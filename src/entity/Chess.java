@@ -1,10 +1,6 @@
 package entity;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GradientPaint;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Ellipse2D;
@@ -75,26 +71,44 @@ public class Chess extends JPanel {
 		}
 		for (int i = 0; i < items.size(); i++) {
 			// g2.setColor(Color.black);
-
+			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,0.5f));
 			Ellipse2D ellipse = (Ellipse2D) items.get(i);
+			Ellipse2D ellipse2D=new Ellipse2D.Double();
+			ellipse2D.setFrameFromCenter(ellipse.getCenterX()+1,ellipse.getCenterY()-1,ellipse.getCenterX()+13,ellipse.getCenterY()+11);
 			// 白子
 			GradientPaint gp1 = new GradientPaint((float) ellipse.getMinX(),
-					(float) ellipse.getMinY(), Color.gray,
+					(float) ellipse.getMinY(), new Color(174,173,171),
 					(float) ellipse.getMaxX(), (float) ellipse.getMaxY(),
-					Color.white);
-			// 黑子
-			GradientPaint gp2 = new GradientPaint((float) ellipse.getMinX(),
+					new Color(116,115,114));
+			GradientPaint gp3 = new GradientPaint((float) ellipse.getMinX(),
 					(float) ellipse.getMinY(), Color.white,
-					(float) ellipse.getCenterX(), (float) ellipse.getCenterY(),
+					(float) ellipse.getMaxX(), (float) ellipse.getMaxY(),
+					Color.gray);
+			// 黑子
+			GradientPaint gp2 = new GradientPaint((float) ellipse.getMinX()-1,
+					(float) ellipse.getMinY()-1, Color.white,
+					(float) ellipse.getCenterX()-1, (float) ellipse.getCenterY()-1,
+					Color.gray);
+			GradientPaint gp4 = new GradientPaint((float) ellipse.getMinX()-1,
+					(float) ellipse.getMinY()-1, Color.white,
+					(float) ellipse.getCenterX()-1, (float) ellipse.getCenterY()-1,
 					Color.black);
 			if (i % 2 == 0) {
 				g2.setPaint(gp2);
+				g2.fill(ellipse);
+				g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,1));
+				g2.setPaint(gp4);
+				g2.fill(ellipse2D);
 			} else {
 				g2.setPaint(gp1);
+				g2.fill(ellipse);
+				g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,1));
+				g2.setPaint(gp3);
+				g2.fill(ellipse2D);
 			}
 
 			// g2.draw(ellipse);
-			g2.fill(ellipse);
 		}
 	}
 	/**
