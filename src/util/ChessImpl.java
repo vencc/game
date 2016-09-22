@@ -7,13 +7,14 @@ public class ChessImpl implements IChess {
 	public static int [][]chess = new int[h][w];
 	boolean white = false;
 	boolean black = false;
-	public void add(int x,int y,int type){
+	public void boolean(int x,int y,int type){
 		
 	}
 	public void delete(int x,int y,int type){
 		
 	}
 	public boolean compare(int x,int y,int type){
+		chess[x][y]=type;
 //		System.out.println(white+""+black);
 //		for(int a=8,b=6;b<10;a++,b++){
 //			chess[a][b]=-1;
@@ -152,16 +153,14 @@ public class ChessImpl implements IChess {
 					}
 				  }	
 			}
-		if(white==true){
-			System.out.println("白色胜利");
+		//返回ture，贏了，返回false，沒人贏。
+		if(white==true&&type==1){
+			return true;
 		}
-		if(black==true){
-			System.out.println("黑色胜利");
+		if(black==true&&type==-1){
+		   return true;
 		}
-        	 
-
 		return false;
-		
 		
 	}
 	 
