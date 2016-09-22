@@ -37,6 +37,8 @@ public class ClientLoginMsg extends BaseMsg{
 			UserDao dao=new UserDao();
 			User user=dao.aa();
 			MyServer.getMyServer().bindUsername(user, client);
+			//4.向客户端发送在线用户列表
+			
 			
 		}else{
 			ServerLoginFailMsg msg=new ServerLoginFailMsg();
