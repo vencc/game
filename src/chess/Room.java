@@ -12,9 +12,10 @@ import javax.swing.JPanel;
 import entity.Chess;
 public class Room extends JFrame{
 	private RoomList roomList;
+	private Home home;
 	
-	public Room() {
-		//this.roomList = roomList;
+	public Room(Home home) {
+		this.home=home;
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		
 		JPanel gamerInfo = new JPanel();
@@ -95,6 +96,6 @@ public class Room extends JFrame{
 	}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		Room roompanel=new Room();
+		Room roompanel=new Room(null);
 	}
 }
