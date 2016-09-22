@@ -69,7 +69,7 @@ public class Home extends JFrame{
     robotButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        toRoomList();
+        toRoom();
       }
     });
   }
@@ -95,5 +95,10 @@ public class Home extends JFrame{
   public void toRoomList(){
     new RoomList(this,user).init();
     this.setVisible(false);
+  }
+  
+  public void toRoom(){
+	  new Room();
+	  this.setVisible(false);
   }
 }
