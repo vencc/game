@@ -22,7 +22,11 @@ public class RoomList extends JFrame {
     this.setVisible(true);
   }
   private void toRoom(){
+<<<<<<< HEAD
+ //   new Room();
+=======
     new Room(null);
+>>>>>>> 78aa2e0cad4e910a54bec075fc94da90bd60d10d
     this.setVisible(false);
   }
   private void toHome(){
