@@ -60,7 +60,7 @@ public class RoomList extends JFrame{
 	    	jpanel[i] = new JPanel();
 	    	jpanel[i].setBackground(new Color(0, 255, 255));
 	    	//
-	    	jbutton[i*3]= new JButton(new ImageIcon("resource\\imag\\9_meitu_2.jpg"));
+	    	jbutton[i*3]= new JButton(new ImageIcon("resource/imag/9_meitu_2.jpg"));
 	    	jbutton[i*3].setSize(50,50);
 	    	jbutton[i*3].setPreferredSize(new Dimension(50,50));
 	    	jpanel[i].add(jbutton[i*3]);
@@ -71,12 +71,12 @@ public class RoomList extends JFrame{
 	        	}
 	        });
 	    	
-	    	jbutton[i*3+1]= new JButton(new ImageIcon("resource\\imag\\\\1.jpg"));
+	    	jbutton[i*3+1]= new JButton(new ImageIcon("resource/imag/1.jpg"));
 	    	jbutton[i*3+1].setSize(150,150);
 	    	jbutton[i*3+1].setPreferredSize(new Dimension(150,150));
 	        jpanel[i].add(jbutton[i*3+1]);
 	        
-	    	jbutton[i*3+2]= new JButton(new ImageIcon("resource\\imag\\\\10_meitu_3.jpg"));
+	    	jbutton[i*3+2]= new JButton(new ImageIcon("resource/imag/10_meitu_3.jpg"));
 	    	jbutton[i*3+2].setSize(50,50);
 	    	jpanel[i].add(jbutton[i*3+2]);
 	    	jbutton[i*3+2].setPreferredSize(new Dimension(50,50));
