@@ -38,6 +38,13 @@ public class MyServer {
 	public static boolean isStarted() {
 		return started;
 	}
+	public List<User> getUserList(){
+		List<User> list = new ArrayList<User>();
+		for(ClientChatThread ct : pool){
+			list.add(ct.getUser());
+		}
+		return list;
+	}
 	/**
 	 * 启动服务器，启动线程监听客户端连接
 	 * @return 返回服务器是否启动
