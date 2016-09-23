@@ -17,6 +17,7 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.WindowConstants;
 
+import net.MyClient;
 import entity.User;
 
 public class RoomList extends JFrame{
@@ -24,6 +25,7 @@ public class RoomList extends JFrame{
 	ArrayList<Room> rooms = new ArrayList();
 	
 	public RoomList(Home home,User user) {
+		MyClient.getMyClient().setRoomlist(this);
 		setSize(new Dimension(1000, 700));
 		
 		JPanel panel = new JPanel();
