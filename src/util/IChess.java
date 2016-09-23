@@ -12,7 +12,7 @@ public interface IChess {
    * @param y  纵坐标
    * @param type  0:白棋   1:黑棋
    */
-  void add(int x,int y,int type);
+  boolean add(int x,int y,int type);
 
   /**
    * 功能: 悔棋时删除棋盘上的棋子

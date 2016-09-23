@@ -7,8 +7,8 @@ public class ChessImpl implements IChess {
 	public static int [][]chess = new int[h][w];
 	boolean white = false;
 	boolean black = false;
-	public void boolean(int x,int y,int type){
-		
+	public boolean add(int x,int y,int type){
+		return false;
 	}
 	public void delete(int x,int y,int type){
 		
