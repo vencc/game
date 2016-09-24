@@ -17,6 +17,7 @@ public class ChessImpl implements IChess {
 	public static int [][]chess = new int[h][w];
 	public static int []chessx = new int[2];
 	public static int []chessy = new int[2];	
+	public static int []informxy = new int[2];
 	boolean white = false;
 	boolean black = false;
 	public  boolean add(int x,int y,int type){		
@@ -36,7 +37,14 @@ public class ChessImpl implements IChess {
 	}
 	public void delete(int type){
 //		刪除棋子類型位tupe的棋子上次下的棋子
-		chess[chessx[type]][chessy[type]]=0;
+		if(chess[chessx[type]][chessy[type]]!=type)
+		{
+			chess[chessx[1]][chessy[1]]=0;
+			chess[chessx[2]][chessy[2]]=0;
+		}else{
+			chess[chessx[type]][chessy[type]]=0;
+		}
+		
 	}
 	public boolean compare(int x,int y,int type){
 		chess[x][y]=type;
@@ -242,7 +250,7 @@ public class ChessImpl implements IChess {
          this.start = true;         
      }  
 
-	 public int ComTurn(int x,int y){     //找出电脑（白子）最佳落子点  
+	 public void ComTurn(int x,int y){     //找出电脑（白子）最佳落子点  
 	        add(x,y,2);
 	    	for(i=0;i<=15;i++)     //遍历棋盘上的所有坐标  
 	                for(j=0;j<=15;j++){     
@@ -329,6 +337,6 @@ public class ChessImpl implements IChess {
 	                    this.win[0][i]=7;  
 	                }  
 	            }  
-	            return m;
+	         
 	        }   
 }
