@@ -35,7 +35,7 @@ public class Room extends JFrame {
 	private JButton But_ready;
 	private static ChessImpl chessimpl;
 	private JButton But_regret;
-
+//1
 	public Room() {
 		// this.roomList = roomList;
 		chessimpl = new ChessImpl();
