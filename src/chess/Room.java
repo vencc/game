@@ -51,7 +51,7 @@ public class Room extends JFrame{
 		
 		gamer1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		JLabel lblNewLabel = new JLabel("对手信息标签");
+		JLabel lblNewLabel = new JLabel("对手信息标签787");
 		gamer1.add(lblNewLabel);
 				
 		JLabel lblNewLabel_1 = new JLabel("个人信息标签");
