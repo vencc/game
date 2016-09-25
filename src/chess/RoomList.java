@@ -2,18 +2,18 @@ package chess;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.AbstractListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -23,28 +23,25 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.WindowConstants;
 
-<<<<<<< HEAD
-import net.MyClient;
+import msg.ClientClickRoomMsg;
 import entity.RoomPojo;
-=======
->>>>>>> 84dff651532ad0cd83bf24e1cca02f2077115b3d
 import entity.User;
+
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class RoomList extends JFrame{
 	
-<<<<<<< HEAD
 	JPanel panel_4 = new JPanel();
 	JList list = new JList();
 	ArrayList<RoomPojo> rooms = new ArrayList();
 	Home home = new Home();
+    User user = null;
 	public RoomList(Home home,final User user) {
-		MyClient.getMyClient().setRoomlist(this);
+		
 		this.home= home;
-=======
-	ArrayList<Room> rooms = new ArrayList();
-	
-	public RoomList(Home home,User user) {
->>>>>>> 84dff651532ad0cd83bf24e1cca02f2077115b3d
+		this.user=user;
+	//	home.getMyClient().setRoomList(this);//让客户端拥有游戏大厅
 		setSize(new Dimension(1000, 700));
 		
 		JPanel panel = new JPanel();
@@ -94,12 +91,12 @@ public class RoomList extends JFrame{
 		panel_4.setLayout(new GridLayout(6, 2, 0, 0));
 	    
 	    
-/*	    for(int i = 0;i<12;i++)
+	    for(int i = 0;i<12;i++)
 	    {
 	    	RoomPojo r = new RoomPojo(0,null,null,RoomPojo.IDLE);
 	    	rooms.add(r);
 	    }
-	    showRoomList(rooms);*/
+	    showRoomList(rooms);
 		
 	       
 		
@@ -109,17 +106,32 @@ public class RoomList extends JFrame{
 		panel_3.setLayout(null);
 		
 		JButton button = new JButton("\u5FEB\u901F\u8FDB\u5165");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		button.addMouseListener(new MouseAdapter() {//快速进入按钮
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				int k=0;
 				 for(int i=0;i<rooms.size();i++){
 					 if(rooms.get(i).getStatus()==1){
-						 toRoom();
+						 int roomid = Integer.parseInt(((JComponent) e.getSource())
+									.getParent().getName());//获得对应房间的名字
+			        		System.out.println("roomid:" + roomid);
+							//房间选择报文传输 roomid、username、isleft  传输给其他用户的界面
+							ClientClickRoomMsg msg = new ClientClickRoomMsg(roomid,user,true);
+							//home.getMyClient().sendMsg(msg);//发给服务器
 						 k=1;
 						 return;
 					 }else if(rooms.get(i).getStatus()==0){
-						 toRoom();
+						 
+						 int roomid = Integer.parseInt(((JComponent) e.getSource())
+									.getParent().getName());//获得对应房间的名字
+			        		System.out.println("roomid:" + roomid);
+							//房间选择报文传输 roomid、username、isleft  传输给其他用户的界面
+							ClientClickRoomMsg msg = new ClientClickRoomMsg(roomid,user,true);
+							//home.getMyClient().sendMsg(msg);//发给服务器
 						 k=1;
 						 return;
 					      }
@@ -129,7 +141,7 @@ public class RoomList extends JFrame{
 				       }
 				 }
 		});
-		button.setBounds(245, 5, 127, 30);
+		button.setBounds(228, 5, 127, 30);
 		panel_3.add(button);
 		
 		JButton btnNewButton = new JButton("\u9000\u51FA\u767B\u5F55");
@@ -140,25 +152,34 @@ public class RoomList extends JFrame{
 				tohome();
 			}
 		});
-		btnNewButton.setBounds(377, 5, 108, 30);
+		btnNewButton.setBounds(393, 5, 108, 30);
 		panel_3.add(btnNewButton);
 		
-		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon("resource\\imag\\12.jpg"));
-		lblNewLabel.setBounds(0, 0, 761, 45);
-		panel_3.add(lblNewLabel);
+		JButton button_1 = new JButton(new ImageIcon("resource\\imag\\9_meitu_2.jpg"));
+		button_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) { //用户头像按钮
+				new UserInfoFrame(user);//进入个人信息界面
+			}
+		});
+		button_1.setBounds(113, 0, 45, 45);
+		panel_3.add(button_1);
+		
+		JButton button_3 = new JButton("\u53CD\u9988");
+		button_3.addMouseListener(new MouseAdapter() {//反馈按钮
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				new SendmailFrame();
+			}
+		});
+		button_3.setBounds(537, 5, 93, 30);
+		panel_3.add(button_3);
 		
 		
 	  }
 	
 	public void showUserList(final List<User> userlist){
-		final String[] values = new String[userlist.size()] ;
+		
 		list.setModel(new AbstractListModel() {
-			{
-				for(int i=0;i<values.length;i++){
-					values[i] = userlist.get(i).getName();
-				}
-			}
 
 			@Override
 			public int getSize() {
@@ -169,13 +190,13 @@ public class RoomList extends JFrame{
 			@Override
 			public Object getElementAt(int index) {
 				// TODO Auto-generated method stub
-				return userlist.get(index).getName();
+				return userlist.get(index);
 			}
 			
 		});
 	}
 	
-	public void showRoomList(List<RoomPojo> rooms) {
+	public void showRoomList(ArrayList<RoomPojo> rooms) {
 		// TODO Auto-generated method stub
 		this.panel_4.removeAll();
 		//JPanel[] jpanel = new JPanel[12];
@@ -186,18 +207,25 @@ public class RoomList extends JFrame{
 	    	JPanel jpanel = new JPanel();
 	    	jpanel.setBackground(new Color(0, 255, 255));
 	    	//
-	    	JButton jbutton1 = new JButton(new ImageIcon("resource\\imag\\9_meitu_2.jpg"));
-	    	jbutton1.setSize(50,50);
-	    	jbutton1.setPreferredSize(new Dimension(50,50));
-	    	jpanel.add(jbutton1);
-	    	jbutton1.addActionListener(new ActionListener() {
+	    	
+	    	JButton leftjbutton1 = new JButton();
+	    	if(r1.getLeftPlayer()!=null)
+	    	     leftjbutton1.setIcon(new ImageIcon(r1.getLeftPlayer().getPhoto()));
+	    	else
+	    		leftjbutton1.setIcon(new ImageIcon("空图片"));
+	    	leftjbutton1.setSize(45,45);
+	    	leftjbutton1.setPreferredSize(new Dimension(45,45));
+	    	jpanel.add(leftjbutton1);
+	    	leftjbutton1.setCursor(new Cursor(Cursor.HAND_CURSOR));
+	    	leftjbutton1.addActionListener(new ActionListener() {
 	        	public void actionPerformed(ActionEvent e) {
 	         //房间左边座位按钮		
-	        	    if(r1.getLeftPlayer()==null){
-	        	    	toRoom();
-	        	    }else{
-	        	    	JOptionPane.showMessageDialog(null, "此位置已有人");
-	        	    }
+	        		int roomid = Integer.parseInt(((JComponent) e.getSource())
+							.getParent().getName());//获得对应房间的名字
+	        		System.out.println("roomid:" + roomid);
+					//房间选择报文传输 roomid、username、isleft  传输给其他用户的界面
+					ClientClickRoomMsg msg = new ClientClickRoomMsg(roomid,user,true);
+					home.getMyClient().sendMsg(msg);//发给服务器
 	        	}
 
 	        });
@@ -207,34 +235,44 @@ public class RoomList extends JFrame{
 	    	jbutton2.setPreferredSize(new Dimension(150,150));
 	        jpanel.add(jbutton2);
 	        
-	        JButton jbutton3= new JButton(new ImageIcon("resource\\imag\\10_meitu_3.jpg"));
-	    	jbutton3.setSize(50,50);
-	    	jpanel.add(jbutton3);
-	    	jbutton3.setPreferredSize(new Dimension(50,50));
-	    	jbutton3.addActionListener(new ActionListener() {
+	        JButton rightjbutton3= new JButton();
+	        if(r1.getRightPlayer()!=null)
+	        rightjbutton3.setIcon(new ImageIcon(r1.getRightPlayer().getPhoto()));
+	        else
+	    		rightjbutton3.setIcon(new ImageIcon("空图片"));
+	    	rightjbutton3.setSize(45,45);
+	    	jpanel.add(rightjbutton3);
+	    	rightjbutton3.setPreferredSize(new Dimension(45,45));
+	    	rightjbutton3.setCursor(new Cursor(Cursor.HAND_CURSOR));
+	    	rightjbutton3.addActionListener(new ActionListener() {
 	        	public void actionPerformed(ActionEvent e) {
 	        		//房间右边座位按钮
-	        		if(r1.getLeftPlayer()==null){
-	        	    	toRoom();
-	        	    }else{
-	        	    	JOptionPane.showMessageDialog(null, "此位置已有人");
-	        	    }
+	        		int roomid = Integer.parseInt(((JComponent) e.getSource())
+							.getParent().getName());//获得对应房间的名字
+	        		System.out.println("roomid:" + roomid);
+					//房间选择报文传输 roomid、username、isleft  传输给其他用户的界面
+					ClientClickRoomMsg msg = new ClientClickRoomMsg(roomid,user,true);
+					//home.getMyClient().sendMsg(msg);//发给服务器
 	        	}
 	        });
 	    	panel_4.add(jpanel);	
 	    }
           RoomList.this.validate();//强制刷新主窗口
 	}
-
-	private void toRoom() {
-		// TODO Auto-generated method stub
-		new Room(null).setVisible(true);
+    
+	public void toRoom(int roomid,User user,boolean isleft){
+		new Room(/*roomid*/).setVisible(true);
+		if(isleft){
+			//设置房间左边玩家，还没写
+		}else{
+			//设置房间右边玩家，还没写
+		}
 	}
-
-	private void tohome() {
+	
+	public void tohome() {
 		// TODO Auto-generated method stub
 		home.setVisible(true);
-		
+		this.dispose();
 	}
 	
 	public void init() {
