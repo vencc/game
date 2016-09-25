@@ -1,14 +1,28 @@
 package chess;
 
+import java.awt.AlphaComposite;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GradientPaint;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.GridLayout;
+import java.awt.RenderingHints;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.geom.Ellipse2D;
+import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import util.ChessImpl;
+import util.IChess;
 import entity.Chess;
 public class Room extends JFrame{
 	private RoomList roomList;
@@ -72,6 +86,75 @@ public class Room extends JFrame{
 		chatRoom.add(label_1);
 		init();
 	}
+	
+	/**
+	 * @wbp.parser.constructor
+	 */
+	public Room( RoomList roomList) {
+		this.roomList=roomList;
+		getContentPane().setLayout(new BorderLayout(0, 0));
+		
+		JPanel gamerInfo = new JPanel();
+		getContentPane().add(gamerInfo, BorderLayout.WEST);
+
+		JPanel gameRoom = new JPanel();
+		getContentPane().add(gameRoom, BorderLayout.CENTER);
+		gameRoom.setLayout(new BorderLayout(0, 0));
+		
+		JPanel UIPanel = new JPanel();
+		gameRoom.add(UIPanel, BorderLayout.SOUTH);
+		gamerInfo.setLayout(new GridLayout(0, 1, 0, 0));
+		
+		JPanel gamer1 = new JPanel();
+		gamerInfo.add(gamer1);
+		
+		JPanel gamer2 = new JPanel();
+		gamerInfo.add(gamer2);
+		
+
+		Chess chessPanel=new Chess();
+		gameRoom.add(chessPanel, BorderLayout.CENTER);
+		UIPanel.setLayout(new BorderLayout(0, 0));
+		
+		JButton But_ready = new JButton("准备");
+		UIPanel.add(But_ready, BorderLayout.WEST);
+		
+		JButton But_start = new JButton("开始");
+		UIPanel.add(But_start, BorderLayout.CENTER);
+		
+		JButton But_exit = new JButton("退出");
+		But_exit.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				toRoomList();
+			}
+		});
+		UIPanel.add(But_exit, BorderLayout.EAST);
+		
+		gamer1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		JLabel lblNewLabel = new JLabel("对手信息标签");
+		gamer1.add(lblNewLabel);
+				
+		JLabel lblNewLabel_1 = new JLabel("个人信息标签");
+		gamer2.add(lblNewLabel_1);
+		
+		
+		JPanel logoPanel = new JPanel();
+		gameRoom.add(logoPanel, BorderLayout.NORTH);
+		logoPanel.setLayout(new BorderLayout(0, 0));
+		
+		JLabel lbllogo = new JLabel("五子棋LOGO");
+		logoPanel.add(lbllogo, BorderLayout.NORTH);
+		
+		JPanel chatRoom = new JPanel();
+		getContentPane().add(chatRoom, BorderLayout.EAST);
+		chatRoom.setLayout(new BorderLayout(0, 0));
+		
+		JLabel label_1 = new JLabel("聊天室");
+		chatRoom.add(label_1);
+		init();
+	}
+	
 	/**
 	 * 功能：初始化房间、棋盘
 	 * 作者：林珊珊
@@ -91,7 +174,7 @@ public class Room extends JFrame{
 	 * */
 	public void toRoomList() {
 
-		// roomList.setVisible(true);
+		roomList.setVisible(true);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	}
 
@@ -107,7 +190,7 @@ public class Room extends JFrame{
 			int y = event.getY();
 
 			if (x > 85 && x < 535 && y > 85 && y < 535) {
-				ChessTablePanel.paintItem(x, y);
+				ChessTable.paintItem(x, y);
 			} else {
 				System.out.println("请将棋子放进棋盘内");
 			}
@@ -135,8 +218,6 @@ public class Room extends JFrame{
 			 */
 
 			// ChessTable.paintItem(x, y);
-
-			Room.ChessTablePanel.repaint();
 			// 判断是否有胜负
 		}
 	}
@@ -146,6 +227,7 @@ public class Room extends JFrame{
 	 * */
 	public static class ChessTable extends JPanel {
 		public boolean isReady = false;
+		public static IChess chessimpl=new ChessImpl(); 
 		public static int Moves;// 本局比赛已下的总步数
 		public static ArrayList items = new ArrayList();
 		/*
@@ -175,7 +257,7 @@ public class Room extends JFrame{
 		 * 
 		 * @author 林珊珊
 		 * */
-		static void paintItem(int x, int y) {// 落子
+		static  void  paintItem(int x, int y) {// 落子
 			int player = 0;
 			int X = x / 30;
 			int Y = y / 30;
@@ -286,7 +368,7 @@ public class Room extends JFrame{
 						(float) ellipse.getCenterX() - 1,
 						(float) ellipse.getCenterY() - 1, Color.black);
 				// 黑子
-				if (chessimpl.chess[(int) ((ellipse.getCenterX() - 99) / 30)][(int) ((ellipse
+				if (ChessImpl.chess[(int) ((ellipse.getCenterX() - 99) / 30)][(int) ((ellipse
 						.getCenterY() - 99) / 30)] == 2) {
 					int t1 = (int) ((ellipse.getCenterX() - 99) / 30);
 					int t2 = (int) ((ellipse.getCenterY() - 99) / 30);
@@ -327,10 +409,11 @@ public class Room extends JFrame{
 		public void unpaintItem() {// 悔棋传入玩家对象
 			int player = 0;
 			// if () {输入玩家是左/右玩家进行悔棋 且符合对方同意悔棋
-//报错注释			chessimpl.delete(Room.chess_BLACK);
+//报错注释			
+			chessimpl.delete(2);
 			//if (chessimpl.chess.length != items.size()) {
 				System.out.println("(chessimpl.chess.length,Moves)=("
-						+ chessimpl.chess.length + "," + Moves + ")");
+						+ ChessImpl.chess.length + "," + Moves + ")");
 				items.remove(0);
 				repaint();
 			
@@ -339,11 +422,6 @@ public class Room extends JFrame{
 			// System.out.println("悔棋异常");
 		}
 
-		public ChessImpl getChessimpl() {
-			return chessimpl;
-		}
-
-		roomList.setVisible(true);
 	}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
