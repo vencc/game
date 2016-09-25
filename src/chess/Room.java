@@ -384,7 +384,7 @@ public class Room extends JFrame {
 		public void unpaintItem() {// 悔棋传入玩家对象
 			int player = 0;
 			// if () {输入玩家是左/右玩家进行悔棋 且符合对方同意悔棋
-			chessimpl.delete(Room.chess_BLACK);
+//报错注释			chessimpl.delete(Room.chess_BLACK);
 			//if (chessimpl.chess.length != items.size()) {
 				System.out.println("(chessimpl.chess.length,Moves)=("
 						+ chessimpl.chess.length + "," + Moves + ")");
