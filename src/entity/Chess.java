@@ -22,7 +22,7 @@ public class Chess extends JPanel {
 	 * 计算棋盘表格坐标(单元格宽高相等)
 	 */
 	private static int[] draw = new int[15];
-	
+
 	/**
 	 * 功能：记录落子情况 其中0表示无子，1表示黑子，2表示白子
 	 */
@@ -113,7 +113,7 @@ public class Chess extends JPanel {
 	}
 	/**
 	 * 输入：监听器所获取的鼠标坐标 功能：为棋盘作悔棋操作 输出：无
-	 * 
+	 *
 	 * @author 林珊珊
 	 * */
 	public static void unpaintItem(int x, int y) {// 悔棋
@@ -137,7 +137,7 @@ public class Chess extends JPanel {
 
 	/**
 	 * 输入：监听器所获取的鼠标坐标 功能：为棋盘绘出棋子 输出：无
-	 * 
+	 *
 	 * @author 林珊珊
 	 * */
 	void paintItem(int x, int y) {// 落子
@@ -171,7 +171,7 @@ public class Chess extends JPanel {
 
 	/**
 	 * 输入：鼠标点击 功能：为棋盘设定鼠标监听器 输出：棋盘落子效果
-	 * 
+	 *
 	 * @author 林珊珊
 	 */
 	private class MouseHandler extends MouseAdapter {

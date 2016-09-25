@@ -23,16 +23,12 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.WindowConstants;
 
-<<<<<<< HEAD
 import net.MyClient;
 import entity.RoomPojo;
-=======
->>>>>>> 84dff651532ad0cd83bf24e1cca02f2077115b3d
 import entity.User;
 
 public class RoomList extends JFrame{
 	
-<<<<<<< HEAD
 	JPanel panel_4 = new JPanel();
 	JList list = new JList();
 	ArrayList<RoomPojo> rooms = new ArrayList();
@@ -40,11 +36,6 @@ public class RoomList extends JFrame{
 	public RoomList(Home home,final User user) {
 		MyClient.getMyClient().setRoomlist(this);
 		this.home= home;
-=======
-	ArrayList<Room> rooms = new ArrayList();
-	
-	public RoomList(Home home,User user) {
->>>>>>> 84dff651532ad0cd83bf24e1cca02f2077115b3d
 		setSize(new Dimension(1000, 700));
 		
 		JPanel panel = new JPanel();
@@ -76,7 +67,7 @@ public class RoomList extends JFrame{
 		panel_1.add(list);
 		
 		JLabel lblNewLabel_1 = new JLabel("New label");
-		lblNewLabel_1.setIcon(new ImageIcon("resource\\imag\\13.jpg"));
+		lblNewLabel_1.setIcon(new ImageIcon("resource/imag/13.jpg"));
 		lblNewLabel_1.setBounds(0, 45, 232, 611);
 		panel_1.add(lblNewLabel_1);
 		
@@ -144,7 +135,7 @@ public class RoomList extends JFrame{
 		panel_3.add(btnNewButton);
 		
 		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon("resource\\imag\\12.jpg"));
+		lblNewLabel.setIcon(new ImageIcon("resource/imag/12.jpg"));
 		lblNewLabel.setBounds(0, 0, 761, 45);
 		panel_3.add(lblNewLabel);
 		
@@ -156,7 +147,7 @@ public class RoomList extends JFrame{
 		list.setModel(new AbstractListModel() {
 			{
 				for(int i=0;i<values.length;i++){
-					values[i] = userlist.get(i).getName();
+					values[i] = userlist.get(i).toString();
 				}
 			}
 
@@ -169,7 +160,7 @@ public class RoomList extends JFrame{
 			@Override
 			public Object getElementAt(int index) {
 				// TODO Auto-generated method stub
-				return userlist.get(index).getName();
+				return userlist.get(index).toString();
 			}
 			
 		});
