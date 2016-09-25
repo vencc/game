@@ -61,6 +61,12 @@ public class Room extends JFrame{
 		UIPanel.add(But_start, BorderLayout.CENTER);
 		
 		JButton But_exit = new JButton("退出");
+		But_exit.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				toRoomList();
+			}
+		});
 		UIPanel.add(But_exit, BorderLayout.EAST);
 		
 		gamer1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
@@ -120,6 +126,12 @@ public class Room extends JFrame{
 		UIPanel.add(But_start, BorderLayout.CENTER);
 		
 		JButton But_exit = new JButton("退出");
+		But_exit.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				toRoomList();
+			}
+		});
 		UIPanel.add(But_exit, BorderLayout.EAST);
 		
 		gamer1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
@@ -165,7 +177,7 @@ public class Room extends JFrame{
 	 * */
 	public void toRoomList() {
 
-		// roomList.setVisible(true);
+		 roomList.setVisible(true);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	}
 
