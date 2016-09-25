@@ -2,22 +2,56 @@ package util;
 
 
 public class ChessImpl implements IChess {
+	private int i, j, k, m, n, icount;  
+     //白子为1，黑子为2,初始为0；
+    private boolean[][][] blacktable = new boolean[15][15][572];  //黑棋获胜组合
+    private boolean[][][] whitetable = new boolean[15][15][572];  //白棋获胜组合
+    private int[][] wnum = new int[15][15];  //白棋在棋盘上各个位置的分值
+    private int[][] bnum = new int[15][15];  //黑棋在棋盘上各个位置的分值
+    private int wgrade,bgrade;  
+    private int[][] win = new int[2][572]; //记录棋子在棋盘上的获胜组合中填入了多少棋子   
+    private boolean start;  
+    private int wmat,wnat,bmde,bnde;    
 	private static int h=15;
 	private static int w=15;
 	public static int [][]chess = new int[h][w];
+	public static int []chessx = new int[2];
+	public static int []chessy = new int[2];	
+	public static int []informxy = new int[2];
 	boolean white = false;
 	boolean black = false;
-	public void boolean(int x,int y,int type){
-		
+	public  boolean add(int x,int y,int type){		
+		if(chess[x][y]!=0)
+		{
+		return false;
+		}else{
+			System.out.println("哈市对啊烧点卡很低");
+			//白棋為1，黑棋為2；
+//			chessx[1]chessy[1]紀録上次白棋下子位置
+//			chessx[2]chessy[2]紀録上次黑棋下子位置
+			chessx[type]=x;
+			chessy[type]=y;
+			chess[x][y]=type;
+			
+		}
+		return true;
 	}
-	public void delete(int x,int y,int type){
+	public void delete(int type){
+//		刪除棋子類型位tupe的棋子上次下的棋子
+		if(chess[chessx[type]][chessy[type]]!=type)
+		{
+			chess[chessx[1]][chessy[1]]=0;
+			chess[chessx[2]][chessy[2]]=0;
+		}else{
+			chess[chessx[type]][chessy[type]]=0;
+		}
 		
 	}
 	public boolean compare(int x,int y,int type){
 		chess[x][y]=type;
 //		System.out.println(white+""+black);
 //		for(int a=8,b=6;b<10;a++,b++){
-//			chess[a][b]=-1;
+//			chess[a][b]=2;
 			
 //		}
 //		System.out.println(chess[5][10]+" 9");
@@ -30,7 +64,7 @@ public class ChessImpl implements IChess {
 					 s++;	
 					
 				 }
-				 if(chess[x][a]==-1)
+				 if(chess[x][a]==2)
 				  z++;
 			     }
 			if(s==5){
@@ -55,7 +89,7 @@ public class ChessImpl implements IChess {
 				 if(chess[a][y]==1){
 					 s++;
 				 }
-				 if(chess[a][y]==-1)
+				 if(chess[a][y]==2)
 				  z++;
 			     }
 			if(s==5){
@@ -75,7 +109,7 @@ public class ChessImpl implements IChess {
 				 if(chess[a][b]==1){
 					 s++;
 				 }
-				 if(chess[a][b]==-1)
+				 if(chess[a][b]==2)
 				  z++;
 			     }
 			if(s==5){
@@ -96,7 +130,7 @@ public class ChessImpl implements IChess {
 						s++;
 //						 System.out.println(s);
 					 }
-					 if(chess[a][b]==-1){
+					 if(chess[a][b]==2){
 					     z++;
 //					  System.out.println(z);
      				 }				     
@@ -120,7 +154,7 @@ public class ChessImpl implements IChess {
 					 if(chess[a][b]==1){
 						 s++;
 					 }
-					 if(chess[a][b]==-1)
+					 if(chess[a][b]==2)
 					  z++;
 				     }
 				if(s==5){
@@ -140,7 +174,7 @@ public class ChessImpl implements IChess {
 							 s++;
 							
 						 }
-						 if(chess[a][b]==-1)
+						 if(chess[a][b]==2)
 						  z++;
 					     }
 					if(s==5){
@@ -157,13 +191,153 @@ public class ChessImpl implements IChess {
 		if(white==true&&type==1){
 			return true;
 		}
-		if(black==true&&type==-1){
+		if(black==true&&type==2){
 		   return true;
 		}
 		return false;
 		
 	}
-	 
+	 public void ResetGame()  
+     {   
+         //初始化棋盘  
+         for(i=0;i<15;i++)  
+             for(j=0;j<15;j++)  
+             {  
+                 this.bnum[i][j] = 0;  
+                 this.wnum[i][j] = 0;  
+                 this.chess[i][j] = 0;  
+             }  
+         //遍历所有的五连子可能情况的权值  
+         //横  
+         for(i=0;i<15;i++)  
+             for(j=0;j<11;j++){  
+                 for(k=0;k<5;k++){  
+                     this.blacktable[j+k][i][icount] = true;  
+                     this.whitetable[j+k][i][icount] = true;  
+                 }  
+                 icount++;  
+             }  
+         //竖  
+         for(i=0;i<15;i++)  
+             for(j=0;j<11;j++){  
+                 for(k=0;k<5;k++){  
+                     this.blacktable[i][j+k][icount] = true;  
+                     this.whitetable[i][j+k][icount] = true;  
+                 }  
+                 icount++;  
+             }  
+         //右斜  
+         for(i=0;i<11;i++)  
+             for(j=0;j<11;j++){  
+                 for(k=0;k<5;k++){  
+                     this.blacktable[j+k][i+k][icount] = true;  
+                     this.whitetable[j+k][i+k][icount] = true;  
+                 }  
+                 icount++;  
+             }  
+         //左斜  
+         for(i=0;i<11;i++)  
+             for(j=15;j>=4;j--){  
+                 for(k=0;k<5;k++){  
+                     this.blacktable[j-k][i+k][icount] = true;  
+                     this.whitetable[j-k][i+k][icount] = true;  
+                 }  
+                 icount++;  
+             }  
+         for(i=0;i<=1;i++)  //初始化黑子白子上的每个权值上的连子数  
+             for(j=0;j<572;j++)  
+                 this.win[i][j] = 0;   
+         this.icount = 0;  
+         this.start = true;         
+     }  
 
-	
+	 public void ComTurn(int x,int y){     //找出电脑（白子）最佳落子点  
+	        add(x,y,2);
+	    	for(i=0;i<=15;i++)     //遍历棋盘上的所有坐标  
+	                for(j=0;j<=15;j++){     
+	                    this.bnum[i][j]=0;  //该坐标的黑子奖励积分清零  
+	                    if(this.chess[i][j] == 0)  //在还没下棋子的地方遍历  
+	                        for(k=0;k<572;k++)    //遍历该棋盘可落子点上的黑子所有权值的连子情况，并给该落子点加上相应奖励分  
+	                            if(this.blacktable[i][j][k]){  
+	                                switch(this.win[0][k]){     
+	                                    case 1: //一连子  
+	                                        this.bnum[i][j]+=5;  
+	                                        break;  
+	                                    case 2: //两连子  
+	                                        this.bnum[i][j]+=50;  
+	                                        break;  
+	                                    case 3: //三连子  
+	                                        this.bnum[i][j]+=180;  
+	                                        break;  
+	                                    case 4: //四连子  
+	                                        this.bnum[i][j]+=400;  
+	                                        break;  
+	                                }  
+	                            }  
+	                    this.wnum[i][j]=0;//该坐标的白子的奖励积分清零  
+	                    if(this.chess[i][j] == 0)  //在还没下棋子的地方遍历  
+	                        for(k=0;k<572;k++)     //遍历该棋盘可落子点上的白子所有权值的连子情况，并给该落子点加上相应奖励分  
+	                            if(this.whitetable[i][j][k]){  
+	                                switch(this.win[1][k]){    
+	                                    case 1:  //一连子  
+	                                        this.wnum[i][j]+=5;  
+	                                        break;  
+	                                    case 2:  //两连子  
+	                                        this.wnum[i][j]+=52;  
+	                                        break;  
+	                                    case 3: //三连子  
+	                                        this.wnum[i][j]+=100;  
+	                                        break;  
+	                                    case 4:  //四连子  
+	                                        this.wnum[i][j]+=400;  
+	                                        break;  
+	                                }  
+	                            }  
+	                }  
+	            if(this.start){      //开始时白子落子坐标  
+	                if(this.chess[4][4]==0){  
+	                    m = 4;  
+	                    n = 4;  
+	                }else{  
+	                    m = 5;  
+	                    n = 5;  
+	                }  
+	                this.start = false;  
+	            }else{  
+	                for(i=0;i<15;i++)  
+	                    for(j=0;j<15;j++)  
+	                        if(this.chess[i][j] == 2){  //找出棋盘上可落子点的黑子白子的各自最大权值，找出各自的最佳落子点  
+	                            if(this.wnum[i][j]>=this.wgrade){  
+	                                this.wgrade = this.wnum[i][j];     
+	                                this.wmat = i;  
+	                                this.wnat = j;  
+	                            }  
+	                            if(this.bnum[i][j]>=this.bgrade){  
+	                                this.bgrade = this.bnum[i][j];     
+	                                this.bmde = i;  
+	                                this.bnde = j;  
+	                            }  
+	                        }  
+	                if(this.wgrade>=this.bgrade){   //如果白子的最佳落子点的权值比黑子的最佳落子点权值大，则电脑的最佳落子点为白子的最佳落子点，否则相反  
+	                    m = wmat;  
+	                    n = wnat;  
+	                }else{  
+	                    m = bmde;  
+	                    n = bnde;  
+	                }  
+	            }  
+	            this.wgrade = 0;          
+	            this.bgrade = 0;  
+	            this.chess[m][n] = 1;  //电脑下子位置      
+	            compare(m,n,1);
+	            for(i=0;i<572;i++){  
+	                if(this.whitetable[m][n][i] && this.win[1][i] != 7)  
+	                    this.win[1][i]++;     //给白子的所有五连子可能的加载当前连子数  
+	                if(this.blacktable[m][n][i]){  
+	                    this.blacktable[m][n][i] = false;  
+	                    this.win[0][i]=7;  
+	                }  
+	            }  
+	         
+	        }   
 }
