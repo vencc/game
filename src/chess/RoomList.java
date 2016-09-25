@@ -228,7 +228,7 @@ public class RoomList extends JFrame{
 
 	private void toRoom() {
 		// TODO Auto-generated method stub
-		new Room(null).setVisible(true);
+	//报错注释---------------	new Room(null).setVisible(true);
 	}
 
 	private void tohome() {

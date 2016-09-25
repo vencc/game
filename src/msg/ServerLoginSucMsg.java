@@ -1,20 +1,21 @@
 package msg;
 
+import net.MyClient;
+import entity.User;
+/**
+ * 登录成功报文类，由服务器发往客户端
+ * @author john
+ * 时间：2016.09.22
+ */
 public class ServerLoginSucMsg extends BaseMsg{
-
-	private String username;
-	public ServerLoginSucMsg(String username) {
+    //跟新使用数据库的User对象
+	private User user;
+	public ServerLoginSucMsg(User user) {
 		super();
-		this.username = username;
+		this.user = user;
 	}
 	public void doBiz() {
-<<<<<<< HEAD
-		MyClient.getMyClient().getNamedialog().loginSuc(user);
-		System.out.println(user.getName());
-=======
-		// TODO Auto-generated method stub
-		
->>>>>>> 84dff651532ad0cd83bf24e1cca02f2077115b3d
+//		MyClient.getMyClient().getNamedialog().loginSuc(user);
 	}
 
 }
