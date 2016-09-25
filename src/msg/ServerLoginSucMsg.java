@@ -16,6 +16,7 @@ public class ServerLoginSucMsg extends BaseMsg{
 	}
 	public void doBiz() {
 		MyClient.getMyClient().getNamedialog().loginSuc(user);
+		System.out.println(user.getName());
 	}
 
 }

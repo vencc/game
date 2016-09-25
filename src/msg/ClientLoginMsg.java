@@ -44,13 +44,13 @@ public class ClientLoginMsg extends BaseMsg{
 			//3.将客户端的用户名与所分配到的线程进行绑定
 			//有username查询dao得到User对象user
 			
-			//MyServer.getMyServer().bindUsername(user, client);
+			MyServer.getMyServer().bindUsername(user, client);
 			//4.向所有客户端发送在线用户列表
-		//	ServerUserListMsg msg2=new ServerUserListMsg(MyServer.getMyServer().getUserList());
-		//	MyServer.getMyServer().sendMsgToAll(msg2);
+			ServerUserListMsg msg2=new ServerUserListMsg(MyServer.getMyServer().getUserList());
+			MyServer.getMyServer().sendMsgToAll(msg2);
 			//5.服务器向登录的客户端发送房间列表报文
-		//	ServerRoomListMsg msg3=new ServerRoomListMsg(MyServer.getMyServer().getRooms());
-		//	MyServer.getMyServer().sendMsgToClient(msg3, this.client);
+			ServerRoomListMsg msg3=new ServerRoomListMsg(MyServer.getMyServer().getRooms());
+			MyServer.getMyServer().sendMsgToClient(msg3, this.client);
 			
 			
 		}else{
