@@ -28,7 +28,7 @@ public class ServerUserListMsg extends BaseMsg {
 	@Override
 	public void doBiz() {
 		System.out.println(userList);
-		//MyClient.getMyClient().getRoomlist().showUserList(userList);
+		MyClient.getMyClient().getRoomlist().showUserList(userList);
 		
 	}
 }

@@ -28,6 +28,6 @@ public class ServerRoomListMsg extends BaseMsg {
 	@Override
 	public void doBiz() {
 		System.out.println(roomList);
-		//MyClient.getMyClient().getRoomlist().showRoomList(roomList);
+		MyClient.getMyClient().getRoomlist().showRoomList(roomList);
 	}
 }
