@@ -50,6 +50,7 @@ public class Room extends JFrame{
 		UIPanel.add(But_exit, BorderLayout.EAST);
 		
 		gamer1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
 		JLabel lblNewLabel = new JLabel("对手信息标签");
 		gamer1.add(lblNewLabel);
 				
@@ -91,6 +92,7 @@ public class Room extends JFrame{
 	 * */
 	public void toRoomList() {
 		roomList.setVisible(true);
+		// �رձ����� this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
