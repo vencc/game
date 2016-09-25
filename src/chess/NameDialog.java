@@ -3,10 +3,6 @@ package chess;
 import entity.User;
 
 import javax.swing.*;
-
-import msg.ClientLoginMsg;
-import net.MyClient;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -24,8 +20,6 @@ public class NameDialog extends JDialog {
   private JButton cancel=new JButton("取消");
 
   public NameDialog(Home home, User user){
-	  // 
-	  MyClient.getMyClient().setNamedialog(this);
     this.user=user;
     this.setModal(true);
     this.home=home;
@@ -56,32 +50,15 @@ public class NameDialog extends JDialog {
     ok.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-    	  //更新
-    	if(MyClient.getMyClient().isConnected()){
-    		return;
-    	}
-    	System.out.println(MyClient.getMyClient());
-    	if(MyClient.getMyClient().connect()){
-            ClientLoginMsg msg=new ClientLoginMsg(nameTextField.getText());
-            MyClient.getMyClient().sendMsg(msg);
-         //   nameDialog.dispose();
-    	}
-    	else{
-    		System.out.println("连接失败");
-    	}
+        home.toRoomList();
+        nameDialog.dispose();
       }
     });
     cancel.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-    	  nameDialog.dispose();
+        nameDialog.dispose();
       }
     });
   }
-  public void loginSuc(User user){
-	  home.toRoomList(user);
-      nameDialog.dispose();
-  }
-  public void loginFail(){}
-  
 }

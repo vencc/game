@@ -23,12 +23,16 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.WindowConstants;
 
+<<<<<<< HEAD
 import net.MyClient;
 import entity.RoomPojo;
+=======
+>>>>>>> 84dff651532ad0cd83bf24e1cca02f2077115b3d
 import entity.User;
 
 public class RoomList extends JFrame{
 	
+<<<<<<< HEAD
 	JPanel panel_4 = new JPanel();
 	JList list = new JList();
 	ArrayList<RoomPojo> rooms = new ArrayList();
@@ -36,6 +40,11 @@ public class RoomList extends JFrame{
 	public RoomList(Home home,final User user) {
 		MyClient.getMyClient().setRoomlist(this);
 		this.home= home;
+=======
+	ArrayList<Room> rooms = new ArrayList();
+	
+	public RoomList(Home home,User user) {
+>>>>>>> 84dff651532ad0cd83bf24e1cca02f2077115b3d
 		setSize(new Dimension(1000, 700));
 		
 		JPanel panel = new JPanel();

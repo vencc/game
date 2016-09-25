@@ -1,5 +1,7 @@
 package msg;
 
+import net.MyServer;
+import entity.RoomPojo;
 import entity.User;
 
 public class ClientClickRoomMsg extends BaseMsg{
@@ -32,6 +34,7 @@ public class ClientClickRoomMsg extends BaseMsg{
 	}
 
 	public void doBiz() {
+		RoomPojo room=MyServer.getMyServer().getRooms().get(roomid);
 	}
 	
 

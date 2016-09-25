@@ -1,153 +1,96 @@
 package chess;
 
-import java.awt.AlphaComposite;
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.GradientPaint;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.GridLayout;
-import java.awt.RenderingHints;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.geom.Ellipse2D;
-import java.util.ArrayList;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import util.ChessImpl;
 import entity.Chess;
-
-public class Room extends JFrame {
-	public static final int chess_BLACK = 2;
-	public static final int chess_WHITE = 1;
-	public static final int chess_EMPTY = 0;
-	// private RoomList roomList;
-	private static ChessTable ChessTablePanel;
-	private JButton But_ready;
-	private static ChessImpl chessimpl;
-	private JButton But_regret;
-
-	public Room() {
-		// this.roomList = roomList;
-		chessimpl = new ChessImpl();
+public class Room extends JFrame{
+	private RoomList roomList;
+	private Home home;
+	
+	public Room(Home home) {
+		this.home=home;
 		getContentPane().setLayout(new BorderLayout(0, 0));
-
+		
 		JPanel gamerInfo = new JPanel();
 		getContentPane().add(gamerInfo, BorderLayout.WEST);
 
 		JPanel gameRoom = new JPanel();
-		gameRoom.setBackground(Color.WHITE);
 		getContentPane().add(gameRoom, BorderLayout.CENTER);
 		gameRoom.setLayout(new BorderLayout(0, 0));
-
+		
 		JPanel UIPanel = new JPanel();
 		gameRoom.add(UIPanel, BorderLayout.SOUTH);
 		gamerInfo.setLayout(new GridLayout(0, 1, 0, 0));
-
+		
 		JPanel gamer1 = new JPanel();
 		gamerInfo.add(gamer1);
-
+		
 		JPanel gamer2 = new JPanel();
 		gamerInfo.add(gamer2);
+		
 
-		ChessTablePanel = new ChessTable();
-		gameRoom.add(ChessTablePanel, BorderLayout.CENTER);
-
+		Chess chessPanel=new Chess();
+		gameRoom.add(chessPanel, BorderLayout.CENTER);
 		UIPanel.setLayout(new BorderLayout(0, 0));
-
-		But_ready = new JButton("准备");
-		But_ready.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if (ChessTablePanel.isReady) {
-					But_ready.setText("准备");
-					ChessTablePanel.setReady(false);
-					System.out.println(ChessTablePanel.isReady);
-				} else {
-					But_ready.setText("取消准备");
-					ChessTablePanel.setReady(true);
-					System.out.println(ChessTablePanel.isReady);
-				}
-			}
-		});
+		
+		JButton But_ready = new JButton("准备");
 		UIPanel.add(But_ready, BorderLayout.WEST);
-
-		But_regret = new JButton("悔棋");
-		But_regret.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if (ChessTablePanel.Moves > 0)
-					ChessTablePanel.unpaintItem();
-				else {
-					System.out.println("当前已经没有棋子了");
-				}
-			}
-		});
-		UIPanel.add(But_regret, BorderLayout.CENTER);
-
+		
 		JButton But_start = new JButton("开始");
-		UIPanel.add(But_start, BorderLayout.NORTH);
-
+		UIPanel.add(But_start, BorderLayout.CENTER);
+		
 		JButton But_exit = new JButton("退出");
-		But_exit.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				toRoomList();
-			}
-		});
 		UIPanel.add(But_exit, BorderLayout.EAST);
-
+		
 		gamer1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-
 		JLabel lblNewLabel = new JLabel("对手信息标签");
 		gamer1.add(lblNewLabel);
-
+				
 		JLabel lblNewLabel_1 = new JLabel("个人信息标签");
 		gamer2.add(lblNewLabel_1);
-
+		
+		
 		JPanel logoPanel = new JPanel();
 		gameRoom.add(logoPanel, BorderLayout.NORTH);
 		logoPanel.setLayout(new BorderLayout(0, 0));
-
+		
 		JLabel lbllogo = new JLabel("五子棋LOGO");
 		logoPanel.add(lbllogo, BorderLayout.NORTH);
-
+		
 		JPanel chatRoom = new JPanel();
 		getContentPane().add(chatRoom, BorderLayout.EAST);
 		chatRoom.setLayout(new BorderLayout(0, 0));
-
+		
 		JLabel label_1 = new JLabel("聊天室");
 		chatRoom.add(label_1);
 		init();
 	}
-
 	/**
-	 * 功能：初始化房间、棋盘 作者：林珊珊
+	 * 功能：初始化房间、棋盘
+	 * 作者：林珊珊
 	 * */
 	public void init() {
 
 		this.setTitle("五子棋");
-		this.setLocation(345, 100);
+		this.setLocation(345, 120);
 		this.setSize(1000, 700);
 		this.setResizable(false);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		// chessimpl.ResetGame();
 		this.setVisible(true);
 	}
-
 	/**
-	 * 功能：跳转至房间列表页面 作者：林珊珊
+	 * 功能：跳转至房间列表页面
+	 * 作者：林珊珊
 	 * */
 	public void toRoomList() {
+
 		// roomList.setVisible(true);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	}
@@ -399,9 +342,11 @@ public class Room extends JFrame {
 		public ChessImpl getChessimpl() {
 			return chessimpl;
 		}
-	}
 
+		roomList.setVisible(true);
+	}
 	public static void main(String[] args) {
-		Room r = new Room();
+		// TODO Auto-generated method stub
+		Room roompanel=new Room(null);
 	}
 }

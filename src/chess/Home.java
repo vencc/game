@@ -92,9 +92,7 @@ public class Home extends JFrame{
    * 功能: 跳转至房间列表界面
    * 作者: 黄欢欢  时间: 2016-09-21
    */
-  
-  //更新 用数据库的User对象
-  public void toRoomList(User user){
+  public void toRoomList(){
     new RoomList(this,user).init();
     this.setVisible(false);
   }
