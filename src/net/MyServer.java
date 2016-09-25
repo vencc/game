@@ -10,7 +10,6 @@ import java.util.List;
 
 import javax.management.MBeanServer;
 
-import entity.RoomPojo;
 import entity.User;
 import net.MyServer;
 import net.MyServer.ClientChatThread;
@@ -24,19 +23,12 @@ import msg.BaseMsg;
  */
 public class MyServer {
 	private static MyServer myserver;
-	private MyServer(){}
-	/**
-	 * 单例获取服务器对象
-	 * @return
-	 */
 	public static  MyServer getMyServer(){
 		if(myserver==null){
-		    myserver=new MyServer();
-			myserver.resetRooms();
+			return new MyServer();
 		}
 		return myserver;
 	}
-	private List<RoomPojo> rooms=new ArrayList<RoomPojo>();
 	public static List<ClientChatThread> pool=new ArrayList();//socket池
 	ServerSocket server=null;
 	private static boolean started=false;
@@ -46,27 +38,6 @@ public class MyServer {
 	public static boolean isStarted() {
 		return started;
 	}
-	
-	public List<RoomPojo> getRooms() {
-		return rooms;
-	}
-	public void setRooms(List<RoomPojo> rooms) {
-		this.rooms = rooms;
-	}
-	/**
-	 * 服务器启动时重置房间列表信息
-	 */
-	private void resetRooms(){
-		rooms.clear();
-		for(int i=1;i<=12;i++){
-			RoomPojo r = new RoomPojo(i,null,null,RoomPojo.IDLE);
-			rooms.add(r);
-		}
-	}
-	/**
-	 * 获得当前在线用户的集合数组
-	 * @return 
-	 */
 	public List<User> getUserList(){
 		List<User> list = new ArrayList<User>();
 		for(ClientChatThread ct : pool){
@@ -167,10 +138,10 @@ public class MyServer {
 				ObjectOutputStream oos = new ObjectOutputStream(
 						client.getOutputStream());
 				oos.writeObject(msg);
-			//	oos.close();
+				oos.flush();
+				oos.close();
 				
 			} catch (IOException e) {
-				e.printStackTrace();
 				System.out.println("给"+client+"发送数据失败");
 			}
 		}
@@ -178,15 +149,13 @@ public class MyServer {
 			 try {
 				 while(true){
 				 ObjectInputStream ois = new ObjectInputStream(client.getInputStream());
-				 
+				 System.out.println("收到数据");
 				 BaseMsg msg = (BaseMsg)ois.readObject();
 				 msg.setClient(client);
-				 System.out.println("收到数据");
 				 msg.doBiz();
-			//	 ois.close();
+				 ois.close();
 				 }
 			} catch (Exception e) {
-				e.printStackTrace();
 					MyServer.pool.remove(this);			
 
 			}
@@ -200,16 +169,11 @@ public class MyServer {
 	public void sendMsgToClient(BaseMsg msg,Socket client){
 		for(ClientChatThread c:pool){
 			if(c.getClient()==client){
-				c.sendMsg(msg,client);
+				c.sendMsg(msg, client);
 				return;
 			}
 		}
 	}
-	/**
-	 * 将用户对象和与之匹配的线程进行绑定
-	 * @param user
-	 * @param client
-	 */
 	public void bindUsername(User user,Socket client){
 		for(ClientChatThread c:pool){
 			if(c.getClient()==client){
@@ -218,16 +182,7 @@ public class MyServer {
 			}
 		}
 	}
-	/**
-	 * 服务器向所有在线客户端发送报文类对象方法
-	 * @param msg
-	 */
-	public void sendMsgToAll(BaseMsg msg){
-		for(ClientChatThread c:pool){
-			c.sendMsg(msg,c.getClient());
-		}
-	}
 	public static void main(String[] args) {
-		MyServer.getMyServer().startListen();
+		 MyServer.getMyServer().startListen();
 	}
 }

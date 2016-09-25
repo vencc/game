@@ -8,44 +8,12 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-import chess.NameDialog;
-import chess.RoomList;
 import msg.BaseMsg;
-/**
- * 客户端类
- * @author john
- *
- */
+
 public class MyClient {
-	
-	private static MyClient myclient;
-	private MyClient(){}
-	private  NameDialog namedialog;
-	private boolean connected=false;
-	private Socket client=null;
-	/**
-	 * 单例获取MyClient对象
-	 */
-	public static  MyClient getMyClient(){
-		if(myclient==null){		
-			myclient= new MyClient();
-		}
-		return myclient;
-	}
-	public RoomList roomlist;
-     public RoomList getRoomlist() {
-		return roomlist;
-	}
-	public void setRoomlist(RoomList roomlist) {
-		this.roomlist = roomlist;
-	}
-	public NameDialog getNamedialog() {
-		return namedialog;
-	}
-	public void setNamedialog(NameDialog namedialog) {
-		this.namedialog = namedialog;
-	}
-	 public boolean isConnected() {
+     private Socket client=null;
+     private boolean connected;
+	 public boolean isConnectrd() {
 		return connected;
 	}
 	public void setConnected(boolean connected) {
@@ -57,18 +25,21 @@ public class MyClient {
 	 */
 	public boolean connect(){
 		try {
-			client=new Socket("localhost",8888);		
-		} catch (Exception e) {
+			client=new Socket("localhost",8888);
+			connected=true;
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
-			this.setConnected(false);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		this.setConnected(true);
 		new ReceiveServerThread(client).start();
 		return true;
 	}
 	/**
 	 *关闭客户端连接 
-	 * @return 是否成功
+	 * @return
 	 */
 	public boolean disConnect(){
 		if(client==null){
@@ -102,8 +73,9 @@ public class MyClient {
 					while(true){
 					 ObjectInputStream ois = new ObjectInputStream(client.getInputStream());
 					 BaseMsg msg = (BaseMsg)ois.readObject();
+					 msg.setClient(client);
 					 msg.doBiz();
-			//		 ois.close();
+					 ois.close();
 				}
 					} catch (IOException e) {
 					// TODO Auto-generated catch block
@@ -122,14 +94,15 @@ public class MyClient {
 	 */
 	
 	public void sendMsg(BaseMsg msg){
-		if(!this.isConnected()){
+		if(!this.isConnectrd()){
 			return;
 		}
 		
 		try {
 			ObjectOutputStream oos = new ObjectOutputStream(client.getOutputStream());
 			oos.writeObject(msg);
-		  //  oos.close();
+		    oos.flush();
+		    oos.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

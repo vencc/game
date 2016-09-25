@@ -2,32 +2,34 @@ package msg;
 
 import java.util.List;
 
-import net.MyClient;
-import entity.RoomPojo;
-/**
- * 记录房间列表的报文类，由服务器发往客户端
- * @author john
- * 时间：2016.09.22
- */
-public class ServerRoomListMsg extends BaseMsg {
-	private List<RoomPojo> roomList;
+import entity.Room;
 
-	public ServerRoomListMsg(List<RoomPojo> roomList) {
+//����˷����ķ����б�֪ͨ����
+public class ServerRoomListMsg extends BaseMsg {
+	private List<Room> roomList;
+
+	public ServerRoomListMsg(List<Room> roomList) {
 		super();
 		this.roomList = roomList;
 	}
 
-	public List<RoomPojo> getRoomList() {
+	public List<Room> getRoomList() {
 		return roomList;
 	}
 
-	public void setRoomList(List<RoomPojo> roomList) {
+	public void setRoomList(List<Room> roomList) {
 		this.roomList = roomList;
 	}
 
 	@Override
 	public void doBiz() {
+		// ����û��б?��ʾ
 		System.out.println(roomList);
+<<<<<<< HEAD
 		MyClient.getMyClient().getRoomlist().showRoomList(roomList);
+=======
+		//LoginFrame.getMyClient().getHallFrame().showRoomList(roomList);;
+
+>>>>>>> 84dff651532ad0cd83bf24e1cca02f2077115b3d
 	}
 }
