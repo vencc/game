@@ -25,7 +25,7 @@ public class ChessImpl implements IChess {
 		{
 		return false;
 		}else{
-			System.out.println("哈市对啊烧点卡很低");
+			System.out.println("哈市对啊烧点卡很低1");
 			//白棋為1，黑棋為2；
 //			chessx[1]chessy[1]紀録上次白棋下子位置
 //			chessx[2]chessy[2]紀録上次黑棋下子位置
