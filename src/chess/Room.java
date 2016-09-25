@@ -107,7 +107,6 @@ public class Room extends JFrame {
 		UIPanel.add(But_exit, BorderLayout.EAST);
 
 		gamer1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-
 		JLabel lblNewLabel = new JLabel("对手信息标签");
 		gamer1.add(lblNewLabel);
 
