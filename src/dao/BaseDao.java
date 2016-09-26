@@ -79,7 +79,9 @@ public class BaseDao {
 			e.printStackTrace();
 			return 0;
 		}finally{
+			//System.out.println();
 			doClose(connection,psm,null);
+			
 		}
 	}
 	public static void doClose(Connection conn, Statement psm,
