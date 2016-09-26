@@ -8,12 +8,6 @@ import net.MyServer;
  *时间：2016.09.21
  */
 
-class UserDao{
-	public User aa(){
-		return new User("zzb");
-	}
-}
-
 public class ClientLoginMsg extends BaseMsg{
 
 
@@ -36,9 +30,8 @@ public class ClientLoginMsg extends BaseMsg{
 		if(!username.isEmpty()){
 			//1.生成response報文
 
-			UserDao dao=new UserDao();
-			User user=dao.aa();
-			ServerLoginSucMsg msg=new ServerLoginSucMsg(user);	
+			User user=new User(username);
+			ServerLoginSucMsg msg=new ServerLoginSucMsg(user);
 			//2.服务器发送报文给指定客户
 			System.out.println(msg);
 			MyServer.getMyServer().sendMsgToClient(msg, this.client);
