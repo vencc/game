@@ -23,6 +23,7 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.WindowConstants;
 
+import msg.ClientLogoutMsg;
 import net.MyClient;
 import entity.RoomPojo;
 import entity.User;
@@ -226,6 +227,9 @@ public class RoomList extends JFrame{
 	}
 
 	private void tohome() {
+		ClientLogoutMsg msg=new ClientLogoutMsg();
+		System.out.println(msg);
+		MyClient.getMyClient().sendMsg(msg);
 		// TODO Auto-generated method stub
 		home.setVisible(true);
 		this.dispose();

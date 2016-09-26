@@ -70,6 +70,7 @@ public class MyServer {
 	public List<User> getUserList(){
 		List<User> list = new ArrayList<User>();
 		for(ClientChatThread ct : pool){
+			if(ct.getUser()!=null)
 			list.add(ct.getUser());
 		}
 		return list;
@@ -181,7 +182,7 @@ public class MyServer {
 				 
 				 BaseMsg msg = (BaseMsg)ois.readObject();
 				 msg.setClient(client);
-				 System.out.println("收到数据");
+				 System.out.println("收到数据"+msg);
 				 msg.doBiz();
 			//	 ois.close();
 				 }
@@ -214,6 +215,14 @@ public class MyServer {
 		for(ClientChatThread c:pool){
 			if(c.getClient()==client){
 				c.setUser(user);
+				return;
+			}
+		}
+	}
+	public void deleteUserCilent(Socket client){
+		for(ClientChatThread c:pool){
+			if(c.getClient()==client){
+				c.setUser(null);
 				return;
 			}
 		}

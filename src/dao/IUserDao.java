@@ -30,4 +30,17 @@ public interface IUserDao {
    * @param userName 玩家姓名
    */
   void deleteUser(String userName);
+
+  /**
+   * 功能: 根据姓名查找该玩家胜利局数
+   * @param userName 玩家姓名
+   * @return 胜利局数
+   */
+  int findWinNum(String userName);
+
+  /**
+   * 功能: 更新胜利局数
+   * @param winNum 当前胜利局数
+   */
+  void update(int winNum);
 }

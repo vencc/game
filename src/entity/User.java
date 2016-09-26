@@ -10,6 +10,16 @@ public class User implements Serializable {
     this.name=name;
     winNum=0;
   }
+  private String fileName;  // 头像路径
+
+  public String getFileName() {
+    return fileName;
+  }
+
+  public void setFileName(String fileName) {
+    this.fileName = fileName;
+  }
+
   private String name;  // 姓名
   private int winNum;  // 战绩
 public String getName() {

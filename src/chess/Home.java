@@ -1,6 +1,8 @@
 package chess;
 
 import entity.User;
+import msg.ClientLoginMsg;
+import net.MyClient;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,6 +19,7 @@ public class Home extends JFrame{
   private  JButton userButton=new JButton();
   private JButton netButton=new JButton("联网对战");    // 联网对战按钮
   private JButton robotButton=new JButton("人机对战");  // 人机对战按钮
+  private JButton logoffButton=new JButton("退出");  // 退出按钮
   private JPanel contentPane=new JPanel(){
     protected void paintComponent(Graphics g){
       Image image=new ImageIcon("resource/imag/home.png").getImage();
@@ -44,6 +47,7 @@ public class Home extends JFrame{
     netButton.setFocusPainted(false);
     userButton.setBounds((int)(this.getWidth()*0.2),(int)(this.getHeight()*0.5),this.getWidth()/6,this.getHeight()/14);
     robotButton.setBounds((int)(this.getWidth()*0.2),(int)(this.getHeight()*0.6),this.getWidth()/6,this.getHeight()/14);
+    logoffButton.setBounds((int)(this.getWidth()*0.2),(int)(this.getHeight()*0.7),this.getWidth()/6,this.getHeight()/14);
 
     // 初始化事件监听
     addAction();
@@ -78,7 +82,16 @@ public class Home extends JFrame{
     userButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        toRoomList(user);
+        ClientLoginMsg msg = new ClientLoginMsg(user.getName());
+        MyClient.getMyClient().sendMsg(msg);
+      }
+    });
+
+    logoffButton.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        home.dispose();
+        new Home();
       }
     });
   }
@@ -107,6 +120,7 @@ public class Home extends JFrame{
     userButton.setText(user.getName());
     contentPane.remove(netButton);
     contentPane.add(userButton);
+    contentPane.add(logoffButton);
     this.setVisible(false);
   }
   
