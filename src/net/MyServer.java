@@ -257,4 +257,15 @@ public class MyServer {
 	public static void main(String[] args) {
 		MyServer.getMyServer().startListen();
 	}
+	/**
+	 * 发送报文给指定User的客户端
+	 */
+	public void  sendMsgToClient(BaseMsg msg,User user){
+		for(ClientChatThread c:pool){
+			if(c.getUser()==user){
+				c.sendMsg(msg, c.getClient());
+				return;
+			}
+		}
+	}
 }
