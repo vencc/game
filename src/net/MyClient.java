@@ -131,6 +131,7 @@ public class MyClient {
 		try {
 			ObjectOutputStream oos = new ObjectOutputStream(client.getOutputStream());
 			oos.writeObject(msg);
+			System.out.println("发送报文"+msg);
 		  //  oos.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

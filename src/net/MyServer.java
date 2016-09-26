@@ -70,6 +70,7 @@ public class MyServer {
 	public List<User> getUserList(){
 		List<User> list = new ArrayList<User>();
 		for(ClientChatThread ct : pool){
+			if(ct.getUser()!=null)
 			list.add(ct.getUser());
 		}
 		return list;
@@ -181,7 +182,7 @@ public class MyServer {
 				 
 				 BaseMsg msg = (BaseMsg)ois.readObject();
 				 msg.setClient(client);
-				 System.out.println("收到数据");
+				 System.out.println("收到数据"+msg);
 				 msg.doBiz();
 			//	 ois.close();
 				 }
@@ -214,6 +215,32 @@ public class MyServer {
 		for(ClientChatThread c:pool){
 			if(c.getClient()==client){
 				c.setUser(user);
+				return;
+			}
+		}
+	}
+
+	/**
+	 * 功能: 退出时删除姓名
+	 * @param client
+   */
+	public void deleteUserCilent(Socket client){
+		for(ClientChatThread c:pool){
+			if(c.getClient()==client){
+				c.setUser(null);
+				return;
+			}
+		}
+	}
+
+	/**
+	 * 功能: 客户端断开连接
+	 * @param client
+   */
+	public void deleteClientSocket(Socket client){
+		for(ClientChatThread c:pool){
+			if(c.getClient()==client){
+				pool.remove(c);
 				return;
 			}
 		}

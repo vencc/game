@@ -1,11 +1,16 @@
 package chess;
 
 import entity.User;
+import msg.ClientLoginMsg;
+import msg.ClientOffMsg;
+import net.MyClient;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 /**
  * 功能: 登录界面
@@ -14,8 +19,10 @@ import java.awt.event.ActionListener;
 public class Home extends JFrame{
   private User user=new User("游客");
   private Home home=this;
+  private  JButton userButton=new JButton();
   private JButton netButton=new JButton("联网对战");    // 联网对战按钮
   private JButton robotButton=new JButton("人机对战");  // 人机对战按钮
+  private JButton logoffButton=new JButton("退出");  // 退出按钮
   private JPanel contentPane=new JPanel(){
     protected void paintComponent(Graphics g){
       Image image=new ImageIcon("resource/imag/home.png").getImage();
@@ -41,7 +48,9 @@ public class Home extends JFrame{
     // 初始化组件
     netButton.setBounds((int)(this.getWidth()*0.2),(int)(this.getHeight()*0.5),this.getWidth()/6,this.getHeight()/14);
     netButton.setFocusPainted(false);
+    userButton.setBounds((int)(this.getWidth()*0.2),(int)(this.getHeight()*0.5),this.getWidth()/6,this.getHeight()/14);
     robotButton.setBounds((int)(this.getWidth()*0.2),(int)(this.getHeight()*0.6),this.getWidth()/6,this.getHeight()/14);
+    logoffButton.setBounds((int)(this.getWidth()*0.2),(int)(this.getHeight()*0.7),this.getWidth()/6,this.getHeight()/14);
 
     // 初始化事件监听
     addAction();
@@ -72,6 +81,33 @@ public class Home extends JFrame{
         toRoom();
       }
     });
+
+    userButton.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        ClientLoginMsg msg = new ClientLoginMsg(user.getName());
+        MyClient.getMyClient().sendMsg(msg);
+      }
+
+
+    });
+
+    addWindowListener(new WindowAdapter(){
+      @Override
+      public void windowClosing(WindowEvent e) {
+        System.out.println("退出程序");
+        ClientOffMsg msg=new ClientOffMsg();
+        MyClient.getMyClient().sendMsg(msg);
+      }
+    });
+
+    logoffButton.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        home.dispose();
+        new Home();
+      }
+    });
   }
 
   /**
@@ -93,7 +129,12 @@ public class Home extends JFrame{
    * 作者: 黄欢欢  时间: 2016-09-21
    */
   public void toRoomList(User user){
+    this.user=user;
     new RoomList(this,user);
+    userButton.setText(user.getName());
+    contentPane.remove(netButton);
+    contentPane.add(userButton);
+    contentPane.add(logoffButton);
     this.setVisible(false);
   }
   
