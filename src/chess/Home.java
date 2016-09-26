@@ -14,6 +14,7 @@ import java.awt.event.ActionListener;
 public class Home extends JFrame{
   private User user=new User("游客");
   private Home home=this;
+  private  JButton userButton=new JButton();
   private JButton netButton=new JButton("联网对战");    // 联网对战按钮
   private JButton robotButton=new JButton("人机对战");  // 人机对战按钮
   private JPanel contentPane=new JPanel(){
@@ -41,6 +42,7 @@ public class Home extends JFrame{
     // 初始化组件
     netButton.setBounds((int)(this.getWidth()*0.2),(int)(this.getHeight()*0.5),this.getWidth()/6,this.getHeight()/14);
     netButton.setFocusPainted(false);
+    userButton.setBounds((int)(this.getWidth()*0.2),(int)(this.getHeight()*0.5),this.getWidth()/6,this.getHeight()/14);
     robotButton.setBounds((int)(this.getWidth()*0.2),(int)(this.getHeight()*0.6),this.getWidth()/6,this.getHeight()/14);
 
     // 初始化事件监听
@@ -72,6 +74,13 @@ public class Home extends JFrame{
         toRoom();
       }
     });
+
+    userButton.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        toRoomList(user);
+      }
+    });
   }
 
   /**
@@ -93,7 +102,11 @@ public class Home extends JFrame{
    * 作者: 黄欢欢  时间: 2016-09-21
    */
   public void toRoomList(User user){
+    this.user=user;
     new RoomList(this,user);
+    userButton.setText(user.getName());
+    contentPane.remove(netButton);
+    contentPane.add(userButton);
     this.setVisible(false);
   }
   
