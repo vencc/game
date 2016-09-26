@@ -3,8 +3,14 @@ package msg;
 import java.util.List;
 
 
-import entity.User;
 
+import net.MyClient;
+import entity.User;
+/**
+ * 记录全体在线用户的报文类，由服务器发往客户端
+ * @author john
+ * 时间：2016.09.22 
+ */
 public class ServerUserListMsg extends BaseMsg {
 	private List<User> userList;
 	
@@ -22,11 +28,7 @@ public class ServerUserListMsg extends BaseMsg {
 	@Override
 	public void doBiz() {
 		System.out.println(userList);
-<<<<<<< HEAD
 		MyClient.getMyClient().getRoomlist().showUserList(userList);
-=======
-		//LoginFrame.getMyClient().getHallFrame().showUserList(userList);
->>>>>>> 84dff651532ad0cd83bf24e1cca02f2077115b3d
 		
 	}
 }
