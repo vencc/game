@@ -120,7 +120,7 @@ public class Room extends JFrame{
 		roomList.setVisible(true);
 		else
 		home.setVisible(true);
-		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		this.dispose();
 	}
 
 	/**

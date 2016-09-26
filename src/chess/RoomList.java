@@ -32,11 +32,14 @@ public class RoomList extends JFrame{
 	JPanel panel_4 = new JPanel();
 	JList list = new JList();
 	ArrayList<RoomPojo> rooms = new ArrayList();
-	Home home = new Home();
+	Home home;
 	public RoomList(Home home,final User user) {
 		MyClient.getMyClient().setRoomlist(this);
 		this.home= home;
-		setSize(new Dimension(1000, 700));
+		this.setTitle("五子棋");
+		this.setSize(1000, 700);
+		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		this.setVisible(true);
 		
 		JPanel panel = new JPanel();
 		getContentPane().add(panel, BorderLayout.CENTER);
@@ -225,17 +228,13 @@ public class RoomList extends JFrame{
 	private void tohome() {
 		// TODO Auto-generated method stub
 		home.setVisible(true);
+		this.dispose();
 		
 	}
 	
-	public void init() {
-	    this.setTitle("五子棋");
-	    this.setSize(1000, 700);
-	    this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-	    this.setVisible(true);
-	  }
+
 	
       public static void main(String[] args) {
-			new RoomList(null,null).setVisible(true);
+			new RoomList(null,null);
      }
 }
