@@ -163,7 +163,7 @@ public class RoomList extends JFrame{
 			@Override
 			public Object getElementAt(int index) {
 				// TODO Auto-generated method stub
-				return userlist.get(index).toString();
+				return userlist.get(index).getName();
 			}
 			
 		});
