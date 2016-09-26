@@ -1,10 +1,7 @@
 package msg;
 
 import entity.RoomPojo;
-import msg.ServerRoomListMsg;
-
 import net.MyServer;
-import entity.RoomPojo;
 import entity.User;
 
 public class ClientClickRoomMsg extends BaseMsg{

@@ -62,7 +62,7 @@ public class Home extends JFrame{
     netButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        new NameDialog(home);
+        toRoomList();
       }
     });
 
@@ -93,7 +93,7 @@ public class Home extends JFrame{
    * 作者: 黄欢欢  时间: 2016-09-21
    */
   public void toRoomList(){
-    new RoomList(this,user).init();
+    new RoomList(this,user);
     this.setVisible(false);
   }
   
