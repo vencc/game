@@ -15,8 +15,8 @@ public class ChessImpl implements IChess {
 	private static int h=15;
 	private static int w=15;
 	public static int [][]chess = new int[h][w];
-	public static int []chessx = new int[2];
-	public static int []chessy = new int[2];	
+	public static int []chessx = new int[3];
+	public static int []chessy = new int[3];	
 	public static int []informxy = new int[2];
 	boolean white = false;
 	boolean black = false;
