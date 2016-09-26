@@ -80,6 +80,7 @@ public class MyClient {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			System.out.println("关闭了");
 		}
 		connected=false;
 		return true;
