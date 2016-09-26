@@ -129,7 +129,7 @@ public class RoomList extends JFrame{
 		btnNewButton.setBounds(393, 5, 108, 30);
 		panel_3.add(btnNewButton);
 		
-		JButton button_1 = new JButton(new ImageIcon("resource\\imag\\9_meitu_2.jpg"));
+		JButton button_1 = new JButton(new ImageIcon(user.getFileName()));
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) { //用户头像按钮
 				new UserInfoFrame(user).setVisible(true);//进入个人信息界面
@@ -226,7 +226,7 @@ public class RoomList extends JFrame{
 
 	        });
 	    	
-	    	JButton jbutton2= new JButton(new ImageIcon("resource\\imag\\1.jpg"));
+	    	JButton jbutton2= new JButton(new ImageIcon());
 	    	jbutton2.setSize(150,150);
 	    	jbutton2.setPreferredSize(new Dimension(150,150));
 	        jpanel.add(jbutton2);
