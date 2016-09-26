@@ -7,7 +7,7 @@ import java.io.Serializable;
  *
  */
 
-public class RoomPojo implements Serializable{
+public class Room implements Serializable{
 	public static final int IDLE=0;//房间无人
 	public static final int WAIT=1;//一人在等待
 	public static final int PLAYING=0;//游戏进行
@@ -39,7 +39,7 @@ public class RoomPojo implements Serializable{
 	public void setStatus(int status) {
 		this.status = status;
 	}
-	public RoomPojo(int rid, User leftPlayer, User rightPlayer, int status) {
+	public Room(int rid, User leftPlayer, User rightPlayer, int status) {
 		super();
 		this.rid = rid;
 		this.leftPlayer = leftPlayer;

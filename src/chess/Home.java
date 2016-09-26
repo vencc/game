@@ -98,7 +98,7 @@ public class Home extends JFrame{
   }
   
   public void toRoom(){
-	  //   报错注释--------------------new Room(this);
+	  new Room(this);
 	  this.setVisible(false);
   }
 }
