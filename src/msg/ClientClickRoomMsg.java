@@ -51,6 +51,8 @@ public class ClientClickRoomMsg extends BaseMsg{
 			}
 			//添加进入房间代码
 			//此处
+			ServerEnterRoomMsg msg1=new ServerEnterRoomMsg(room,isleft);
+			MyServer.getMyServer().sendMsgToClient(msg1, this.client);
 			//
 			ServerRoomListMsg msg=new ServerRoomListMsg(MyServer.getMyServer().getRooms());
 			MyServer.getMyServer().sendMsgToAll(msg);
@@ -73,6 +75,8 @@ public class ClientClickRoomMsg extends BaseMsg{
 				
 				room.setStatus(RoomPojo.PLAYING);
 				room.setLeftPlayer(user);
+				ServerEnterRoomMsg msg1=new ServerEnterRoomMsg(room,isleft);
+				MyServer.getMyServer().sendMsgToClient(msg1, this.client);
 				ServerRoomListMsg msg = new ServerRoomListMsg(MyServer.getMyServer().getRooms());
 				MyServer.getMyServer().sendMsgToAll(msg);
 				return;
@@ -92,6 +96,8 @@ public class ClientClickRoomMsg extends BaseMsg{
 				}
 				room.setStatus(RoomPojo.PLAYING);
 				room.setRightPlayer(user);
+				ServerEnterRoomMsg msg1=new ServerEnterRoomMsg(room,isleft);
+				MyServer.getMyServer().sendMsgToClient(msg1, this.client);
 				ServerRoomListMsg msg = new ServerRoomListMsg(MyServer
 						.getMyServer().getRooms());
 				MyServer.getMyServer().sendMsgToAll(msg);
