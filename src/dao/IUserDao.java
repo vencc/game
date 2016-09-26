@@ -18,13 +18,8 @@ public interface IUserDao {
    * 功能: 设置玩家的头像
    * @param FileName  头像路径
    */
-  void updateUserImag(String FileName);
+  void updateUserImag(String FileName,String uname);
 
-  /**
-   * 功能: 修改玩家姓名
-   * @param userName 玩家姓名
-   */
-  void updateUserName(String userName);
   /**
    * 功能: 删除玩家
    * @param userName 玩家姓名
@@ -42,5 +37,5 @@ public interface IUserDao {
    * 功能: 更新胜利局数
    * @param winNum 当前胜利局数
    */
-  void update(int winNum);
+  void update(int new_winNum,String name);
 }

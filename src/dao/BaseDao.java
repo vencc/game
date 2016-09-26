@@ -9,7 +9,7 @@ import java.sql.Statement;
 
 public class BaseDao {
 	// 1.四个静态常量的参数
-	public static final String url = "jdbc:mysql://localhost:3306/mnsd";
+	public static final String url = "jdbc:mysql://localhost:3306/fivechess";
 	public static final String username = "root";
 	public static final String password = "root";
 	public static final String classname = "com.mysql.jdbc.Driver";
