@@ -23,7 +23,6 @@ import javax.swing.JPanel;
 
 import util.ChessImpl;
 import util.IChess;
-import entity.Chess;
 import entity.RoomPojo;
 import entity.User;
 public class Room extends JFrame{
@@ -33,13 +32,23 @@ public class Room extends JFrame{
 	private User leftPlayer;//房间内左边玩家
 	private User rightPlayer;//房间内右边玩家
 	private int status;//房间的状态
+	private  ChessTable chessPanel;
+	
+	public ChessTable getChessPanel() {
+		return chessPanel;
+	}
+
+	public void setChessPanel(ChessTable chessPanel) {
+		this.chessPanel = chessPanel;
+	}
 
 	public Room(RoomPojo room) {
+		
 		this.rid=room.getRid();
 		this.leftPlayer=room.getLeftPlayer();
 		this.rightPlayer=room.getRightPlayer();
 		this.status=room.getStatus();
-		init();
+		init(0);
 	}
 	
 	public RoomList getRoomList() {
@@ -84,19 +93,19 @@ public class Room extends JFrame{
 
 	public Room(Home home) {
 		this.home=home;
-		init();
+		init(1);//人机
 	}
 	
 	public Room(RoomList roomList) {
 		this.roomList=roomList;
-		init();
+		init(0);
 	}
 	
 	/**
 	 * 功能：初始化房间、棋盘
 	 * 作者：林珊珊
 	 * */
-	public void init() {
+	public void init(int model) {//联网对战0  人机对战1
 
 		this.setTitle("五子棋");
 		this.setLocation(345, 120);
@@ -123,8 +132,13 @@ public class Room extends JFrame{
 		JPanel gamer2 = new JPanel();
 		gamerInfo.add(gamer2);
 
-
-		final ChessTable chessPanel=new ChessTable(this);
+		//if(model==0){
+			chessPanel=new ChessTable(this);
+			System.out.println("联网");
+	//	}else{
+		//chessPanel=new ChessTable();
+		//System.out.println("人机");
+	//	}
 		gameRoom.add(chessPanel, BorderLayout.CENTER);
 		UIPanel.setLayout(new BorderLayout(0, 0));
 
@@ -190,56 +204,12 @@ public class Room extends JFrame{
 		this.dispose();
 	}
 
-	/**
-	 * 输入：鼠标点击 功能：为棋盘设定鼠标监听器 输出：棋盘落子效果
-	 * 
-	 * @author 林珊珊
-	 */
-	public static class MouseHandler extends MouseAdapter {
-		public void mousePressed(MouseEvent event) {
-
-			int x = event.getX();
-			int y = event.getY();
-
-			if (x > 85 && x < 535 && y > 85 && y < 535) {
-				ChessTable.paintItem(x, y);
-			} else {
-				System.out.println("请将棋子放进棋盘内");
-			}
-			/*
-			 * if (map[i][j] == 0) { Ellipse2D ellipse = new Ellipse2D.Double();
-			 * ellipse.setFrameFromCenter(centerX, centerY, centerX + 12,
-			 * centerY + 12); map[i][j] = 1; System.out.println("(i,j)=" + i +
-			 * "," + j); items.add(ellipse); if (Moves > 256) { // 格子放满未分胜负，平局 }
-			 * else Moves++; System.out.println("move=" + Moves); } else {
-			 * System.out.println("这里已经放过棋子了"); }
-			 */
-
-			System.out.println("x:" + x + "y:" + y);
-			/*
-			 * if(悔棋) unpaintItem(x, y);
-			 */
-			/*
-			 * if(落子) paintItem(x, y);
-			 */
-			/*
-			 * if(认输) 游戏结束
-			 */
-			/*
-			 * if(退出) 回到房间列表
-			 */
-
-			// ChessTable.paintItem(x, y);
-
-
-			// 判断是否有胜负
-		}
-	}
-
+	
 	/**
 	 * 功能：棋盘面板 作者:林珊珊
 	 * */
 	public static class ChessTable extends JPanel {
+		private  int model;
 		private Room room;
 		public static final int chess_BLACK = 2;
 		public static final int chess_WHITE = 1;
@@ -265,16 +235,74 @@ public class Room extends JFrame{
 		public ChessTable(Room room) {
 			super(null);
 			this.room=room;
+			model=0;
+			Moves=0;
 			this.setBounds(0, 0, BOARD_WIDTH, BOARD_WIDTH);
 			this.addMouseListener(new MouseHandler());
 		}
+		public ChessTable() {//人机
+			super(null);
+			Moves=0;
+			model=1;
+		//	chessimpl.ResetGame();
+			this.setBounds(0, 0, BOARD_WIDTH, BOARD_WIDTH);
+			this.addMouseListener(new MouseHandler());
+		}
+		/**
+		 * 输入：鼠标点击 功能：为棋盘设定鼠标监听器 输出：棋盘落子效果
+		 * 
+		 * @author 林珊珊
+		 */
+		public  class MouseHandler extends MouseAdapter {
+			public void mousePressed(MouseEvent event) {
 
+				int x = event.getX();
+				int y = event.getY();
+
+				if (x > 85 && x < 535 && y > 85 && y < 535) {
+					paintItem(x, y);
+					room.repaint();
+					repaint();
+				} else {
+					System.out.println("请将棋子放进棋盘内");
+				}
+				/*
+				 * if (map[i][j] == 0) { Ellipse2D ellipse = new Ellipse2D.Double();
+				 * ellipse.setFrameFromCenter(centerX, centerY, centerX + 12,
+				 * centerY + 12); map[i][j] = 1; System.out.println("(i,j)=" + i +
+				 * "," + j); items.add(ellipse); if (Moves > 256) { // 格子放满未分胜负，平局 }
+				 * else Moves++; System.out.println("move=" + Moves); } else {
+				 * System.out.println("这里已经放过棋子了"); }
+				 */
+
+				System.out.println("x:" + x + "y:" + y);
+				/*
+				 * if(悔棋) unpaintItem(x, y);
+				 */
+				/*
+				 * if(落子) paintItem(x, y);
+				 */
+				/*
+				 * if(认输) 游戏结束
+				 */
+				/*
+				 * if(退出) 回到房间列表
+				 */
+
+				// ChessTable.paintItem(x, y);
+
+
+				// 判断是否有胜负
+			}
+		}
+		
+		
 		/**
 		 * 输入：监听器所获取的鼠标坐标 功能：为棋盘绘出棋子 输出：无
 		 * 
 		 * @author 林珊珊
 		 * */
-		static void paintItem(int x, int y) {// 落子
+		 void paintItem(int x, int y) {// 落子
 			int X = x / 30;
 			int Y = y / 30;
 			int centerX = X * 30 + 10;
@@ -282,11 +310,17 @@ public class Room extends JFrame{
 			int i = (x - 90) / 30;
 			int j = (y - 90) / 30;
 			if (i < 15) {
+			//	if(model==1){//人机
+			//		chessimpl.ComTurn(i,j);
+				//}
+			//	else {
 				chessimpl.add(i, j, 1);
+			//	}
 				Ellipse2D ellipse = new Ellipse2D.Double();
 				ellipse.setFrameFromCenter(centerX, centerY, centerX + 12,
 						centerY + 12);
 				 items.add(ellipse);
+				
 				if (Moves > 256) {
 					// 格子放满未分胜负，平局
 				} else
@@ -416,6 +450,6 @@ public class Room extends JFrame{
 		}
 	}
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		Room r=new Room(new Home());
 	}
 }
