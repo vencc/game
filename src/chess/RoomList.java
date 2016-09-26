@@ -132,7 +132,7 @@ public class RoomList extends JFrame{
 		JButton button_1 = new JButton(new ImageIcon(user.getFileName()));
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) { //用户头像按钮
-				new UserInfoFrame(user).setVisible(true);//进入个人信息界面
+			//	new UserInfoFrame(user).setVisible(true);//进入个人信息界面
 			}
 		});
 		button_1.setBounds(113, 0, 45, 45);
@@ -192,7 +192,7 @@ public class RoomList extends JFrame{
 		});
 	}
 	
-	public void showRoomList(ArrayList<RoomPojo> rooms) {
+	public void showRoomList(List<RoomPojo> rooms) {
 		// TODO Auto-generated method stub
 		this.panel_4.removeAll();
 		//JPanel[] jpanel = new JPanel[12];
