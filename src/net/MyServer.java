@@ -219,10 +219,28 @@ public class MyServer {
 			}
 		}
 	}
+
+	/**
+	 * 功能: 退出时删除姓名
+	 * @param client
+   */
 	public void deleteUserCilent(Socket client){
 		for(ClientChatThread c:pool){
 			if(c.getClient()==client){
 				c.setUser(null);
+				return;
+			}
+		}
+	}
+
+	/**
+	 * 功能: 客户端断开连接
+	 * @param client
+   */
+	public void deleteClientSocket(Socket client){
+		for(ClientChatThread c:pool){
+			if(c.getClient()==client){
+				pool.remove(c);
 				return;
 			}
 		}
