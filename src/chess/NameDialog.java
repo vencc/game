@@ -12,15 +12,13 @@ import java.awt.event.ActionListener;
  */
 public class NameDialog extends JDialog {
   private Home home;
-  private User user;
   private NameDialog nameDialog=this;
   private JTextField nameTextField=new JTextField();
   private JLabel nameTip=new JLabel("请输入姓名");
   private JButton ok=new JButton("确定");
   private JButton cancel=new JButton("取消");
 
-  public NameDialog(Home home, User user){
-    this.user=user;
+  public NameDialog(Home home){
     this.setModal(true);
     this.home=home;
     this.setResizable(false);

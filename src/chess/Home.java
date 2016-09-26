@@ -62,7 +62,7 @@ public class Home extends JFrame{
     netButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        new NameDialog(home,user);
+        new NameDialog(home);
       }
     });
 
