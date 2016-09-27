@@ -10,6 +10,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 import chess.NameDialog;
+import chess.Room;
 import chess.RoomList;
 import msg.BaseMsg;
 /**
@@ -24,6 +25,15 @@ public class MyClient {
 	private  NameDialog namedialog;
 	private boolean connected=false;
 	private Socket client=null;
+	private Room room;
+	
+	
+	public Room getRoom() {
+		return room;
+	}
+	public void setRoom(Room room) {
+		this.room = room;
+	}
 	/**
 	 * 单例获取MyClient对象
 	 */
