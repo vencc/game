@@ -237,7 +237,7 @@ public class ChessImpl implements IChess {
              }  
          //左斜  
          for(i=0;i<11;i++)  
-             for(j=15;j>=4;j--){  
+             for(j=14;j>=4;j--){  
                  for(k=0;k<5;k++){  
                      this.blacktable[j-k][i+k][icount] = true;  
                      this.whitetable[j-k][i+k][icount] = true;  
