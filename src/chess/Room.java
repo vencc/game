@@ -21,6 +21,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import net.MyClient;
 import util.ChessImpl;
 import util.IChess;
 import entity.RoomPojo;
@@ -44,8 +45,9 @@ public class Room extends JFrame {
 		this.chessPanel = chessPanel;
 	}
 
-	public Room(RoomPojo room,boolean left) {
-		
+	public Room(RoomPojo room) {
+
+		MyClient.getMyClient().setRoom(this);
 		this.rid = room.getRid();
 		this.leftPlayer = room.getLeftPlayer();
 		this.left=left;
