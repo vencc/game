@@ -24,7 +24,10 @@ public class Home extends JFrame{
   private JButton robotButton=new JButton("人机对战");  // 人机对战按钮
   private JButton logoffButton=new JButton("退出");  // 退出按钮
   private JPanel contentPane=new JPanel(){
-
+    protected void paintComponent(Graphics g){
+      Image image=new ImageIcon("resource/imag/home.png").getImage();
+      g.drawImage(image,0,0,getWidth(),getHeight(),this);
+    }
 
   };
 
