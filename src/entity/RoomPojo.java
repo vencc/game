@@ -10,7 +10,7 @@ import java.io.Serializable;
 public class RoomPojo implements Serializable{
 	public static final int IDLE=0;//房间无人
 	public static final int WAIT=1;//一人在等待
-	public static final int PLAYING=0;//游戏进行
+	public static final int PLAYING=2;//游戏进行
 	private int rid;//房间编号
 	private User leftPlayer;//房间内左边玩家
 	private User rightPlayer;//房间内右边玩家

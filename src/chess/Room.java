@@ -35,7 +35,6 @@ public class Room extends JFrame {
 	private User rightPlayer;// 房间内右边玩家
 	private int status;// 房间的状态
 	private ChessTable chessPanel;
-	private boolean left;
 
 	public ChessTable getChessPanel() {
 		return chessPanel;
@@ -50,7 +49,6 @@ public class Room extends JFrame {
 		MyClient.getMyClient().setRoom(this);
 		this.rid = room.getRid();
 		this.leftPlayer = room.getLeftPlayer();
-		this.left=left;
 		this.rightPlayer = room.getRightPlayer();
 		this.status = room.getStatus();
 		init(0);
@@ -137,13 +135,13 @@ public class Room extends JFrame {
 		JPanel gamer2 = new JPanel();
 		gamerInfo.add(gamer2);
 
-		 if(model==0){
+		// if(model==0){
 		chessPanel = new ChessTable(this);
 		System.out.println("联网");
-		 }else{
-		 chessPanel=new ChessTable();
-		 System.out.println("人机");
-		 }
+		// }else{
+		// chessPanel=new ChessTable();
+		// System.out.println("人机");
+		// }
 		gameRoom.add(chessPanel, BorderLayout.CENTER);
 		UIPanel.setLayout(new BorderLayout(0, 0));
 
@@ -250,8 +248,7 @@ public class Room extends JFrame {
 			super(null);
 			Moves = 0;
 			model = 1;
-			chessimpl.ResetGame();
-			System.out.println("is here!");
+			// chessimpl.ResetGame();
 			this.setBounds(0, 0, BOARD_WIDTH, BOARD_WIDTH);
 			this.addMouseListener(new MouseHandler());
 		}
@@ -317,12 +314,12 @@ public class Room extends JFrame {
 			int i = (x - 90) / 30;
 			int j = (y - 90) / 30;
 			if (i < 15) {
-				 if(model==1){//人机
-				 chessimpl.ComTurn(i,j);
-				 }
-				 else {
+				// if(model==1){//人机
+				// chessimpl.ComTurn(i,j);
+				// }
+				// else {
 				chessimpl.add(i, j, 1);
-				 }
+				// }
 				Ellipse2D ellipse = new Ellipse2D.Double();
 				ellipse.setFrameFromCenter(centerX, centerY, centerX + 12,
 						centerY + 12);

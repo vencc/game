@@ -79,7 +79,7 @@ public class RoomList extends JFrame {
     panel_3.setLayout(null);
 
     JButton button = new JButton("\u5FEB\u901F\u8FDB\u5165");
-    button.addActionListener(new ActionListener() {
+    button.addActionListener(new ActionListener() {//快速进入
       public void actionPerformed(ActionEvent e) {
         int k = 0;
         for (int i = 0; i < rooms.size(); i++) {
@@ -261,7 +261,7 @@ public class RoomList extends JFrame {
 
       final RoomPojo r1 = rooms.get(i);
       JPanel jpanel = new JPanel();
-      jpanel.setName((i+1)+"");
+      jpanel.setName(i+"");
 jpanel.setOpaque(false);
       JButton leftjbutton1 = new JButton();
       if (r1.getLeftPlayer() != null)
@@ -276,7 +276,7 @@ jpanel.setOpaque(false);
         public void actionPerformed(ActionEvent e) {
           //房间左边座位按钮
           int roomid = Integer.parseInt(((JComponent) e.getSource()).getParent().getName());//获得对应房间的名字
-          System.out.println("roomid:" + roomid);
+          System.out.println("roomid:===" + roomid);
           //房间选择报文传输 roomid、username、isleft  传输给其他用户的界面
           ClientClickRoomMsg msg = new ClientClickRoomMsg(roomid, user, true);
           MyClient.getMyClient().sendMsg(msg);//发给服务器
@@ -306,7 +306,7 @@ jpanel.setOpaque(false);
               .getParent().getName());//获得对应房间的名字
           System.out.println("roomid:" + roomid);
           //房间选择报文传输 roomid、username、isleft  传输给其他用户的界面
-          ClientClickRoomMsg msg = new ClientClickRoomMsg(roomid, user, true);
+          ClientClickRoomMsg msg = new ClientClickRoomMsg(roomid, user, false);
           MyClient.getMyClient().sendMsg(msg);//发给服务器
         }
       });
@@ -316,6 +316,7 @@ jpanel.setOpaque(false);
   }
 
   public void toRoom(int roomid, boolean isleft) {
+    System.out.println(MyClient.getMyClient()+"----intoRoom: "+roomid);
     new Room(rooms.get(roomid));
   }
 

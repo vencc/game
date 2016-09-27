@@ -58,7 +58,7 @@ public class MyServer {
 	 */
 	private void resetRooms(){
 		rooms.clear();
-		for(int i=1;i<=12;i++){
+		for(int i=0;i<12;i++){
 			RoomPojo r = new RoomPojo(i,null,null,RoomPojo.IDLE);
 			rooms.add(r);
 		}
