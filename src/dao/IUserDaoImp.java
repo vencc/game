@@ -5,7 +5,10 @@ import java.sql.SQLException;
 import java.util.*;
 
 import entity.User;
-
+/**
+ * 功能: User类接口实现
+* @author 王小明  时间: 2016-09-27
+ */
 public class IUserDaoImp implements IUserDao {
 	String sql=null;
 	BaseDao b=new BaseDao();
@@ -59,7 +62,7 @@ public class IUserDaoImp implements IUserDao {
 	
 	 /**
 	   * 功能: 设置玩家的头像
-	   * @param FileName  头像路径
+	   * @param new_FileName  头像路径
 	   */
 	@Override
 	public
@@ -111,7 +114,7 @@ public class IUserDaoImp implements IUserDao {
 
 	 /**
 	   * 功能：修改战绩
-	   * @param winNum 战绩
+	   * @param new_winNum 战绩
 	   */
 	@Override
 	public
@@ -120,7 +123,6 @@ public class IUserDaoImp implements IUserDao {
 		String[] paras={new_winNum+"",name};
 		b.doUpdate(sql, paras);
 	}
-
 	
 }
 	

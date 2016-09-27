@@ -106,6 +106,7 @@ public class BaseDao {
 			doClose(connection,psm,null);
 		}
 	}
+
 	public static void doClose(Connection conn, Statement psm,
 			ResultSet rs) {
 		// 关闭各种资源

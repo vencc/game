@@ -46,4 +46,5 @@ public interface IUserDao {
    * @param winNum 当前胜利局数
    */
   void update(int new_winNum,String name);
+
 }

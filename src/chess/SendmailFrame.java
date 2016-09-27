@@ -32,7 +32,10 @@ import javax.swing.JTextPane;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
+/**
+ * 功能: 邮件发送功能，邮件反馈.
+ * 作者: 王小明   时间: 2016-09-23
+ */
 public class SendmailFrame extends JFrame {
 	JTextArea textArea = null;
 	String r = null;
