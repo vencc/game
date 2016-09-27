@@ -1,5 +1,6 @@
 package msg;
 
+import chess.Room;
 import entity.RoomPojo;
 import net.MyServer;
 import entity.User;
@@ -42,6 +43,8 @@ public class ClientClickRoomMsg extends BaseMsg{
 
 	public void doBiz() {
 		RoomPojo room=MyServer.getMyServer().getRooms().get(roomid);
+		System.out.println("报文类里的ID: "+room.getRid());
+		System.out.println("STATUS : "+room.getStatus());
 		if(room.getStatus()==RoomPojo.IDLE){
 			room.setStatus(room.WAIT);
 			if(isleft){
