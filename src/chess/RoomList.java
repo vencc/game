@@ -160,7 +160,7 @@ public class RoomList extends JFrame {
     JPanel panel_1 = new JPanel();
     tabbedPane.addTab("在线用户", null, panel_1, null);
     panel_1.setLayout(null);
-/*
+
     list.setOpaque(false);
     list.setModel(new AbstractListModel() {
       String[] values = new String[]{"list1", "list2", "list3", "list4", "list5"};
@@ -186,7 +186,7 @@ public class RoomList extends JFrame {
     lblNewLabel_1.setBounds(0, 0, 232, 594);
     panel_5.add(lblNewLabel_1);
 
-*/
+
   }
 
   public void showUserList(final List<User> userlist) {
