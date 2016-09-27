@@ -1,5 +1,7 @@
 package dao;
 
+import java.util.List;
+
 import entity.User;
 
 /**
@@ -38,4 +40,9 @@ public interface IUserDao {
    * @param winNum 当前胜利局数
    */
   void update(int new_winNum,String name);
+  /**
+   * 功能: 查找所有玩家信息，返回数组
+   * @return 返回实体类供他人调用
+   */
+	List<User> findAll();
 }
