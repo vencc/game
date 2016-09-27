@@ -18,18 +18,6 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.WindowConstants;
 
-import com.apple.laf.AquaTabbedPaneUI;
-import com.jtattoo.plaf.acryl.AcrylTabbedPaneUI;
-import com.jtattoo.plaf.aero.AeroTabbedPaneUI;
-import com.jtattoo.plaf.aluminium.AluminiumTabbedPaneUI;
-import com.jtattoo.plaf.fast.FastTabbedPaneUI;
-import com.jtattoo.plaf.graphite.GraphiteTabbedPaneUI;
-import com.jtattoo.plaf.hifi.HiFiTabbedPaneUI;
-import com.jtattoo.plaf.luna.LunaTabbedPaneUI;
-import com.jtattoo.plaf.mcwin.McWinTabbedPaneUI;
-import com.jtattoo.plaf.mint.MintTabbedPaneUI;
-import com.jtattoo.plaf.smart.SmartTabbedPaneUI;
-import com.sun.java.swing.plaf.motif.MotifTabbedPaneUI;
 import msg.ClientClickRoomMsg;
 import msg.ClientOffMsg;
 import net.MyClient;
@@ -39,9 +27,6 @@ import util.ScrollbarUI;
 import util.TabbedPaneUI;
 
 import javax.swing.JTabbedPane;
-import javax.swing.plaf.metal.MetalTabbedPaneUI;
-import javax.swing.plaf.multi.MultiTabbedPaneUI;
-import javax.swing.plaf.synth.SynthTabbedPaneUI;
 
 public class RoomList extends JFrame {
 

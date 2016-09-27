@@ -35,6 +35,7 @@ public class Room extends JFrame {
 	private User rightPlayer;// 房间内右边玩家
 	private int status;// 房间的状态
 	private ChessTable chessPanel;
+	private boolean left;
 
 	public ChessTable getChessPanel() {
 		return chessPanel;
@@ -49,6 +50,7 @@ public class Room extends JFrame {
 		MyClient.getMyClient().setRoom(this);
 		this.rid = room.getRid();
 		this.leftPlayer = room.getLeftPlayer();
+		this.left=left;
 		this.rightPlayer = room.getRightPlayer();
 		this.status = room.getStatus();
 		init(0);
@@ -135,13 +137,13 @@ public class Room extends JFrame {
 		JPanel gamer2 = new JPanel();
 		gamerInfo.add(gamer2);
 
-		// if(model==0){
-		chessPanel = new ChessTable(this);
-		System.out.println("联网");
-		// }else{
-		// chessPanel=new ChessTable();
-		// System.out.println("人机");
-		// }
+		if(model==0){
+			chessPanel = new ChessTable(this);
+			System.out.println("联网");
+		}else{
+			chessPanel=new ChessTable();
+			System.out.println("人机");
+		}
 		gameRoom.add(chessPanel, BorderLayout.CENTER);
 		UIPanel.setLayout(new BorderLayout(0, 0));
 
@@ -248,14 +250,15 @@ public class Room extends JFrame {
 			super(null);
 			Moves = 0;
 			model = 1;
-			// chessimpl.ResetGame();
+			chessimpl.ResetGame();
+			System.out.println("is here!");
 			this.setBounds(0, 0, BOARD_WIDTH, BOARD_WIDTH);
 			this.addMouseListener(new MouseHandler());
 		}
 
 		/**
 		 * 输入：鼠标点击 功能：为棋盘设定鼠标监听器 输出：棋盘落子效果
-		 * 
+		 *
 		 * @author 林珊珊
 		 */
 		public class MouseHandler extends MouseAdapter {
@@ -303,7 +306,7 @@ public class Room extends JFrame {
 
 		/**
 		 * 输入：监听器所获取的鼠标坐标 功能：为棋盘绘出棋子 输出：无
-		 * 
+		 *
 		 * @author 林珊珊
 		 * */
 		void paintItem(int x, int y) {// 落子
@@ -314,12 +317,12 @@ public class Room extends JFrame {
 			int i = (x - 90) / 30;
 			int j = (y - 90) / 30;
 			if (i < 15) {
-				// if(model==1){//人机
-				// chessimpl.ComTurn(i,j);
-				// }
-				// else {
-				chessimpl.add(i, j, 1);
-				// }
+				if(model==1){//人机
+					chessimpl.ComTurn(i,j);
+				}
+				else {
+					chessimpl.add(i, j, 1);
+				}
 				Ellipse2D ellipse = new Ellipse2D.Double();
 				ellipse.setFrameFromCenter(centerX, centerY, centerX + 12,
 						centerY + 12);
@@ -434,7 +437,7 @@ public class Room extends JFrame {
 
 		/**
 		 * 输入：监听器所获取的鼠标坐标 功能：为棋盘作悔棋操作 输出：无
-		 * 
+		 *
 		 * @author 林珊珊
 		 * */
 		public void unpaintItem() {// 悔棋传入玩家对象
