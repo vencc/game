@@ -57,6 +57,13 @@ public class ClientClickRoomMsg extends BaseMsg{
 			//
 			ServerRoomListMsg msg=new ServerRoomListMsg(MyServer.getMyServer().getRooms());
 			MyServer.getMyServer().sendMsgToAll(msg);
+			System.out.println();
+			/*System.out.println("==========================");
+			System.out.println("测试"+room.getRid());
+			System.out.println("测试"+room.getStatus());
+			System.out.println("测试"+room.getLeftPlayer());
+			System.out.println("测试"+room.getRightPlayer());
+			System.out.println("==========================");*/
 			return;
 		}
 		if (room.getStatus() == RoomPojo.WAIT) {
@@ -69,7 +76,12 @@ public class ClientClickRoomMsg extends BaseMsg{
 						MyServer.getMyServer().sendMsgToAll(msg);
 						return;
 					}
+					return;
 				}
+			/*	System.out.println("测试"+room.getRid());
+				System.out.println("测试"+room.getStatus());
+				System.out.println("测试"+room.getLeftPlayer());
+				System.out.println("测试"+room.getRightPlayer());*/
 				if(room.getRightPlayer().equals(user)){
 					return;
 				}
@@ -91,6 +103,7 @@ public class ClientClickRoomMsg extends BaseMsg{
 						MyServer.getMyServer().sendMsgToAll(msg);
 						return;
 					}
+					return;
 				}
 				if(room.getLeftPlayer().equals(user)){
 					return;
