@@ -7,7 +7,7 @@ import java.util.List;
 import net.MyServer;
 import entity.RoomPojo;
 /** 
- * 用户将正常落子的棋谱传递给服务器
+ * 用户将落子的棋谱传递给服务器
  * @author john
  *
  */

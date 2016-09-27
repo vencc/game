@@ -12,6 +12,7 @@ public class ClientLoginMsg extends BaseMsg{
 
 
 	private String username;
+	
 	public ClientLoginMsg(String username) {
 		super();
 		this.username = username;
