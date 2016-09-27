@@ -52,6 +52,7 @@ public class ClientClickRoomMsg extends BaseMsg{
 			//添加进入房间代码
 			//此处
 			ServerEnterRoomMsg msg1=new ServerEnterRoomMsg(room,isleft);
+			System.out.println("发送房间报文"+msg1);
 			MyServer.getMyServer().sendMsgToClient(msg1, this.client);
 			//
 			ServerRoomListMsg msg=new ServerRoomListMsg(MyServer.getMyServer().getRooms());
