@@ -18,15 +18,18 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.WindowConstants;
 
+import msg.ClientClickChatMsg;
 import msg.ClientClickRoomMsg;
 import msg.ClientOffMsg;
 import net.MyClient;
 import entity.RoomPojo;
 import entity.User;
-import util.ScrollbarUI;
-import util.TabbedPaneUI;
 
 import javax.swing.JTabbedPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+
+//房间列表界面，大厅界面
 
 public class RoomList extends JFrame {
 
@@ -35,7 +38,8 @@ public class RoomList extends JFrame {
   Home home;
   User user = null;
   JList list = new JList();
-
+  JTextArea textArea = new JTextArea();
+  private JTextField textField = new JTextField();
   public RoomList(Home home, final User user) {
 
     this.home = home;
@@ -64,20 +68,26 @@ public class RoomList extends JFrame {
     panel_3.setLayout(null);
 
     JButton button = new JButton("\u5FEB\u901F\u8FDB\u5165");
-    button.addActionListener(new ActionListener() {//快速进入
-      public void actionPerformed(ActionEvent e) {
+    button.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent e) {//快速进入按钮
         int k = 0;
         for (int i = 0; i < rooms.size(); i++) {
-          if (rooms.get(i).getStatus() == 1) {
+          if (rooms.get(i).getStatus() == 1) {  //等待状态
             int roomid = Integer.parseInt(((JComponent) e.getSource())
-                .getParent().getName());//获得对应房间的名字
+                .getParent().getName());//获得对应房间的名字 
+            Boolean isleft;
             System.out.println("roomid:" + roomid);
+            if(rooms.get(i).getLeftPlayer()!=null){
+                 isleft = false;
+            }else{
+            	isleft = true;
+            }
             //房间选择报文传输 roomid、username、isleft  传输给其他用户的界面
             ClientClickRoomMsg msg = new ClientClickRoomMsg(roomid, user, true);
             MyClient.getMyClient().sendMsg(msg);//发给服务器
             k = 1;
             return;
-          } else if (rooms.get(i).getStatus() == 0) {
+          } else if (rooms.get(i).getStatus() == 0) {//空闲状态
 
             int roomid = Integer.parseInt(((JComponent) e.getSource())
                 .getParent().getName());//获得对应房间的名字
@@ -94,24 +104,27 @@ public class RoomList extends JFrame {
         }
       }
     });
-    button.setBounds(228, 5, 127, 30);
+    button.setBounds(209, 9, 127, 30);
     panel_3.add(button);
 
     JButton btnNewButton = new JButton("\u9000\u51FA\u767B\u5F55");
     btnNewButton.addActionListener(new ActionListener() {//退出登录按钮
       @Override
       public void actionPerformed(ActionEvent e) {
-
+    	  //先注释   ClientLogoutMsg msg = new ClientLogoutMsg(user);
+          // MyClient.getMyClient().sendMsg(msg);//发给服务器
         tohome();
+        
       }
     });
-    btnNewButton.setBounds(393, 5, 108, 30);
+    btnNewButton.setBounds(631, 9, 108, 30);
     panel_3.add(btnNewButton);
 
     JButton button_1 = new JButton(new ImageIcon(user.getFileName()));
     button_1.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) { //用户头像按钮
-        //	new UserInfoFrame(user).setVisible(true);//进入个人信息界面
+        	//new UserImageChangeFrame(user).setVisible(true);//进入个人信息界面
+
       }
     });
     button_1.setBounds(113, 0, 45, 45);
@@ -124,8 +137,20 @@ public class RoomList extends JFrame {
         new SendmailFrame();
       }
     });
-    button_3.setBounds(537, 5, 93, 30);
+    button_3.setBounds(505, 9, 93, 30);
     panel_3.add(button_3);
+    
+    JButton button_2 = new JButton("战绩排名");
+    button_2.addMouseListener(new MouseAdapter() {
+    	@Override
+    	public void mouseClicked(MouseEvent e) {
+    		 //战绩排名按钮
+    		//new WinNumFrame().setVisible(true);
+    		
+    	}
+    });
+    button_2.setBounds(375, 9, 93, 30);
+    panel_3.add(button_2);
 
     JPanel panel_2 = new JPanel();
     panel_2.setOpaque(false);
@@ -134,9 +159,9 @@ public class RoomList extends JFrame {
     panel_2.setLayout(null);
 
     JScrollPane scrollPane = new JScrollPane();
-    scrollPane.setBounds(0, 8, 744, 534);
+    scrollPane.setBounds(0, 0, 756, 543);
     scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-    scrollPane.getVerticalScrollBar().setUI(new ScrollbarUI());
+    scrollPane.getVerticalScrollBar().setOpaque(false);
     panel_2.add(scrollPane);
     scrollPane.setOpaque(false);
     scrollPane.setBorder(null);
@@ -146,26 +171,20 @@ public class RoomList extends JFrame {
     panel_4.setLayout(new GridLayout(6, 2, 0, 0));
 
 
-    for (int i = 0; i < 12; i++) {
+   /* for (int i = 0; i < 12; i++) {
       RoomPojo r = new RoomPojo(0, null, null, RoomPojo.IDLE);
       rooms.add(r);
     }
     showRoomList(rooms);
+*/
 
-
-
+     
     JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
     tabbedPane.setOpaque(false);
-    tabbedPane.setUI(new TabbedPaneUI("#a6770e","#ffffff"));
-    tabbedPane.setBounds(0, 0, 232, 666);
+    tabbedPane.setBounds(0, 0, 232, 661);
     panel.add(tabbedPane);
 
-    JPanel panel_1 = new JPanel(){
-      protected void paintComponent(Graphics g) {
-        Image image = new ImageIcon("resource/imag/chart.png").getImage();
-        g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
-      }
-    };
+    JPanel panel_1 = new JPanel();
     tabbedPane.addTab("在线用户", null, panel_1, null);
     panel_1.setLayout(null);
 
@@ -182,27 +201,37 @@ public class RoomList extends JFrame {
       }
     });
 
-    list.setBounds(5, 5, 222, 600);
+    list.setBounds(0, 0, 232, 632);
     panel_1.add(list);
 
-    JPanel panel_5 = new JPanel(){
-      protected void paintComponent(Graphics g) {
-        Image image = new ImageIcon("resource/imag/chart.png").getImage();
-        g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
-      }
-    };
-    panel_5.setOpaque(false);
+    JPanel panel_5 = new JPanel();
     tabbedPane.addTab("在线聊天", null, panel_5, null);
     panel_5.setLayout(null);
+    
+    
+    textArea.setBackground(Color.YELLOW);
+    textArea.setBounds(0, 0, 232, 605);
+    panel_5.add(textArea);
 
-    JLabel lblNewLabel_1 = new JLabel("");
-    lblNewLabel_1.setBackground(Color.YELLOW);
-    lblNewLabel_1.setBounds(0, 0, 232, 594);
-    panel_5.add(lblNewLabel_1);
-
+    textField.setBounds(0, 607, 149, 25);
+    panel_5.add(textField);
+    textField.setColumns(10);
+    JButton btnNewButton_1 = new JButton("发送");
+    btnNewButton_1.addMouseListener(new MouseAdapter() {
+    	@Override
+    	public void mouseClicked(MouseEvent e) { //在线聊天发送按钮
+    		String str = textField.getText() ;
+    		  //房间选择报文传输 聊天信息传输给其他用户的界面
+            ClientClickChatMsg msg = new ClientClickChatMsg(str,user);
+            MyClient.getMyClient().sendMsg(msg);//发给服务器
+    	}
+    });
+    btnNewButton_1.setBounds(148, 603, 79, 29);
+    panel_5.add(btnNewButton_1);
 
   }
 
+  //在线用户显示
   public void showUserList(final List<User> userlist) {
     addWindowListener(new WindowAdapter() {
       @Override
@@ -236,7 +265,13 @@ public class RoomList extends JFrame {
     });
   }
 
+  //聊天信息显示
+  public void showChatMsg(String str){
+	  String str1 = this.textArea.getText();
+	  this.textArea.setText(str+str1);	  
+  }
 
+  //房间列表显示
   public void showRoomList(List<RoomPojo> rooms) {
     // TODO Auto-generated method stub
     this.panel_4.removeAll();
@@ -246,7 +281,7 @@ public class RoomList extends JFrame {
 
       final RoomPojo r1 = rooms.get(i);
       JPanel jpanel = new JPanel();
-      jpanel.setName(i+"");
+      jpanel.setName((i+1)+"");
 jpanel.setOpaque(false);
       JButton leftjbutton1 = new JButton();
       if (r1.getLeftPlayer() != null)
@@ -261,7 +296,7 @@ jpanel.setOpaque(false);
         public void actionPerformed(ActionEvent e) {
           //房间左边座位按钮
           int roomid = Integer.parseInt(((JComponent) e.getSource()).getParent().getName());//获得对应房间的名字
-          System.out.println("roomid:===" + roomid);
+          System.out.println("roomid:" + roomid);
           //房间选择报文传输 roomid、username、isleft  传输给其他用户的界面
           ClientClickRoomMsg msg = new ClientClickRoomMsg(roomid, user, true);
           MyClient.getMyClient().sendMsg(msg);//发给服务器
@@ -291,7 +326,7 @@ jpanel.setOpaque(false);
               .getParent().getName());//获得对应房间的名字
           System.out.println("roomid:" + roomid);
           //房间选择报文传输 roomid、username、isleft  传输给其他用户的界面
-          ClientClickRoomMsg msg = new ClientClickRoomMsg(roomid, user, false);
+          ClientClickRoomMsg msg = new ClientClickRoomMsg(roomid, user, true);
           MyClient.getMyClient().sendMsg(msg);//发给服务器
         }
       });
@@ -300,11 +335,12 @@ jpanel.setOpaque(false);
     RoomList.this.validate();//强制刷新主窗口
   }
 
+  //进入房间
   public void toRoom(int roomid, boolean isleft) {
-    System.out.println(MyClient.getMyClient()+"----intoRoom: "+roomid);
     new Room(rooms.get(roomid));
   }
 
+  //返回大厅
   public void tohome() {
     // TODO Auto-generated method stub
     home.setVisible(true);
