@@ -60,6 +60,26 @@ public class BaseDao {
 		}
 	}
 	
+	//查找用户信息，返回整个用户信息
+		public static ResultSet doQuery(String sql) {
+			// 创建psm --> sql
+			Connection connection = getConnection();
+			if (connection == null)
+				return null;
+			// 执行操作
+			ResultSet rs = null;
+			PreparedStatement psm = null;
+			try {
+				psm = connection.prepareStatement(sql);
+				rs = psm.executeQuery();
+				return rs;
+			
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return null;
+			}
+		}
+	
 	//更新  不需要ResultSet
 	public static int doUpdate(String sql, String[] paras) {
 		// 创建psm --> sql
@@ -84,25 +104,6 @@ public class BaseDao {
 			return 0;
 		}finally{
 			doClose(connection,psm,null);
-		}
-	}
-	//查找用户信息，返回整个用户信息
-	public static ResultSet doQuery(String sql) {
-		// 创建psm --> sql
-		Connection connection = getConnection();
-		if (connection == null)
-			return null;
-		// 执行操作
-		ResultSet rs = null;
-		PreparedStatement psm = null;
-		try {
-			psm = connection.prepareStatement(sql);
-			rs = psm.executeQuery();
-			return rs;
-		
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return null;
 		}
 	}
 	public static void doClose(Connection conn, Statement psm,
