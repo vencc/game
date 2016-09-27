@@ -23,6 +23,8 @@ import msg.ClientOffMsg;
 import net.MyClient;
 import entity.RoomPojo;
 import entity.User;
+import util.ScrollbarUI;
+import util.TabbedPaneUI;
 
 import javax.swing.JTabbedPane;
 
@@ -132,9 +134,9 @@ public class RoomList extends JFrame {
     panel_2.setLayout(null);
 
     JScrollPane scrollPane = new JScrollPane();
-    scrollPane.setBounds(0, 0, 756, 543);
+    scrollPane.setBounds(0, 8, 744, 534);
     scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-    scrollPane.getVerticalScrollBar().setOpaque(false);
+    scrollPane.getVerticalScrollBar().setUI(new ScrollbarUI());
     panel_2.add(scrollPane);
     scrollPane.setOpaque(false);
     scrollPane.setBorder(null);
@@ -154,10 +156,16 @@ public class RoomList extends JFrame {
 
     JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
     tabbedPane.setOpaque(false);
-    tabbedPane.setBounds(0, 0, 232, 661);
+    tabbedPane.setUI(new TabbedPaneUI("#a6770e","#ffffff"));
+    tabbedPane.setBounds(0, 0, 232, 666);
     panel.add(tabbedPane);
 
-    JPanel panel_1 = new JPanel();
+    JPanel panel_1 = new JPanel(){
+      protected void paintComponent(Graphics g) {
+        Image image = new ImageIcon("resource/imag/chart.png").getImage();
+        g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
+      }
+    };
     tabbedPane.addTab("在线用户", null, panel_1, null);
     panel_1.setLayout(null);
 
@@ -174,10 +182,16 @@ public class RoomList extends JFrame {
       }
     });
 
-    list.setBounds(0, 0, 232, 632);
+    list.setBounds(5, 5, 222, 600);
     panel_1.add(list);
 
-    JPanel panel_5 = new JPanel();
+    JPanel panel_5 = new JPanel(){
+      protected void paintComponent(Graphics g) {
+        Image image = new ImageIcon("resource/imag/chart.png").getImage();
+        g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
+      }
+    };
+    panel_5.setOpaque(false);
     tabbedPane.addTab("在线聊天", null, panel_5, null);
     panel_5.setLayout(null);
 
