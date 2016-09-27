@@ -15,35 +15,6 @@ public class RoomPojo implements Serializable{
 	private User leftPlayer;//房间内左边玩家
 	private User rightPlayer;//房间内右边玩家
 	private int status;//房间的状态
-	private boolean isLeftReady=false;//左边玩家是否准备
-	private boolean isRightReady=false;//右边玩家是否准备
-	private boolean isLeftPlay=false;//左边玩家是否可落子
-	private boolean isRightPlay=false;//右边玩家是否可落子
-	
-	public boolean isLeftReady() {
-		return isLeftReady;
-	}
-	public void setLeftReady(boolean isLeftReady) {
-		this.isLeftReady = isLeftReady;
-	}
-	public boolean isRightReady() {
-		return isRightReady;
-	}
-	public void setRightReady(boolean isRightReady) {
-		this.isRightReady = isRightReady;
-	}
-	public boolean isLeftPlay() {
-		return isLeftPlay;
-	}
-	public void setLeftPlay(boolean isLeftPlay) {
-		this.isLeftPlay = isLeftPlay;
-	}
-	public boolean isRightPlay() {
-		return isRightPlay;
-	}
-	public void setRightPlay(boolean isRightPlay) {
-		this.isRightPlay = isRightPlay;
-	}
 	public int getRid() {
 		return rid;
 	}
