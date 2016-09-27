@@ -287,7 +287,7 @@ jpanel.setOpaque(false);
   }
 
   public void toRoom(int roomid, boolean isleft) {
-    new Room(rooms.get(roomid), isleft);
+    new Room(rooms.get(roomid));
   }
 
   public void tohome() {
