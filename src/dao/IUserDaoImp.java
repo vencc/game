@@ -5,7 +5,10 @@ import java.sql.SQLException;
 import java.util.*;
 
 import entity.User;
-
+/**
+ * 功能: User类接口实现
+* @author 王小明  时间: 2016-09-27
+ */
 public class IUserDaoImp implements IUserDao {
 	String sql=null;
 	BaseDao b=new BaseDao();
@@ -96,6 +99,29 @@ public class IUserDaoImp implements IUserDao {
 		String[] paras={new_winNum+"",name};
 		b.doUpdate(sql, paras);
 	}
+	 /**
+	   * 功能: 查找玩家信息
+	   * @return 返回实体类供他人调用
+	   */
+	public List<User> findAll() {
+		// TODO Auto-generated method stub
+		String sql="select * from userinfo";
+		ResultSet rs=b.doQuery(sql);
+		ArrayList list=new ArrayList();
+		User ui=null;
+	  	 try {
+			while(rs.next())
+			 {
+		 ui=new User(rs.getString(1),rs.getString(2),rs.getInt(3));
+         list.add(ui);
+			 }
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	  	 return list;
+	}
+	
 	
 }
 	
