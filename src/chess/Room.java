@@ -19,6 +19,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import msg.ClientBackChess;
 import msg.ClientBeReady;
 import msg.ClientClickChatMsg;
 import net.MyClient;
@@ -211,7 +212,7 @@ public class Room extends JFrame {
 				System.out.println(msg);
 				System.out.println(msg.getRoompojo());
 				System.out.println("22222222");*/
-	            MyClient.getMyClient().sendMsg(msg);//发给服务器
+				MyClient.getMyClient().sendMsg(msg);//发给服务器
 			}
 		});
 		But_ready.setBounds(157, 5, 73, 23);
@@ -232,8 +233,11 @@ public class Room extends JFrame {
 		But_regret.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (ChessTable.Moves > 0)
+				if (ChessTable.Moves > 0){
 					chessPanel.unpaintItem();
+					ClientBackChess msg=new ClientBackChess(rid,isleft);
+					MyClient.getMyClient().sendMsg(msg);//发给服务器
+				}
 				else {
 					System.out.println("当前已经没有棋子了");
 				}

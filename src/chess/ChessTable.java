@@ -14,6 +14,8 @@ import java.awt.geom.Ellipse2D;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
+import net.MyClient;
+import msg.ClientMovePieces;
 import util.ChessImpl;
 import util.IChess;
 
@@ -76,6 +78,8 @@ public class ChessTable extends JPanel {
 
 				if (x > 30 && x < 535 && y > 30 && y < 535) {
 					paintItem(x, y);
+					ClientMovePieces msg=new ClientMovePieces(room.getRid(), Room.isleft, ChessImpl.chess);
+					MyClient.getMyClient().sendMsg(msg);
 					System.out.println("is here!");
 					if (model != 1)
 						room.repaint();
