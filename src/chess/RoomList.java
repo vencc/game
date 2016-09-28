@@ -350,9 +350,8 @@ jpanel.setOpaque(false);
     RoomList.this.validate();//强制刷新主窗口
   }
 
-  //进入房间
-  public void toRoom(int roomid, boolean isleft) {
-    new Room(rooms.get(roomid),isleft);
+  public void toRoom(RoomPojo roompojo, boolean isleft) {
+    new Room(roompojo,isleft);
   }
 
   //返回大厅
