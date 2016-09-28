@@ -19,6 +19,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import msg.ClientBeReady;
+import msg.ClientClickChatMsg;
+import net.MyClient;
 import util.ChessImpl;
 import util.IChess;
 import entity.RoomPojo;
@@ -33,7 +36,7 @@ public class Room extends JFrame {
 	private User rightPlayer;// 房间内右边玩家
 	private int status;// 房间的状态
 	private ChessTable chessPanel;
-	private boolean left;
+	public static boolean isleft;
 
 	public ChessTable getChessPanel() {
 		return chessPanel;
@@ -46,14 +49,21 @@ public class Room extends JFrame {
 	/**
 	 * @wbp.parser.constructor
 	 */
-	public Room(RoomPojo room, boolean left) {
+	public Room(int roomid, boolean isleft) {
 
-		this.rid = room.getRid();
-		this.leftPlayer = room.getLeftPlayer();
-		this.left = left;
-		this.rightPlayer = room.getRightPlayer();
-		this.status = room.getStatus();
-		init(0);
+		this.rid = roomid;
+	//	this.leftPlayer = room.getLeftPlayer();
+		this.isleft = isleft;
+	//	this.rightPlayer = room.getRightPlayer();
+	//	this.status = room.getStatus();
+		if(isleft==true){
+			//System.out.println("房间"+rid+"：左边有人坐下来了"+leftPlayer.getName());
+			}
+		else{
+			//System.out.println("房间"+rid+"：右边有人坐下来了"+rightPlayer.getName());
+		}
+		init(1);
+		
 	}
 
 	public RoomList getRoomList() {
@@ -186,6 +196,24 @@ public class Room extends JFrame {
 		UIPanel.setLayout(null);
 
 		JButton But_ready = new JButton("准备");
+		But_ready.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				//当有一方点击准备，则发送ClientBeReady报文
+				//查看对方是否准备
+				//String str = textField.getText() ;
+	    		  //房间选择报文传输 聊天信息传输给其他用户的界面
+				//System.out.println("11111111");
+				//System.out.println(roompojo);
+				//System.out.println("11111111");
+				ClientBeReady msg = new ClientBeReady(rid,isleft);
+				/*System.out.println("22222222");
+				System.out.println(msg);
+				System.out.println(msg.getRoompojo());
+				System.out.println("22222222");*/
+	            MyClient.getMyClient().sendMsg(msg);//发给服务器
+			}
+		});
 		But_ready.setBounds(157, 5, 73, 23);
 		UIPanel.add(But_ready);
 

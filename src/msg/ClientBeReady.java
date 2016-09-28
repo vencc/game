@@ -10,14 +10,17 @@ import entity.RoomPojo;
  * 
  */
 public class ClientBeReady extends BaseMsg {
-	private RoomPojo roompojo;
+	private int roomid;
     private boolean isleft;
-	public RoomPojo getRoompojo() {
-		return roompojo;
+
+
+	public int getRoomid() {
+		return roomid;
 	}
 
-	public void setRoompojo(RoomPojo roompojo) {
-		this.roompojo = roompojo;
+
+	public void setRoomid(int roomid) {
+		this.roomid = roomid;
 	}
 
 
@@ -25,21 +28,34 @@ public class ClientBeReady extends BaseMsg {
 		return isleft;
 	}
 
+
 	public void setIsleft(boolean isleft) {
 		this.isleft = isleft;
 	}
 	
 
-	public ClientBeReady(RoomPojo roompojo, boolean isleft) {
+
+	public ClientBeReady(int roomid, boolean isleft) {
 		super();
-		this.roompojo = roompojo;
+		this.roomid = roomid;
 		this.isleft = isleft;
 	}
 
+
 	public void doBiz() {
-		/*if(isleft){
+		/*System.out.println(roompojo.equals(this.getRoompojo()));
+		System.out.println("3333333");
+		System.out.println(this);
+		System.out.println(this.roompojo);
+		System.out.println("3333333");*/
+		RoomPojo roompojo=MyServer.getMyServer().getRooms().get(roomid);
+		System.out.println("123"+roompojo);
+		if(isleft){
 			if(roompojo.isRightReady()){
 				// 报文还没写完整
+				
+				roompojo.setLeftReady(true);
+				System.out.println("左边右边都准备了");
 				ServerStartGame msg=new ServerStartGame();
 				MyServer.getMyServer().sendMsgToClient(msg, roompojo.getLeftPlayer());
 				ServerStartGame msg2=new ServerStartGame();
@@ -47,26 +63,37 @@ public class ClientBeReady extends BaseMsg {
 				return;
 			}
 			if(roompojo.isLeftReady()){
+				System.out.println("左边取消准备了");
 				roompojo.setLeftReady(false);
 				return;
 			}
 			roompojo.setLeftReady(true);
+			System.out.println("左边准备了");
+			System.out.println(roompojo);
+			System.out.println(roompojo.isLeftReady());
 		}
 		else{
 			if(roompojo.isLeftReady()){
 				// 报文还没写完整
+				System.out.println("左边右边都准备了");
+				roompojo.setRightReady(true);			
+				System.out.println("----------------");
 				ServerStartGame msg=new ServerStartGame();
 				MyServer.getMyServer().sendMsgToClient(msg, roompojo.getLeftPlayer());
+	
 				ServerStartGame msg2=new ServerStartGame();
 				MyServer.getMyServer().sendMsgToClient(msg2, roompojo.getRightPlayer());
 				return;
 			}
 			if(roompojo.isRightReady()){
+				System.out.println("右边取消准备了");
 				roompojo.setLeftReady(false);
 				return;
 			}
 			roompojo.setRightReady(true);
-		}*/
+			
+			System.out.println(roompojo.isLeftReady()+"右边准备了");
+		}
 
 	}
 
