@@ -34,7 +34,7 @@ public class ServerEnterRoomMsg extends BaseMsg{
 	}
 
 	public void doBiz() {
-	    MyClient.getMyClient().getRoomlist().toRoom(roompojo.getRid(),isleft);
+	    MyClient.getMyClient().getRoomlist().toRoom(roompojo,isleft);
 	}
 	
 
