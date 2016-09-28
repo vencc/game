@@ -122,10 +122,10 @@ public class ChessTable extends JPanel {
 			int[] index_copy = new int[2];
 			int X = x / 34;
 			int Y = y / 34;
-			int centerX = X * 34 + 11;
-			int centerY = Y * 34 + 11;
-			int i = (x - 40) / 34;
-			int j = (y - 40) / 34;
+			int centerX = X * 34 + 42;
+			int centerY = Y * 34 + 42;
+			int i = (x - 21) / 34;
+			int j = (y - 21) / 34;
 			if (i < 15 && j < 15) {
 				if (model == 1) {// 人机
 					System.out.println("调用算法接口处i,j=" + i + "," + j);
@@ -162,7 +162,7 @@ public class ChessTable extends JPanel {
 			// .getImage(), 45, 45, 570, 570, this);
 			// } else {
 			g.drawImage(new ImageIcon("resource/imag/pan.png").getImage(), 0,
-					0, 570, 570, this);
+					0, 565, 565, this);
 			// }
 			Graphics2D g2 = (Graphics2D) g;
 			g2.setColor(Color.black);
@@ -177,28 +177,14 @@ public class ChessTable extends JPanel {
 				draw[i] = WIDTH;
 			}
 
-			// * 画横线
-			for (int i = 0, width = 100 + 20 * 21; i < draw.length; i++, ch++) {
-				g.setColor(Color.black);
-				g.drawLine(45, draw[i], width, draw[i]);
-				g.setColor(Color.blue);
-				// g.drawString("" + ch, 100, draw[i] + 3);
-			}
-			// 画竖线
-			for (int i = 0, width = 100 + 20 * 21; i < draw.length; i++) {
-				g.setColor(Color.black);
-				g.drawLine(draw[i] + 2, 43, draw[i] + 2, width);
-				g.setColor(Color.blue);
-				// g.drawString("" + (i + 1), draw[i], 100);
-			}
 			for (int i = 0; i < 15; i++) {
 				for (int j = 0; j < 15; j++) {
 					if (ChessImpl.chess[i][j] != 0) {
 						int m, n;
-						m = i * 34 + 45;
-						n = j * 34 + 45;
+						m = i * 34 + 42;
+						n = j * 34 + 42;
 						Ellipse2D ellipse = new Ellipse2D.Double();
-						ellipse.setFrameFromCenter(m, n, m + 12, n + 12);
+						ellipse.setFrameFromCenter(m, n, m + 14, n + 14);
 						g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 								RenderingHints.VALUE_ANTIALIAS_ON);
 						g2.setComposite(AlphaComposite.getInstance(

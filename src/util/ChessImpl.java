@@ -291,7 +291,7 @@ public class ChessImpl implements IChess {
 											this.bnum[i][j] += 50;
 											break;
 										case 3: // 三连子
-											this.bnum[i][j] += 180;
+											this.bnum[i][j] += 140;
 											break;
 										case 4: // 四连子
 											this.bnum[i][j] += 400;
@@ -311,10 +311,10 @@ public class ChessImpl implements IChess {
 											this.wnum[i][j] += 52;
 											break;
 										case 3: // 三连子
-											this.wnum[i][j] += 100;
+											this.wnum[i][j] += 150;
 											break;
 										case 4: // 四连子
-											this.wnum[i][j] += 400;
+											this.wnum[i][j] += 410;
 											break;
 									}
 								}
