@@ -283,7 +283,7 @@ public class RoomList extends JFrame {
   //聊天信息显示
   public void showChatMsg(String str){
 	  String str1 = this.textArea.getText();
-	  this.textArea.setText(str+str1);
+	  this.textArea.setText(str1+"\n"+str+"\n");
   }
 
   //房间列表显示
