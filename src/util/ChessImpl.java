@@ -319,8 +319,13 @@ public class ChessImpl implements IChess {
 								}
 					}
 				if (this.start) { // 开始时白子落子坐标
-					m = x + 1;
-					n = y;
+					if(x==7&&y==7){
+						m=x+1;
+						n=y;
+					}else{
+						m=7;
+						n=7;
+					}
 					this.start = false;
 				} else {
 					for (i = 0; i < 15; i++)
