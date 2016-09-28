@@ -12,49 +12,57 @@ import entity.RoomPojo;
  *
  */
 public class ClientMovePieces extends BaseMsg{
-    private RoomPojo roompojo;
+    private int roomid;
     private boolean isleft;
-    private List<Ellipse2D> list=new ArrayList<>();
+    private int [][] chess;
     
-	public RoomPojo getRoompojo() {
-		return roompojo;
+	
+	public int getRoomid() {
+		return roomid;
 	}
 
-	public void setRoompojo(RoomPojo roompojo) {
-		this.roompojo = roompojo;
+
+	public void setRoomid(int roomid) {
+		this.roomid = roomid;
 	}
+
 
 	public boolean isIsleft() {
 		return isleft;
 	}
 
+
 	public void setIsleft(boolean isleft) {
 		this.isleft = isleft;
 	}
 
-	public List<Ellipse2D> getList() {
-		return list;
+
+	public int[][] getChess() {
+		return chess;
 	}
 
-	public void setList(List<Ellipse2D> list) {
-		this.list = list;
+
+	public void setChess(int[][] chess) {
+		this.chess = chess;
 	}
 	
 
-	public ClientMovePieces(RoomPojo roompojo, boolean isleft,
-			List<Ellipse2D> list) {
+
+	public ClientMovePieces(int roomid, boolean isleft, int[][] chess) {
 		super();
-		this.roompojo = roompojo;
+		this.roomid = roomid;
 		this.isleft = isleft;
-		this.list = list;
+		this.chess = chess;
 	}
 
+
 	public void doBiz() {
+		RoomPojo roompojo=MyServer.getMyServer().getRooms().get(roomid);
 		if(isleft){
-			ServerMovePieces msg=new ServerMovePieces(list);
+			ServerMovePieces msg=new ServerMovePieces(chess);
 			MyServer.getMyServer().sendMsgToClient(msg, roompojo.getRightPlayer());
 		}else{
-			ServerMovePieces msg=new ServerMovePieces(list);
+			ServerMovePieces msg=new ServerMovePieces(chess);
 			MyServer.getMyServer().sendMsgToClient(msg, roompojo.getLeftPlayer());
 		}
 	}

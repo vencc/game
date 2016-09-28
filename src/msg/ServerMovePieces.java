@@ -12,21 +12,27 @@ import net.MyServer;
  *
  */
 public class ServerMovePieces extends BaseMsg{
-	private List<Ellipse2D> list=new ArrayList<>();
+	private int [][] chess;
 	
-	public List<Ellipse2D> getList() {
-		return list;
+	
+	public int[][] getChess() {
+		return chess;
 	}
-
-	public void setList(List<Ellipse2D> list) {
-		this.list = list;
-	}
+	
 
 
-	public ServerMovePieces(List<Ellipse2D> list) {
+	public ServerMovePieces(int[][] chess) {
 		super();
-		this.list = list;
+		this.chess = chess;
 	}
+
+
+
+	public void setChess(int[][] chess) {
+		this.chess = chess;
+	}
+
+
 	public void doBiz() {
 		//MyClient.getMyClient().getRoom().receiveChess();
 	}
