@@ -17,6 +17,8 @@ import java.util.concurrent.TimeUnit;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
+import net.MyClient;
+import msg.ClientMovePieces;
 import util.ChessImpl;
 import util.IChess;
 
@@ -113,6 +115,7 @@ public class ChessTable extends JPanel {
   public class MouseHandler extends MouseAdapter {
     public void mousePressed(MouseEvent event) {
 
+
       synchronized (chessTable) {
             int x = event.getX();
             int y = event.getY();
@@ -134,6 +137,19 @@ public class ChessTable extends JPanel {
               System.out.println("请将棋子放进棋盘内");
             }
         /*
+
+				if (x > 30 && x < 535 && y > 30 && y < 535) {
+					paintItem(x, y);
+					ClientMovePieces msg=new ClientMovePieces(room.getRid(), Room.isleft, ChessImpl.chess);
+					MyClient.getMyClient().sendMsg(msg);
+					System.out.println("is here!");
+					if (model != 1)
+						room.repaint();
+					repaint();
+				} else {
+					System.out.println("请将棋子放进棋盘内");
+				}
+				/*
 				 * if (map[i][j] == 0) { Ellipse2D ellipse = new
 				 * Ellipse2D.Double(); ellipse.setFrameFromCenter(centerX,
 				 * centerY, centerX + 12, centerY + 12); map[i][j] = 1;

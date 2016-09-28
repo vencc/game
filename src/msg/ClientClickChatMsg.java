@@ -1,5 +1,6 @@
 package msg;
 
+import net.MyServer;
 import entity.User;
 
 public class ClientClickChatMsg extends BaseMsg{
@@ -30,7 +31,9 @@ public class ClientClickChatMsg extends BaseMsg{
 	}
 
 	public void doBiz() {
-		
+		String s=user.getName()+" : "+str;
+		ServerGroupChat msg=new ServerGroupChat(s);
+		MyServer.getMyServer().sendMsgToAll(msg);	
 	}
 
 }

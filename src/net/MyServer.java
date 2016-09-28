@@ -168,6 +168,7 @@ public class MyServer {
 				ObjectOutputStream oos = new ObjectOutputStream(
 						client.getOutputStream());
 				oos.writeObject(msg);
+				System.out.println("发送报文"+msg);
 			//	oos.close();
 				
 			} catch (IOException e) {
@@ -262,7 +263,7 @@ public class MyServer {
 	 */
 	public void  sendMsgToClient(BaseMsg msg,User user){
 		for(ClientChatThread c:pool){
-			if(c.getUser()==user){
+			if(c.getUser().getName().equals(user.getName())){
 				c.sendMsg(msg, c.getClient());
 				return;
 			}

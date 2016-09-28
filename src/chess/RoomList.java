@@ -283,7 +283,7 @@ public class RoomList extends JFrame {
   //聊天信息显示
   public void showChatMsg(String str){
 	  String str1 = this.textArea.getText();
-	  this.textArea.setText(str+str1);
+	  this.textArea.setText(str1+"\n"+str+"\n");
   }
 
   //房间列表显示
@@ -350,8 +350,9 @@ jpanel.setOpaque(false);
     RoomList.this.validate();//强制刷新主窗口
   }
 
-  public void toRoom(RoomPojo roompojo, boolean isleft) {
-    new Room(roompojo,isleft);
+  public void toRoom(int roomid, boolean isleft) {
+    
+	  new Room(roomid,isleft);
   }
 
   //返回大厅

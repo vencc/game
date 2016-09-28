@@ -8,33 +8,39 @@ import entity.RoomPojo;
  *
  */
 public class ServerEnterRoomMsg extends BaseMsg{
-	private RoomPojo roompojo;
+	private int roomid;
 	private boolean isleft;
+
+
+	public int getRoomid() {
+		return roomid;
+	}
+
+
+	public void setRoomid(int roomid) {
+		this.roomid = roomid;
+	}
+
 
 	public boolean isIsleft() {
 		return isleft;
 	}
 
+
 	public void setIsleft(boolean isleft) {
 		this.isleft = isleft;
 	}
 
-	public RoomPojo getRoompojo() {
-		return roompojo;
-	}
 
-	public void setRoompojo(RoomPojo roompojo) {
-		this.roompojo = roompojo;
-	}
-
-	public ServerEnterRoomMsg(RoomPojo roompojo, boolean isleft) {
+	public ServerEnterRoomMsg(int roomid, boolean isleft) {
 		super();
-		this.roompojo = roompojo;
+		this.roomid = roomid;
 		this.isleft = isleft;
 	}
 
+
 	public void doBiz() {
-	    MyClient.getMyClient().getRoomlist().toRoom(roompojo,isleft);
+	    MyClient.getMyClient().getRoomlist().toRoom(roomid,isleft);
 	}
 	
 
