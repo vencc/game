@@ -249,9 +249,9 @@ public class UpdatePicture extends JFrame{
 		btnNewButton_16.setBounds(103, 10, 93, 82);
 		getContentPane().add(btnNewButton_16);
 	}
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		new UpdatePicture(new User("czf")).setVisible(true);
 		
-	}
+	}*/
 	
 }
