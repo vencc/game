@@ -352,7 +352,7 @@ jpanel.setOpaque(false);
 
   //进入房间
   public void toRoom(int roomid, boolean isleft) {
-    new Room(rooms.get(roomid));
+    new Room(rooms.get(roomid),isleft);
   }
 
   //返回大厅
