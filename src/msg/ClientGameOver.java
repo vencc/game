@@ -8,33 +8,46 @@ import entity.RoomPojo;
  *
  */
 public class ClientGameOver extends BaseMsg{
-    private RoomPojo roompojo;
+    private int roomid;
 	private boolean isleft;
 	
-	public RoomPojo getRoompojo() {
-		return roompojo;
+	
+
+	public int getRoomid() {
+		return roomid;
 	}
 
-	public void setRoompojo(RoomPojo roompojo) {
-		this.roompojo = roompojo;
+
+
+	public void setRoomid(int roomid) {
+		this.roomid = roomid;
 	}
+
+
 
 	public boolean isIsleft() {
 		return isleft;
 	}
+
+
 
 	public void setIsleft(boolean isleft) {
 		this.isleft = isleft;
 	}
 	
 
-	public ClientGameOver(RoomPojo roompojo, boolean isleft) {
+
+
+	public ClientGameOver(int roomid, boolean isleft) {
 		super();
-		this.roompojo = roompojo;
+		this.roomid = roomid;
 		this.isleft = isleft;
 	}
 
+
+
 	public void doBiz() {
+		RoomPojo roompojo=MyServer.getMyServer().getRooms().get(roomid);
 		if(isleft){
 			ServerWinMsg msg=new ServerWinMsg();
 			MyServer.getMyServer().sendMsgToClient(msg, roompojo.getLeftPlayer());
@@ -48,6 +61,4 @@ public class ClientGameOver extends BaseMsg{
 			MyServer.getMyServer().sendMsgToClient(msg2, roompojo.getLeftPlayer());
 		}
 	}
-	
-
 }

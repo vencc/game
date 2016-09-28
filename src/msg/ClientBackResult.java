@@ -9,9 +9,11 @@ import net.MyServer;
  */
 public class ClientBackResult extends BaseMsg{
     private boolean result;
-    private RoomPojo roompojo;
+    private int roomid;
     private boolean isleft;
     
+	
+
 	public boolean isResult() {
 		return result;
 	}
@@ -20,12 +22,12 @@ public class ClientBackResult extends BaseMsg{
 		this.result = result;
 	}
 
-	public RoomPojo getRoompojo() {
-		return roompojo;
+	public int getRoomid() {
+		return roomid;
 	}
 
-	public void setRoompojo(RoomPojo roompojo) {
-		this.roompojo = roompojo;
+	public void setRoomid(int roomid) {
+		this.roomid = roomid;
 	}
 
 	public boolean isIsleft() {
@@ -35,16 +37,18 @@ public class ClientBackResult extends BaseMsg{
 	public void setIsleft(boolean isleft) {
 		this.isleft = isleft;
 	}
+
 	
 
-	public ClientBackResult(boolean result, RoomPojo roompojo, boolean isleft) {
+	public ClientBackResult(boolean result, int roomid, boolean isleft) {
 		super();
 		this.result = result;
-		this.roompojo = roompojo;
+		this.roomid = roomid;
 		this.isleft = isleft;
 	}
 
 	public void doBiz() {
+		RoomPojo roompojo=MyServer.getMyServer().getRooms().get(roomid);
          if(result){
         	if(isleft){
         		ServerBackSucceed msg=new ServerBackSucceed();
