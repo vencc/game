@@ -261,7 +261,6 @@ public class ChessImpl implements IChess {
 	}
 
 	public int[] ComTurn(int x, int y) { // 找出电脑（白子）最佳落子点
-		if (add(x, y, 2) != false) {
 			int index[] = new int[2];
 			if (compare(x, y, 2) == true) {
 				System.out.println("黑色赢了");
@@ -291,7 +290,7 @@ public class ChessImpl implements IChess {
 											this.bnum[i][j] += 50;
 											break;
 										case 3: // 三连子
-											this.bnum[i][j] += 180;
+											this.bnum[i][j] += 140;
 											break;
 										case 4: // 四连子
 											this.bnum[i][j] += 400;
@@ -311,10 +310,10 @@ public class ChessImpl implements IChess {
 											this.wnum[i][j] += 52;
 											break;
 										case 3: // 三连子
-											this.wnum[i][j] += 100;
+											this.wnum[i][j] += 150;
 											break;
 										case 4: // 四连子
-											this.wnum[i][j] += 400;
+											this.wnum[i][j] += 410;
 											break;
 									}
 								}
@@ -365,9 +364,5 @@ public class ChessImpl implements IChess {
 
 				return index;
 			}
-		}
-		else{
-			return null;
-		}
 	}
 }

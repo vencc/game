@@ -233,10 +233,11 @@ public class Room extends JFrame {
 		But_regret.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				ClientBackChess msg=new ClientBackChess(rid,isleft);
+				MyClient.getMyClient().sendMsg(msg);//发给服务器
 				if (ChessTable.Moves > 0){
 					chessPanel.unpaintItem();
-					ClientBackChess msg=new ClientBackChess(rid,isleft);
-					MyClient.getMyClient().sendMsg(msg);//发给服务器
+					
 				}
 				else {
 					System.out.println("当前已经没有棋子了");
