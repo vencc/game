@@ -7,6 +7,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/**
+ * 功能: 数据库公共类，工具类
+* @author 王小明  时间: 2016-09-27
+ */
 public class BaseDao {
 	// 1.四个静态常量的参数
 	public static final String url = "jdbc:mysql://localhost:3306/fivechess";
@@ -56,6 +60,26 @@ public class BaseDao {
 		}
 	}
 	
+	//查找用户信息，返回整个用户信息
+		public static ResultSet doQuery(String sql) {
+			// 创建psm --> sql
+			Connection connection = getConnection();
+			if (connection == null)
+				return null;
+			// 执行操作
+			ResultSet rs = null;
+			PreparedStatement psm = null;
+			try {
+				psm = connection.prepareStatement(sql);
+				rs = psm.executeQuery();
+				return rs;
+			
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return null;
+			}
+		}
+	
 	//更新  不需要ResultSet
 	public static int doUpdate(String sql, String[] paras) {
 		// 创建psm --> sql
@@ -82,6 +106,7 @@ public class BaseDao {
 			doClose(connection,psm,null);
 		}
 	}
+
 	public static void doClose(Connection conn, Statement psm,
 			ResultSet rs) {
 		// 关闭各种资源

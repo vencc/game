@@ -19,7 +19,7 @@ import java.awt.event.WindowEvent;
 public class Home extends JFrame{
   private User user=new User("游客");
   private Home home=this;
-  private  JButton userButton=new JButton();
+  private  JButton userButton=new JButton();       // 用户已登录显示自己姓名的按钮
   private JButton netButton=new JButton("联网对战");    // 联网对战按钮
   private JButton robotButton=new JButton("人机对战");  // 人机对战按钮
   private JButton logoffButton=new JButton("退出");  // 退出按钮
@@ -28,6 +28,7 @@ public class Home extends JFrame{
       Image image=new ImageIcon("resource/imag/home.png").getImage();
       g.drawImage(image,0,0,getWidth(),getHeight(),this);
     }
+
   };
 
   public Home(){
@@ -92,6 +93,10 @@ public class Home extends JFrame{
 
     });
 
+    /**
+     * 功能: 监听窗体关闭按钮
+     * 作者:黄欢欢  时间: 2016-09-23
+     */
     addWindowListener(new WindowAdapter(){
       @Override
       public void windowClosing(WindowEvent e) {
