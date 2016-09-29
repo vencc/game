@@ -9,7 +9,7 @@ import net.MyClient;
 public class ServerDefeatmsg extends BaseMsg{
 
 	public void doBiz() {
-		//MyClient.getMyClient().getRoom().deafeat();
+		MyClient.getMyClient().getRoom().deafeat();
 	}
 	
 

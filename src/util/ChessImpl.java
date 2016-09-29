@@ -5,14 +5,14 @@ public class ChessImpl implements IChess {
 	// 白子为1，黑子为2,初始为0；
 	private boolean[][][] blacktable = new boolean[15][15][572]; // 黑棋获胜组合
 	private boolean[][][] whitetable = new boolean[15][15][572]; // 白棋获胜组合
-	private int[][] wnum = new int[15][15]; // 白棋在棋盘上各个位置的分值
+	private int[][] wnum = new int[15][15]; // 白棋在棋盘上各个位置的分值 
 	private int[][] bnum = new int[15][15]; // 黑棋在棋盘上各个位置的分值
-	private int wgrade, bgrade;
+	private int wgrade, bgrade;             
 	private int[][] win = new int[3][572]; // 记录棋子在棋盘上的获胜组合中填入了多少棋子
 	private boolean start;
-	private int wmat, wnat, bmde, bnde;
-	private static int h = 15;
-	private static int w = 15;
+	private int wmat, wnat, bmde, bnde,nowchess;
+	private static int h = 17;    //chess[0][type+14] chess[1][type+14] 保留黑子最近下的2颗棋
+	private static int w = 17;   //chess[2][15]标记当前最新下的棋子颜色
 	public static int[][] chess = new int[h][w];
 	public static int[] chessx = new int[3];
 	public static int[] chessy = new int[3];
@@ -33,9 +33,10 @@ public class ChessImpl implements IChess {
 			// 白棋為1，黑棋為2；
 			// chessx[1]chessy[1]紀録上次白棋下子位置
 			// chessx[2]chessy[2]紀録上次黑棋下子位置
-			chessx[type] = x;
-			chessy[type] = y;
+			chess[0][type+14] = x;
+			chess[1][type+14] = y;
 			chess[x][y] = type;
+			chess[2][15]=type;
 
 		}
 		return true;
@@ -43,16 +44,19 @@ public class ChessImpl implements IChess {
 
 	public void delete(int type) {
 		// 刪除棋子類型位tupe的棋子上次下的棋子
-		if (chess[chessx[type]][chessy[type]] != type) {
-			chess[chessx[1]][chessy[1]] = 0;
-			chess[chessx[2]][chessy[2]] = 0;
+		System.out.println("==============="+type);
+		System.out.println(chess[2][15]);
+		if (chess[2][15] != type) {
+			
+			chess[chess[0][15]][chess[1][15]] = 0;
+			chess[chess[0][16]][chess[1][16]] = 0;
 		} else {
-			chess[chessx[type]][chessy[type]] = 0;
-			if (type == 1)
-				System.out.println("在" + i + "," + j + "处删了一个白棋");
-			else {
-				System.out.println("在" + i + "," + j + "处删了一个黑棋");
-			}
+			chess[chess[0][type+14]][chess[1][type+14]] = 0;
+			//if (type == 1)
+			//	System.out.println("在" + i + "," + j + "处删了一个白棋");
+			//else {
+				//System.out.println("在" + i + "," + j + "处删了一个黑棋");
+			//}
 		}
 
 	}
@@ -262,10 +266,7 @@ public class ChessImpl implements IChess {
 
 	public int[] ComTurn(int x, int y) { // 找出电脑（白子）最佳落子点
 			int index[] = new int[2];
-			if (compare(x, y, 2) == true) {
-				System.out.println("黑色赢了");
-				return null;
-			} else {
+		 
 				for(i=0;i<572;i++){
 					if(this.blacktable[x][y][i] && this.win[2][i] != 7)
 						this.win[2][i]++;     //给黑子的所有五连子可能的加载当前连子数
@@ -347,8 +348,9 @@ public class ChessImpl implements IChess {
 				}
 				this.wgrade = 0;
 				this.bgrade = 0;
-				chess[m][n] = 1; // 电脑下子位置
+				 // 电脑下子位置
 				System.out.println("电脑下在了" + m + "," + n);
+				add(m,n,1);
 				compare(m, n, 1);
 				for (i = 0; i < 572; i++) {
 					if (this.whitetable[m][n][i] && this.win[1][i] != 7)
@@ -363,6 +365,5 @@ public class ChessImpl implements IChess {
 				index[1] = n;
 
 				return index;
-			}
 	}
 }

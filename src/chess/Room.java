@@ -10,6 +10,7 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 
@@ -17,11 +18,14 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import msg.ClientBackChess;
+import msg.ClientBackResult;
 import msg.ClientBeReady;
 import msg.ClientClickChatMsg;
+import msg.ClientMovePieces;
 import net.MyClient;
 import util.ChessImpl;
 import util.IChess;
@@ -35,6 +39,22 @@ public class Room extends JFrame {
 	private int rid;// 房间编号
 	private User leftPlayer;// 房间内左边玩家
 	private User rightPlayer;// 房间内右边玩家
+	private static boolean canplay=false;
+	private static boolean beforeRegret=false;
+	public static JLabel labelnow =null;
+	//private boolean isLeftPlay=false;//左边玩家是否可落子
+	//private boolean isRightPlay=false;//右边玩家是否可落子
+	
+
+
+	public boolean isCanplay() {
+		return canplay;
+	}
+
+	public void setCanplay(boolean canplay) {
+		this.canplay = canplay;
+	}
+
 	private int status;// 房间的状态
 	private ChessTable chessPanel;
 	public static boolean isleft;
@@ -50,20 +70,12 @@ public class Room extends JFrame {
 	/**
 	 * @wbp.parser.constructor
 	 */
-	public Room(int roomid, boolean isleft) {
-
+	public Room(int roomid, boolean isleft) {//网络对战模式
+        MyClient.getMyClient().setRoom(this);
+		System.out.println("网络对战");
 		this.rid = roomid;
-	//	this.leftPlayer = room.getLeftPlayer();
 		this.isleft = isleft;
-	//	this.rightPlayer = room.getRightPlayer();
-	//	this.status = room.getStatus();
-		if(isleft==true){
-			//System.out.println("房间"+rid+"：左边有人坐下来了"+leftPlayer.getName());
-			}
-		else{
-			//System.out.println("房间"+rid+"：右边有人坐下来了"+rightPlayer.getName());
-		}
-		init(1);
+		init(0);
 		
 	}
 
@@ -114,13 +126,13 @@ public class Room extends JFrame {
 
 	public Room(RoomList roomList) {
 		this.roomList = roomList;
-		init(0);
+		init(0);//网络对战
 	}
 
 	/**
 	 * 功能：初始化房间、棋盘 作者：林珊珊
 	 * */
-	public void init(int model) {// 联网对战0 人机对战1
+	public void init(final int model) {// 联网对战0 人机对战1
 
 		this.setTitle("五子棋");
 		this.setLocation(345, 120);
@@ -131,7 +143,11 @@ public class Room extends JFrame {
 		setVisible(true);
 		getContentPane().setLayout(null);
 
-		chessPanel = new ChessTable();
+		if(model==0)//网络对战
+		chessPanel = new ChessTable(this);
+		else{
+			chessPanel = new ChessTable();
+		}
 		chessPanel.setBounds(210, 100, 568, 568);
 		getContentPane().add(chessPanel);
 
@@ -162,7 +178,9 @@ public class Room extends JFrame {
 		label_2.setBackground(Color.PINK);
 		label_2.setBounds(53, 41, 117, 57);
 		gamer2.add(label_2);
-
+		 labelnow = new JLabel("isCanplay()="+isCanplay());
+		labelnow.setBounds(300, 400, 150, 150);
+		chessPanel.add(labelnow);
 		/*
 		 * ImageIcon icon_ready=new ImageIcon("resource/imag/ready_icon.png");
 		 * JLabel Icon_ready = new JLabel(icon_ready); JPanel toastPanel = new
@@ -200,18 +218,7 @@ public class Room extends JFrame {
 		But_ready.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				//当有一方点击准备，则发送ClientBeReady报文
-				//查看对方是否准备
-				//String str = textField.getText() ;
-	    		  //房间选择报文传输 聊天信息传输给其他用户的界面
-				//System.out.println("11111111");
-				//System.out.println(roompojo);
-				//System.out.println("11111111");
 				ClientBeReady msg = new ClientBeReady(rid,isleft);
-				/*System.out.println("22222222");
-				System.out.println(msg);
-				System.out.println(msg.getRoompojo());
-				System.out.println("22222222");*/
 				MyClient.getMyClient().sendMsg(msg);//发给服务器
 			}
 		});
@@ -233,15 +240,23 @@ public class Room extends JFrame {
 		But_regret.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				if(model==0){//联机
+				beforeRegret=isCanplay();
+				setCanplay(false);
+				labelnow.setText("isCanplay="+isCanplay());
 				ClientBackChess msg=new ClientBackChess(rid,isleft);
 				MyClient.getMyClient().sendMsg(msg);//发给服务器
-				if (ChessTable.Moves > 0){
+				
+				}else{//人机
 					chessPanel.unpaintItem();
+				}
+				//if (ChessTable.Moves > 0){
+					//chessPanel.unpaintItem();
 					
-				}
-				else {
-					System.out.println("当前已经没有棋子了");
-				}
+			//	}
+				//else {
+					//System.out.println("当前已经没有棋子了");
+				//}
 			}
 		});
 		UIPanel.add(But_regret);
@@ -266,5 +281,66 @@ public class Room extends JFrame {
 
 	public static void main(String[] args) {
 		Room r = new Room(new Home());
+	}
+
+	public void gameStart() {
+		if(isleft){
+			setCanplay(true);			
+		}
+		
+		
+		//if((isLeftPlay()==false)&&(isRightPlay()==false)){
+			//setLeftPlay(true);//黑棋先手
+		//}
+	}
+
+	public void decide() {
+		boolean result;
+		 String[] options = { "同意", "不同意"  }; 
+		 int res=JOptionPane.showOptionDialog(this, "对方请求悔棋", "是否同意", 
+		JOptionPane.DEFAULT_OPTION, JOptionPane.YES_NO_OPTION, 
+		null, options, options[0]); 
+
+		if(res==0){
+			result=true;
+		}else{
+			result=false;
+		}
+		if(result){
+			setCanplay(false);
+		}
+		ClientBackResult msg=new ClientBackResult(result, rid, isleft);
+		MyClient.getMyClient().sendMsg(msg);
+	}
+
+	public void BackFail() {
+		if(beforeRegret){
+			setCanplay(true);
+		}
+		JOptionPane.showMessageDialog(this,
+				"对方不同意你的请求", "", JOptionPane.ERROR_MESSAGE); 
+		
+		
+	}
+
+	public void BackSucceed() {
+		setCanplay(true);
+		chessPanel.unpaintItem();//本身面板
+		ClientMovePieces msg=new ClientMovePieces(rid,isleft,ChessImpl.chess,true);
+		MyClient.getMyClient().sendMsg(msg);
+		JOptionPane.showMessageDialog(this,
+				"alert", "对方同意了你的请求", JOptionPane.ERROR_MESSAGE); 
+	}
+
+	public void win() {
+		setCanplay(false);
+		JOptionPane.showMessageDialog(this,
+				"你赢了！", "大侠，在下甘拜下风！！", JOptionPane.ERROR_MESSAGE); 
+		
+	}
+
+	public void deafeat() {
+		JOptionPane.showMessageDialog(this,
+				"你输了！", "胜败乃兵家常事，壮士请重新来过", JOptionPane.ERROR_MESSAGE); 
 	}
 }

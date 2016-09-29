@@ -50,6 +50,9 @@ public class ClientBeReady extends BaseMsg {
 		System.out.println("3333333");*/
 		RoomPojo roompojo=MyServer.getMyServer().getRooms().get(roomid);
 		System.out.println("123"+roompojo);
+		if(roompojo.isLeftReady()&&roompojo.isRightReady()){
+			return;
+		}
 		if(isleft){
 			if(roompojo.isRightReady()){
 				// 报文还没写完整
