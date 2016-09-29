@@ -47,8 +47,8 @@ public class RoomList extends JFrame {
   User user = null;
   JList list = new JList();
   JTextArea textArea = new JTextArea();
+  JTextArea textArea_1 = new JTextArea();
   JButton button_1 = new JButton();
-  JTextField textField = new JTextField();
 
   JPanel panel_2 = new JPanel();
   JButton btnNewButton_1 = new JButton("发送");
@@ -271,7 +271,7 @@ public class RoomList extends JFrame {
     scrollPane.getViewport().setOpaque(false);
     scrollPane.setViewportView(panel_4);
     panel_4.setOpaque(false);
-    panel_4.setLayout(new GridLayout(6, 2, 0, 0));
+    panel_4.setLayout(new GridLayout(6, 2, 10, 10));
 
 
     for (int i = 0; i < 12; i++) {
@@ -284,30 +284,48 @@ public class RoomList extends JFrame {
 
 
 
-
+    JScrollPane scrollPane_1 = new JScrollPane();
+    scrollPane_1.setBounds(0, 0, 250, 560);
+    panel_5.add(scrollPane_1);
+    
     textArea.setBackground(Color.YELLOW);
     textArea.setEditable(false);
     textArea.setBounds(23, 20, 205, 520);
     textArea.setOpaque(false);
     textArea.setLineWrap(true);
-    panel_5.add(textArea);
-
-    textField.setBounds(0, 583, 149, 25);
-    sendPanel.add(textField);
-    textField.setColumns(10);
-    textField.setVisible(false);
+    scrollPane_1.add(textArea);
+    
+    
 
     btnNewButton_1.setVisible(false);
     btnNewButton_1.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e) { //在线聊天发送按钮
-        String str = textField.getText();
+        String str = textArea_1.getText();
         //房间选择报文传输 聊天信息传输给其他用户的界面
         ClientClickChatMsg msg = new ClientClickChatMsg(str, user);
         MyClient.getMyClient().sendMsg(msg);//发给服务器
       }
     });
-    btnNewButton_1.setBounds(148, 583, 79, 25);
+    sendPanel.setLayout(null);
+    
+    textArea_1.addKeyListener(new KeyAdapter() {//聊天回车键事件
+    	@Override
+    	public void keyPressed(KeyEvent e) {
+    		if(e.getKeyCode()==KeyEvent.VK_ENTER){
+    			String str = textArea_1.getText();
+    	        //房间选择报文传输 聊天信息传输给其他用户的界面
+    	        ClientClickChatMsg msg = new ClientClickChatMsg(str, user);
+    	        MyClient.getMyClient().sendMsg(msg);//发给服务器
+    		}
+    	}
+    });
+    
+    
+    textArea_1.setBounds(10, 5, 143, 24);
+    textArea_1.setLineWrap(true);
+    sendPanel.add(textArea_1);
+    btnNewButton_1.setBounds(163, 5, 57, 23);
     sendPanel.add(btnNewButton_1);
 
   }
