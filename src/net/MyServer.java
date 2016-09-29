@@ -50,6 +50,7 @@ public class MyServer {
 	public List<RoomPojo> getRooms() {
 		return rooms;
 	}
+
 	public void setRooms(List<RoomPojo> rooms) {
 		this.rooms = rooms;
 	}

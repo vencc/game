@@ -208,6 +208,7 @@ panel.add(sendPanel);
       public void actionPerformed(ActionEvent e) {
     	  ClientLogoutMsg msg = new ClientLogoutMsg(user);
           MyClient.getMyClient().sendMsg(msg);//发给服务器
+        tohome();
       }
     });
     btnNewButton.setBounds(625, 5, 108, 30);
@@ -417,7 +418,8 @@ panel.add(sendPanel);
 
   public void toRoom(int roomid, boolean isleft) {
 
-	  new Room(roomid,isleft);
+	  new Room(roomid,isleft,this);
+    this.setVisible(false);
   }
 
   //返回大厅
