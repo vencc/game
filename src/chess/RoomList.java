@@ -20,6 +20,9 @@ import javax.swing.WindowConstants;
 
 import msg.ClientClickChatMsg;
 import msg.ClientClickRoomMsg;
+import msg.ClientClickUpdateMsg;
+import msg.ClientClickWinNumMsg;
+import msg.ClientLogoutMsg;
 import msg.ClientOffMsg;
 import net.MyClient;
 import entity.RoomPojo;
@@ -41,6 +44,7 @@ public class RoomList extends JFrame {
   User user = null;
   JList list = new JList();
   JTextArea textArea = new JTextArea();
+  JButton button_1 = new JButton();
   private JTextField textField = new JTextField();
   public RoomList(Home home, final User user) {
 
@@ -106,27 +110,26 @@ public class RoomList extends JFrame {
         }
       }
     });
-    button.setBounds(228, 5, 127, 30);
+    button.setBounds(187, 5, 127, 30);
     panel_3.add(button);
 
     JButton btnNewButton = new JButton("\u9000\u51FA\u767B\u5F55");
     btnNewButton.addActionListener(new ActionListener() {//退出登录按钮
       @Override
       public void actionPerformed(ActionEvent e) {
-    	  //先注释   ClientLogoutMsg msg = new ClientLogoutMsg(user);
-          // MyClient.getMyClient().sendMsg(msg);//发给服务器
-        tohome();
-
+    	  ClientLogoutMsg msg = new ClientLogoutMsg(user);
+          MyClient.getMyClient().sendMsg(msg);//发给服务器
       }
     });
-    btnNewButton.setBounds(393, 5, 108, 30);
+    btnNewButton.setBounds(625, 5, 108, 30);
     panel_3.add(btnNewButton);
 
-    JButton button_1 = new JButton(new ImageIcon(user.getFileName()));
+    button_1.setIcon(new ImageIcon(user.getFileName()));
     button_1.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) { //用户头像按钮
-        	//new UserImageChangeFrame(user).setVisible(true);//进入个人信息界面
-
+        	//new UpdatePictrue(user).setVisible(true);//进入个人信息界面
+    	  ClientClickUpdateMsg msg = new ClientClickUpdateMsg(user);
+          MyClient.getMyClient().sendMsg(msg);//发给服务器
       }
     });
     button_1.setBounds(113, 0, 45, 45);
@@ -139,7 +142,7 @@ public class RoomList extends JFrame {
         new SendmailFrame();
       }
     });
-    button_3.setBounds(537, 5, 93, 30);
+    button_3.setBounds(488, 5, 93, 30);
     panel_3.add(button_3);
 
     JButton button_2 = new JButton("战绩排名");
@@ -147,11 +150,12 @@ public class RoomList extends JFrame {
     	@Override
     	public void mouseClicked(MouseEvent e) {
     		 //战绩排名按钮
-    		//new WinNumFrame().setVisible(true);
-
+    		 ClientClickWinNumMsg msg = new ClientClickWinNumMsg();
+             MyClient.getMyClient().sendMsg(msg);
+            
     	}
     });
-    button_2.setBounds(375, 9, 93, 30);
+    button_2.setBounds(352, 5, 93, 30);
     panel_3.add(button_2);
 
     JPanel panel_2 = new JPanel();
@@ -225,6 +229,7 @@ public class RoomList extends JFrame {
 
     textArea.setBackground(Color.YELLOW);
     textArea.setBounds(5, 5, 222, 583);
+    textArea.setEditable(false);
     textArea.setOpaque(false);
     panel_5.add(textArea);
 
@@ -279,6 +284,16 @@ public class RoomList extends JFrame {
 
     });
   }
+  
+  //更新头像显示
+  public void showPictrue(User user){
+	  button_1.setIcon(new ImageIcon(user.getFileName()));
+  }
+  
+  //战绩排名显示
+  public void logout(ArrayList<User> userlist){
+	  new WinNumFrame(userlist).setVisible(true);
+  }
 
   //聊天信息显示
   public void showChatMsg(String str){
@@ -302,7 +317,7 @@ jpanel.setOpaque(false);
       if (r1.getLeftPlayer() != null)
         leftjbutton1.setIcon(new ImageIcon(r1.getLeftPlayer().getFileName()));
       else
-        leftjbutton1.setIcon(new ImageIcon());
+        leftjbutton1.setIcon(new ImageIcon("resource/imag/kong.png"));
       leftjbutton1.setSize(45, 45);
       leftjbutton1.setPreferredSize(new Dimension(45, 45));
       jpanel.add(leftjbutton1);
@@ -327,9 +342,9 @@ jpanel.setOpaque(false);
 
       JButton rightjbutton3 = new JButton();
       if (r1.getRightPlayer() != null)
-        rightjbutton3.setIcon(new ImageIcon(r1.getRightPlayer().getFileName()));
+        rightjbutton3.setIcon(new ImageIcon(rooms.get(i).getRightPlayer().getFileName()));
       else
-        rightjbutton3.setIcon(new ImageIcon());
+        rightjbutton3.setIcon(new ImageIcon("resource/imag/kong.png"));
       rightjbutton3.setSize(45, 45);
       jpanel.add(rightjbutton3);
       rightjbutton3.setPreferredSize(new Dimension(45, 45));
@@ -351,7 +366,7 @@ jpanel.setOpaque(false);
   }
 
   public void toRoom(int roomid, boolean isleft) {
-    
+	  
 	  new Room(roomid,isleft);
   }
 
