@@ -48,7 +48,9 @@ public class RoomList extends JFrame {
   JList list = new JList();
   JTextArea textArea = new JTextArea();
   JButton button_1 = new JButton();
-  private JTextField textField = new JTextField();
+  JTextField textField = new JTextField();
+
+  JButton btnNewButton_1 = new JButton("发送");
 
   public RoomList(Home home, final User user) {
 
@@ -73,9 +75,9 @@ public class RoomList extends JFrame {
     JPanel sendPanel=new JPanel();
     sendPanel.setBounds(10,630,230,35);
     sendPanel.setOpaque(false);
-panel.add(sendPanel);
+    panel.add(sendPanel);
 
-    JPanel panel_1 = new JPanel() {
+    final JPanel panel_1 = new JPanel() {
       protected void paintComponent(Graphics g) {
         Image image = new ImageIcon("resource/imag/chart.png").getImage();
         g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
@@ -85,23 +87,8 @@ panel.add(sendPanel);
     panel_1.setOpaque(false);
     panel_1.setLayout(null);
 
-    list.setOpaque(false);
-    list.setModel(new AbstractListModel() {
-      String[] values = new String[]{"list1", "list2", "list3", "list4", "list5"};
 
-      public int getSize() {
-        return values.length;
-      }
-
-      public Object getElementAt(int index) {
-        return values[index];
-      }
-    });
-
-    list.setBounds(23, 20, 205, 520);
-    panel_1.add(list);
-
-    JPanel panel_5 = new JPanel() {
+    final JPanel panel_5 = new JPanel() {
       protected void paintComponent(Graphics g) {
         Image image = new ImageIcon("resource/imag/chart.png").getImage();
         g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
@@ -115,7 +102,7 @@ panel.add(sendPanel);
     JPanel jPanel=new JPanel();
     jPanel.setBounds(0,0,232,200);
     jPanel.setLayout(null);
-    JButton label1=new JButton(){
+    final JButton label1=new JButton(){
       protected void paintComponent(Graphics g) {
         Image image = new ImageIcon("resource/imag/bt1.png").getImage();
         g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
@@ -138,6 +125,8 @@ panel.add(sendPanel);
         panel_5.setVisible(true);
         label2.setBounds(50,38,140,45);
         label1.setBounds(70,10,100,40);
+        textField.setVisible(true);
+        btnNewButton_1.setVisible(true);
       }
     });
 
@@ -148,6 +137,8 @@ panel.add(sendPanel);
         panel_1.setVisible(true);
         label1.setBounds(50,38,140,45);
         label2.setBounds(70,10,100,40);
+        textField.setVisible(false);
+        btnNewButton_1.setVisible(false);
       }
     });
     label2.setBounds(70,10,100,40);
@@ -158,7 +149,7 @@ panel.add(sendPanel);
 
     JPanel panel_3 = new JPanel();
     panel_3.setOpaque(false);
-    panel_3.setBounds(232, 0, 761, 65);
+    panel_3.setBounds(200, 0, 761, 65);
     panel.add(panel_3);
     panel_3.setLayout(null);
 
@@ -214,16 +205,6 @@ panel.add(sendPanel);
     btnNewButton.setBounds(625, 5, 108, 30);
     panel_3.add(btnNewButton);
 
-    button_1.setIcon(new ImageIcon(user.getFileName()));
-    button_1.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent e) { //用户头像按钮
-        	//new UpdatePictrue(user).setVisible(true);//进入个人信息界面
-    	  ClientClickUpdateMsg msg = new ClientClickUpdateMsg(user);
-          MyClient.getMyClient().sendMsg(msg);//发给服务器
-      }
-    });
-    button_1.setBounds(113, 0, 45, 45);
-    panel_3.add(button_1);
 
     JButton button_3 = new JButton("\u53CD\u9988");
     button_3.addActionListener(new ActionListener() {//反馈按钮
@@ -242,11 +223,37 @@ panel.add(sendPanel);
     		 //战绩排名按钮
     		 ClientClickWinNumMsg msg = new ClientClickWinNumMsg();
              MyClient.getMyClient().sendMsg(msg);
-            
+
     	}
     });
     button_2.setBounds(352, 5, 93, 30);
     panel_3.add(button_2);
+
+    list.setOpaque(false);
+    list.setModel(new AbstractListModel() {
+      String[] values = new String[]{"list1", "list2", "list3", "list4", "list5"};
+
+      public int getSize() {
+        return values.length;
+      }
+
+      public Object getElementAt(int index) {
+        return values[index];
+      }
+    });
+
+    list.setBounds(23, 20, 205, 520);
+    panel_1.add(list);
+    button_1.setIcon(new ImageIcon(user.getFileName()));
+    button_1.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent e) { //用户头像按钮
+        //new UpdatePictrue(user).setVisible(true);//进入个人信息界面
+        ClientClickUpdateMsg msg = new ClientClickUpdateMsg(user);
+        MyClient.getMyClient().sendMsg(msg);//发给服务器
+      }
+    });
+    button_1.setBounds(113, 0, 45, 45);
+    panel_3.add(button_1);
 
     JPanel panel_2 = new JPanel();
     panel_2.setOpaque(false);
@@ -282,12 +289,15 @@ panel.add(sendPanel);
     textArea.setEditable(false);
     textArea.setBounds(23, 20, 205, 520);
     textArea.setOpaque(false);
+    textArea.setLineWrap(true);
     panel_5.add(textArea);
 
     textField.setBounds(0, 583, 149, 25);
     sendPanel.add(textField);
     textField.setColumns(10);
-    JButton btnNewButton_1 = new JButton("发送");
+    textField.setVisible(false);
+
+    btnNewButton_1.setVisible(false);
     btnNewButton_1.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e) { //在线聊天发送按钮
@@ -362,7 +372,7 @@ panel.add(sendPanel);
 
       final RoomPojo r1 = rooms.get(i);
       JPanel jpanel = new JPanel();
-      jpanel.setName((i + 1) + "");
+      jpanel.setName(i + "");
       jpanel.setOpaque(false);
       JButton leftjbutton1 = new JButton();
       if (r1.getLeftPlayer() != null)
