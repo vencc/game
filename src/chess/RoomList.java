@@ -47,8 +47,8 @@ public class RoomList extends JFrame {
   User user = null;
   JList list = new JList();
   JTextArea textArea = new JTextArea();
+  JTextArea textArea_1 = new JTextArea();
   JButton button_1 = new JButton();
-  private JTextField textField = new JTextField();
 
   public RoomList(Home home, final User user) {
 
@@ -75,7 +75,7 @@ public class RoomList extends JFrame {
     sendPanel.setOpaque(false);
 panel.add(sendPanel);
 
-    JPanel panel_1 = new JPanel() {
+    final JPanel panel_1 = new JPanel() {
       protected void paintComponent(Graphics g) {
         Image image = new ImageIcon("resource/imag/chart.png").getImage();
         g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
@@ -101,7 +101,7 @@ panel.add(sendPanel);
     list.setBounds(23, 20, 205, 520);
     panel_1.add(list);
 
-    JPanel panel_5 = new JPanel() {
+    final JPanel panel_5 = new JPanel() {
       protected void paintComponent(Graphics g) {
         Image image = new ImageIcon("resource/imag/chart.png").getImage();
         g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
@@ -115,7 +115,7 @@ panel.add(sendPanel);
     JPanel jPanel=new JPanel();
     jPanel.setBounds(0,0,232,200);
     jPanel.setLayout(null);
-    JButton label1=new JButton(){
+    final JButton label1=new JButton(){
       protected void paintComponent(Graphics g) {
         Image image = new ImageIcon("resource/imag/bt1.png").getImage();
         g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
@@ -125,7 +125,7 @@ panel.add(sendPanel);
     panel.add(jPanel);
     jPanel.add(label1);
     jPanel.setOpaque(false);
-    JButton label2=new JButton(){
+    final JButton label2=new JButton(){
       protected void paintComponent(Graphics g) {
         Image image = new ImageIcon("resource/imag/bt1small.png").getImage();
         g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
@@ -282,21 +282,23 @@ panel.add(sendPanel);
     textArea.setBounds(23, 20, 205, 520);
     textArea.setOpaque(false);
     panel_5.add(textArea);
-
-    textField.setBounds(0, 583, 149, 25);
-    sendPanel.add(textField);
-    textField.setColumns(10);
     JButton btnNewButton_1 = new JButton("发送");
     btnNewButton_1.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e) { //在线聊天发送按钮
-        String str = textField.getText();
+        String str = textArea_1.getText();
         //房间选择报文传输 聊天信息传输给其他用户的界面
         ClientClickChatMsg msg = new ClientClickChatMsg(str, user);
         MyClient.getMyClient().sendMsg(msg);//发给服务器
       }
     });
-    btnNewButton_1.setBounds(148, 583, 79, 25);
+    sendPanel.setLayout(null);
+    
+  
+    textArea_1.setBounds(0, 5, 86, 24);
+    textArea_1.setLineWrap(true);
+    sendPanel.add(textArea_1);
+    btnNewButton_1.setBounds(91, 5, 57, 23);
     sendPanel.add(btnNewButton_1);
 
   }
@@ -361,7 +363,7 @@ panel.add(sendPanel);
 
       final RoomPojo r1 = rooms.get(i);
       JPanel jpanel = new JPanel();
-      jpanel.setName((i + 1) + "");
+      jpanel.setName((i) + "");
       jpanel.setOpaque(false);
       JButton leftjbutton1 = new JButton();
       if (r1.getLeftPlayer() != null)
