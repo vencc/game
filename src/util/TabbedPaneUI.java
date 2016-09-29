@@ -15,7 +15,8 @@ import java.awt.geom.RoundRectangle2D;
 import java.util.Arrays;
 
 /**
- * Created by huanghuanhuan on 9/27/16.
+ * 功能: 自定义TabbedPaneUI
+ * @author 黄欢欢  时间: 2016-09-27
  */
 public class TabbedPaneUI extends BasicTabbedPaneUI {
 
@@ -124,7 +125,7 @@ public class TabbedPaneUI extends BasicTabbedPaneUI {
               lines[i + 1]);
           carp.addPoint(0, lines[i + 1]);
           carp.addPoint(0, lines[i]);
-          g.setColor(hazAlfa(fila + 2));
+          g.setColor(Color.BLACK);
           g.fillPolygon(carp);
           g.setColor(darkShadow.darker());
           g.drawPolygon(carp);
