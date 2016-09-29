@@ -77,7 +77,7 @@ public class RoomList extends JFrame {
     sendPanel.setOpaque(false);
     panel.add(sendPanel);
 
-    final JPanel panel_1 = new JPanel() {
+    JPanel panel_1 = new JPanel() {
       protected void paintComponent(Graphics g) {
         Image image = new ImageIcon("resource/imag/chart.png").getImage();
         g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
@@ -88,7 +88,7 @@ public class RoomList extends JFrame {
     panel_1.setLayout(null);
 
 
-    final JPanel panel_5 = new JPanel() {
+    JPanel panel_5 = new JPanel() {
       protected void paintComponent(Graphics g) {
         Image image = new ImageIcon("resource/imag/chart.png").getImage();
         g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
@@ -102,7 +102,7 @@ public class RoomList extends JFrame {
     JPanel jPanel=new JPanel();
     jPanel.setBounds(0,0,232,200);
     jPanel.setLayout(null);
-    final JButton label1=new JButton(){
+    JButton label1=new JButton(){
       protected void paintComponent(Graphics g) {
         Image image = new ImageIcon("resource/imag/bt1.png").getImage();
         g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
