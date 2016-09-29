@@ -25,6 +25,7 @@ public class Main {
    *************************************************/
   private static void setLookAndFeel() {
     try {
+      UIManager.put("TabbedPane.contentOpaque", false);
       UIManager.setLookAndFeel(new McWinLookAndFeel());
       UIManager.put("CheckBox.font", new java.awt.Font("宋体", 0, 14));
       UIManager.put("Tree.font", new java.awt.Font("宋体", 0, 14));
