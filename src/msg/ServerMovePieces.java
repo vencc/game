@@ -30,6 +30,7 @@ public class ServerMovePieces extends BaseMsg{
 	public boolean isBackChess() {
 		return backChess;
 	}
+	
 
 
 	public void setBackChess(boolean backChess) {
@@ -37,19 +38,11 @@ public class ServerMovePieces extends BaseMsg{
 	}
 
 
-	public ServerMovePieces(int[][] chess) {
-		super();
-		this.chess = chess;
-	}
-
-	
-
 	public ServerMovePieces( int[][] chess,boolean backChess) {
 		super();
+		this.chess=chess;
 		this.backChess = backChess;
-		this.chess = chess;
 	}
-
 
 	public void doBiz() {
 		MyClient.getMyClient().getRoom().getChessPanel().receiveChess(chess,backChess);

@@ -11,6 +11,8 @@ import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 
@@ -21,11 +23,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import msg.ClientBackChess;
-import msg.ClientBackResult;
-import msg.ClientBeReady;
-import msg.ClientClickChatMsg;
-import msg.ClientMovePieces;
+import msg.*;
 import net.MyClient;
 import util.ChessImpl;
 import util.IChess;
@@ -70,8 +68,10 @@ public class Room extends JFrame {
 	/**
 	 * @wbp.parser.constructor
 	 */
-	public Room(int roomid, boolean isleft) {//网络对战模式
-        MyClient.getMyClient().setRoom(this);
+     
+	public Room(int roomid, boolean isleft,RoomList roomList) {
+		this.roomList=roomList;  
+		MyClient.getMyClient().setRoom(this);
 		System.out.println("网络对战");
 		this.rid = roomid;
 		this.isleft = isleft;
@@ -122,11 +122,6 @@ public class Room extends JFrame {
 	public Room(Home home) {
 		this.home = home;
 		init(1);// 人机
-	}
-
-	public Room(RoomList roomList) {
-		this.roomList = roomList;
-		init(0);//网络对战
 	}
 
 	/**
@@ -225,12 +220,30 @@ public class Room extends JFrame {
 		But_ready.setBounds(157, 5, 73, 23);
 		UIPanel.add(But_ready);
 
+		/**
+		 * 退出按钮
+		 */
 		JButton But_exit = new JButton("退出");
 		But_exit.setBounds(416, 5, 73, 23);
 		But_exit.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				if(model==0) {
+					ClientOutRoomMsg msg = new ClientOutRoomMsg(rid, false);
+					MyClient.getMyClient().sendMsg(msg);
+				}
 				toRoomList();
+			}
+		});
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				if(model==0) {
+					ClientOutRoomMsg msg = new ClientOutRoomMsg(rid, false);
+					MyClient.getMyClient().sendMsg(msg);
+					ClientOffMsg msg1 = new ClientOffMsg();
+					MyClient.getMyClient().sendMsg(msg1);
+				}
 			}
 		});
 		UIPanel.add(But_exit);

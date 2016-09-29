@@ -25,7 +25,7 @@ public class ScrollbarUI extends BasicScrollBarUI {
 //		thumbLightShadowColor = Color.YELLOW;
 
     // 滑道
-    trackColor = new Color(166,119,14);
+    trackColor = new Color(203f/255f,198f/255f,170f/255f,0.87f);
 //		trackHighlightColor = Color.GREEN;
   }
 

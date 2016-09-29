@@ -61,6 +61,7 @@ public class ChessTable extends JPanel {
 	public static int[][] map = new int[15][15];
 
 	public ChessTable(Room room) {
+	    
 		this.room = room;
 		model = 0;
 		Moves = 0;
@@ -139,6 +140,7 @@ public class ChessTable extends JPanel {
 							if(room.isCanplay()&&paintItem(humanX, humanY)){
 								Moves++;
 								room.setCanplay(false);
+								System.out.println("kjdhasjdakdhads+=========="+ChessImpl.chess[0][0]);
 								ClientMovePieces msg = new ClientMovePieces(
 										room.getRid(), room.isleft, ChessImpl.chess,false);
 										MyClient.getMyClient().sendMsg(msg);

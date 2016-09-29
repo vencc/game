@@ -42,11 +42,9 @@ public class ClientMovePieces extends BaseMsg{
 	}
 
 
-
 	public boolean isIsleft() {
 		return isleft;
 	}
-
 
 
 	public void setIsleft(boolean isleft) {
@@ -54,18 +52,15 @@ public class ClientMovePieces extends BaseMsg{
 	}
 
 
-
 	public int[][] getChess() {
 		return chess;
 	}
-
 
 
 	public void setChess(int[][] chess) {
 		this.chess = chess;
 	}
 	
-
 
 
 	
@@ -83,6 +78,7 @@ public class ClientMovePieces extends BaseMsg{
 
 
 	public void doBiz() {
+		System.out.println(chess[0][0]);
 		RoomPojo roompojo =MyServer.getMyServer().getRooms().get(roomid);
 		if(isleft){
 			ServerMovePieces msg=new ServerMovePieces(chess,backChess);

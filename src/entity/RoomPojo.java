@@ -75,6 +75,9 @@ public class RoomPojo implements Serializable{
 		this.rightPlayer = rightPlayer;
 		this.status = status;
 	}
+	public String toString(){
+		return "状态: "+status+", 左边玩家: "+leftPlayer+", 右边玩家: "+rightPlayer;
+	}
 	
 	
 	

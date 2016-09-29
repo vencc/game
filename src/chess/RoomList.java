@@ -2,6 +2,9 @@ package chess;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.geom.Area;
+import java.awt.geom.Rectangle2D;
+import java.awt.geom.RoundRectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +23,9 @@ import javax.swing.WindowConstants;
 
 import msg.ClientClickChatMsg;
 import msg.ClientClickRoomMsg;
+import msg.ClientClickUpdateMsg;
+import msg.ClientClickWinNumMsg;
+import msg.ClientLogoutMsg;
 import msg.ClientOffMsg;
 import net.MyClient;
 import entity.RoomPojo;
@@ -41,7 +47,13 @@ public class RoomList extends JFrame {
   User user = null;
   JList list = new JList();
   JTextArea textArea = new JTextArea();
-  private JTextField textField = new JTextField();
+  JButton button_1 = new JButton();
+  JTextField textField = new JTextField();
+
+  JPanel panel_2 = new JPanel();
+  JButton btnNewButton_1 = new JButton("发送");
+
+  JScrollPane scrollPane = new JScrollPane();
   public RoomList(Home home, final User user) {
 
     this.home = home;
@@ -62,10 +74,84 @@ public class RoomList extends JFrame {
     getContentPane().add(panel, BorderLayout.CENTER);
     panel.setLayout(null);
 
+    JPanel sendPanel=new JPanel();
+    sendPanel.setBounds(10,630,230,35);
+    sendPanel.setOpaque(false);
+    panel.add(sendPanel);
+
+    final JPanel panel_1 = new JPanel() {
+      protected void paintComponent(Graphics g) {
+        Image image = new ImageIcon("resource/imag/chart.png").getImage();
+        g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
+      }
+    };
+    panel_1.setBounds(0,70,250,560);
+    panel_1.setOpaque(false);
+    panel_1.setLayout(null);
+
+
+    final JPanel panel_5 = new JPanel() {
+      protected void paintComponent(Graphics g) {
+        Image image = new ImageIcon("resource/imag/chart.png").getImage();
+        g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
+      }
+    };
+    panel_5.setBounds(0,70,250,560);
+    panel_5.setOpaque(false);
+    panel_5.setVisible(false);
+    panel_5.setLayout(null);
+
+    JPanel jPanel=new JPanel();
+    jPanel.setBounds(0,0,232,200);
+    jPanel.setLayout(null);
+    final JButton label1=new JButton(){
+      protected void paintComponent(Graphics g) {
+        Image image = new ImageIcon("resource/imag/bt1.png").getImage();
+        g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
+      }
+    };
+    label1.setBounds(50,38,140,45);
+    panel.add(jPanel);
+    jPanel.add(label1);
+    jPanel.setOpaque(false);
+    final JButton label2=new JButton(){
+      protected void paintComponent(Graphics g) {
+        Image image = new ImageIcon("resource/imag/bt1small.png").getImage();
+        g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
+      }
+    };
+    label2.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        panel_1.setVisible(false);
+        panel_5.setVisible(true);
+        label2.setBounds(50,38,140,45);
+        label1.setBounds(70,10,100,40);
+        textField.setVisible(true);
+        btnNewButton_1.setVisible(true);
+      }
+    });
+
+    label1.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        panel_5.setVisible(false);
+        panel_1.setVisible(true);
+        label1.setBounds(50,38,140,45);
+        label2.setBounds(70,10,100,40);
+        textField.setVisible(false);
+        btnNewButton_1.setVisible(false);
+      }
+    });
+    label2.setBounds(70,10,100,40);
+    jPanel.add(label2);
+
+    panel.add(panel_1);
+    panel.add(panel_5);
 
     JPanel panel_3 = new JPanel();
     panel_3.setOpaque(false);
-    panel_3.setBounds(232, 0, 761, 65);
+    panel_3.setBounds(200, 0, 761, 65);
     panel.add(panel_3);
     panel_3.setLayout(null);
 
@@ -79,10 +165,10 @@ public class RoomList extends JFrame {
                 .getParent().getName());//获得对应房间的名字
             Boolean isleft;
             System.out.println("roomid:" + roomid);
-            if(rooms.get(i).getLeftPlayer()!=null){
-                 isleft = false;
-            }else{
-            	isleft = true;
+            if (rooms.get(i).getLeftPlayer() != null) {
+              isleft = false;
+            } else {
+              isleft = true;
             }
             //房间选择报文传输 roomid、username、isleft  传输给其他用户的界面
             ClientClickRoomMsg msg = new ClientClickRoomMsg(roomid, user, true);
@@ -106,31 +192,21 @@ public class RoomList extends JFrame {
         }
       }
     });
-    button.setBounds(228, 5, 127, 30);
+    button.setBounds(187, 5, 127, 30);
     panel_3.add(button);
 
     JButton btnNewButton = new JButton("\u9000\u51FA\u767B\u5F55");
     btnNewButton.addActionListener(new ActionListener() {//退出登录按钮
       @Override
       public void actionPerformed(ActionEvent e) {
-    	  //先注释   ClientLogoutMsg msg = new ClientLogoutMsg(user);
-          // MyClient.getMyClient().sendMsg(msg);//发给服务器
+    	  ClientLogoutMsg msg = new ClientLogoutMsg(user);
+          MyClient.getMyClient().sendMsg(msg);//发给服务器
         tohome();
-
       }
     });
-    btnNewButton.setBounds(393, 5, 108, 30);
+    btnNewButton.setBounds(625, 5, 108, 30);
     panel_3.add(btnNewButton);
 
-    JButton button_1 = new JButton(new ImageIcon(user.getFileName()));
-    button_1.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent e) { //用户头像按钮
-        	//new UserImageChangeFrame(user).setVisible(true);//进入个人信息界面
-
-      }
-    });
-    button_1.setBounds(113, 0, 45, 45);
-    panel_3.add(button_1);
 
     JButton button_3 = new JButton("\u53CD\u9988");
     button_3.addActionListener(new ActionListener() {//反馈按钮
@@ -139,7 +215,7 @@ public class RoomList extends JFrame {
         new SendmailFrame();
       }
     });
-    button_3.setBounds(537, 5, 93, 30);
+    button_3.setBounds(488, 5, 93, 30);
     panel_3.add(button_3);
 
     JButton button_2 = new JButton("战绩排名");
@@ -147,21 +223,46 @@ public class RoomList extends JFrame {
     	@Override
     	public void mouseClicked(MouseEvent e) {
     		 //战绩排名按钮
-    		//new WinNumFrame().setVisible(true);
+    		 ClientClickWinNumMsg msg = new ClientClickWinNumMsg();
+             MyClient.getMyClient().sendMsg(msg);
 
     	}
     });
-    button_2.setBounds(375, 9, 93, 30);
+    button_2.setBounds(352, 5, 93, 30);
     panel_3.add(button_2);
 
-    JPanel panel_2 = new JPanel();
+    list.setOpaque(false);
+    list.setModel(new AbstractListModel() {
+      String[] values = new String[]{"list1", "list2", "list3", "list4", "list5"};
+
+      public int getSize() {
+        return values.length;
+      }
+
+      public Object getElementAt(int index) {
+        return values[index];
+      }
+    });
+
+    list.setBounds(23, 20, 205, 520);
+    panel_1.add(list);
+    button_1.setIcon(new ImageIcon(user.getFileName()));
+    button_1.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent e) { //用户头像按钮
+        //new UpdatePictrue(user).setVisible(true);//进入个人信息界面
+        ClientClickUpdateMsg msg = new ClientClickUpdateMsg(user);
+        MyClient.getMyClient().sendMsg(msg);//发给服务器
+      }
+    });
+    button_1.setBounds(113, 0, 45, 45);
+    panel_3.add(button_1);
+
     panel_2.setOpaque(false);
-    panel_2.setBounds(232, 120, 758, 578);
+    panel_2.setBounds(getWidth()/3, getHeight()/5-10, getWidth()/5*3, getHeight()/5*3+15);
     panel.add(panel_2);
     panel_2.setLayout(null);
 
-    JScrollPane scrollPane = new JScrollPane();
-    scrollPane.setBounds(0, 8, 744, 534);
+    scrollPane.setBounds(0, 4, getWidth()/7*4, getHeight()*6/10);
     scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
     scrollPane.getVerticalScrollBar().setUI(new ScrollbarUI());
     panel_2.add(scrollPane);
@@ -181,68 +282,33 @@ public class RoomList extends JFrame {
 
 
 
-    JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-    tabbedPane.setOpaque(false);
-    tabbedPane.setUI(new TabbedPaneUI("#a6770e","#ffffff"));
-    tabbedPane.setBounds(0, 0, 232, 666);
-    panel.add(tabbedPane);
 
-    JPanel panel_1 = new JPanel(){
-      protected void paintComponent(Graphics g) {
-        Image image = new ImageIcon("resource/imag/chart.png").getImage();
-        g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
-      }
-    };
-    tabbedPane.addTab("在线用户", null, panel_1, null);
-    panel_1.setLayout(null);
-
-    list.setOpaque(false);
-    list.setModel(new AbstractListModel() {
-      String[] values = new String[]{"list1", "list2", "list3", "list4", "list5"};
-
-      public int getSize() {
-        return values.length;
-      }
-
-      public Object getElementAt(int index) {
-        return values[index];
-      }
-    });
-
-    list.setBounds(5, 5, 222, 600);
-    panel_1.add(list);
-
-    JPanel panel_5 = new JPanel(){
-      protected void paintComponent(Graphics g) {
-        Image image = new ImageIcon("resource/imag/chart.png").getImage();
-        g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
-      }
-    };
-    panel_5.setOpaque(false);
-    tabbedPane.addTab("在线聊天", null, panel_5, null);
-    panel_5.setLayout(null);
 
 
     textArea.setBackground(Color.YELLOW);
-    textArea.setBounds(5, 5, 222, 583);
+    textArea.setEditable(false);
+    textArea.setBounds(23, 20, 205, 520);
     textArea.setOpaque(false);
+    textArea.setLineWrap(true);
     panel_5.add(textArea);
 
     textField.setBounds(0, 583, 149, 25);
-    panel_5.add(textField);
+    sendPanel.add(textField);
     textField.setColumns(10);
-    JButton btnNewButton_1 = new JButton("发送");
+    textField.setVisible(false);
+
+    btnNewButton_1.setVisible(false);
     btnNewButton_1.addMouseListener(new MouseAdapter() {
-    	@Override
-    	public void mouseClicked(MouseEvent e) { //在线聊天发送按钮
-    		String str = textField.getText() ;
-    		  //房间选择报文传输 聊天信息传输给其他用户的界面
-            ClientClickChatMsg msg = new ClientClickChatMsg(str,user);
-            MyClient.getMyClient().sendMsg(msg);//发给服务器
-    	}
+      @Override
+      public void mouseClicked(MouseEvent e) { //在线聊天发送按钮
+        String str = textField.getText();
+        //房间选择报文传输 聊天信息传输给其他用户的界面
+        ClientClickChatMsg msg = new ClientClickChatMsg(str, user);
+        MyClient.getMyClient().sendMsg(msg);//发给服务器
+      }
     });
     btnNewButton_1.setBounds(148, 583, 79, 25);
-    panel_5.add(btnNewButton_1);
+    sendPanel.add(btnNewButton_1);
 
   }
 
@@ -279,11 +345,33 @@ public class RoomList extends JFrame {
 
     });
   }
+  /**
+   * 功能: 当窗口缩放拖动时重绘窗口
+   * 作者: 黄欢欢   时间: 2016-09-21
+   * @param time    重绘时间
+   * @param x       起点横坐标
+   * @param y       起点纵坐标
+   * @param width   窗体宽度
+   * @param height  窗体高度
+   */
+  public void repaint(long time, int x, int y, int width, int height){
+    panel_2.setBounds(getWidth()/3, getHeight()/5-10, getWidth()/5*3, getHeight()/5*3+15);
+    scrollPane.setBounds(0, 4, getWidth()/7*4, getHeight()*6/10);
+  }
+  //更新头像显示
+  public void showPictrue(User user){
+	  button_1.setIcon(new ImageIcon(user.getFileName()));
+  }
+  
+  //战绩排名显示
+  public void logout(ArrayList<User> userlist){
+	  new WinNumFrame(userlist).setVisible(true);
+  }
 
   //聊天信息显示
-  public void showChatMsg(String str){
-	  String str1 = this.textArea.getText();
-	  this.textArea.setText(str1+"\n"+str+"\n");
+  public void showChatMsg(String str) {
+    String str1 = this.textArea.getText();
+    this.textArea.setText(str1 + "\n" + str + "\n");
   }
 
   //房间列表显示
@@ -296,13 +384,13 @@ public class RoomList extends JFrame {
 
       final RoomPojo r1 = rooms.get(i);
       JPanel jpanel = new JPanel();
-      jpanel.setName((i+1)+"");
-jpanel.setOpaque(false);
+      jpanel.setName(i + "");
+      jpanel.setOpaque(false);
       JButton leftjbutton1 = new JButton();
       if (r1.getLeftPlayer() != null)
         leftjbutton1.setIcon(new ImageIcon(r1.getLeftPlayer().getFileName()));
       else
-        leftjbutton1.setIcon(new ImageIcon());
+        leftjbutton1.setIcon(new ImageIcon("resource/imag/kong.png"));
       leftjbutton1.setSize(45, 45);
       leftjbutton1.setPreferredSize(new Dimension(45, 45));
       jpanel.add(leftjbutton1);
@@ -319,17 +407,17 @@ jpanel.setOpaque(false);
 
       });
 
-      Image image=new ImageIcon("resource/imag/table.png").getImage().getScaledInstance(100,100,Image.SCALE_DEFAULT);
-      JButton jbutton2 = new JButton(new ImageIcon(image));
-      jbutton2.setSize(100, 100);
-      jbutton2.setPreferredSize(new Dimension(100, 100));
+      Image image = new ImageIcon("resource/imag/table.png").getImage().getScaledInstance(80, 80, Image.SCALE_DEFAULT);
+      JLabel jbutton2 = new JLabel(new ImageIcon(image));
+      jbutton2.setSize(80, 80);
+      jbutton2.setPreferredSize(new Dimension(80, 80));
       jpanel.add(jbutton2);
 
       JButton rightjbutton3 = new JButton();
       if (r1.getRightPlayer() != null)
-        rightjbutton3.setIcon(new ImageIcon(r1.getRightPlayer().getFileName()));
+        rightjbutton3.setIcon(new ImageIcon(rooms.get(i).getRightPlayer().getFileName()));
       else
-        rightjbutton3.setIcon(new ImageIcon());
+        rightjbutton3.setIcon(new ImageIcon("resource/imag/kong.png"));
       rightjbutton3.setSize(45, 45);
       jpanel.add(rightjbutton3);
       rightjbutton3.setPreferredSize(new Dimension(45, 45));
@@ -351,8 +439,9 @@ jpanel.setOpaque(false);
   }
 
   public void toRoom(int roomid, boolean isleft) {
-    
-	  new Room(roomid,isleft);
+
+	  new Room(roomid,isleft,this);
+    this.setVisible(false);
   }
 
   //返回大厅
