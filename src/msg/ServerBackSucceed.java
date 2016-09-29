@@ -9,7 +9,8 @@ import net.MyClient;
 public class ServerBackSucceed extends BaseMsg{
 
 	public void doBiz() {
-       // MyClient.getMyClient().getRoom().BackSucceed();		
+        MyClient.getMyClient().getRoom().BackSucceed();
+		System.out.println("悔棋成功");
 	}
 
 }

@@ -8,23 +8,31 @@ import entity.RoomPojo;
  *
  */
 public class ClientBackChess extends BaseMsg{
-    private RoomPojo roompojo;
+    private int roomid;
     private boolean isleft;
     
     
-	public RoomPojo getRoompojo() {
-		return roompojo;
+	
+
+	public int getRoomid() {
+		return roomid;
 	}
 
 
-	public void setRoompojo(RoomPojo roompojo) {
-		this.roompojo = roompojo;
+
+
+	public void setRoomid(int roomid) {
+		this.roomid = roomid;
 	}
+
+
 
 
 	public boolean isIsleft() {
 		return isleft;
 	}
+
+
 
 
 	public void setIsleft(boolean isleft) {
@@ -33,14 +41,19 @@ public class ClientBackChess extends BaseMsg{
 	
 
 
-	public ClientBackChess(RoomPojo roompojo, boolean isleft) {
+
+
+	public ClientBackChess(int roomid, boolean isleft) {
 		super();
-		this.roompojo = roompojo;
+		this.roomid = roomid;
 		this.isleft = isleft;
 	}
 
 
+
+
 	public void doBiz() {
+		RoomPojo roompojo=MyServer.getMyServer().getRooms().get(roomid);
          if(isleft){
         	 ServerBackChess msg=new ServerBackChess();
         	 MyServer.getMyServer().sendMsgToClient(msg, roompojo.getRightPlayer());

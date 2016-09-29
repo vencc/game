@@ -10,7 +10,7 @@ import net.MyClient;
 public class ServerStartGame extends BaseMsg{
 
 	public void doBiz() {
-		//MyClient.getMyClient().getRoom().gameStart();
+		MyClient.getMyClient().getRoom().gameStart();
 		System.out.println("游戏开始报文");
 	}
 

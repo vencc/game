@@ -79,7 +79,7 @@ public class RoomList extends JFrame {
     sendPanel.setOpaque(false);
     panel.add(sendPanel);
 
-    JPanel panel_1 = new JPanel() {
+    final JPanel panel_1 = new JPanel() {
       protected void paintComponent(Graphics g) {
         Image image = new ImageIcon("resource/imag/chart.png").getImage();
         g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
@@ -90,7 +90,7 @@ public class RoomList extends JFrame {
     panel_1.setLayout(null);
 
 
-    JPanel panel_5 = new JPanel() {
+    final JPanel panel_5 = new JPanel() {
       protected void paintComponent(Graphics g) {
         Image image = new ImageIcon("resource/imag/chart.png").getImage();
         g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
@@ -104,7 +104,7 @@ public class RoomList extends JFrame {
     JPanel jPanel=new JPanel();
     jPanel.setBounds(0,0,232,200);
     jPanel.setLayout(null);
-    JButton label1=new JButton(){
+    final JButton label1=new JButton(){
       protected void paintComponent(Graphics g) {
         Image image = new ImageIcon("resource/imag/bt1.png").getImage();
         g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
@@ -114,7 +114,7 @@ public class RoomList extends JFrame {
     panel.add(jPanel);
     jPanel.add(label1);
     jPanel.setOpaque(false);
-    JButton label2=new JButton(){
+    final JButton label2=new JButton(){
       protected void paintComponent(Graphics g) {
         Image image = new ImageIcon("resource/imag/bt1small.png").getImage();
         g.drawImage(image, 0, 0, getWidth(), getHeight(), this);

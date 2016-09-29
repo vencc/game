@@ -114,6 +114,7 @@ public class MyClient {
 					while(true){
 					 ObjectInputStream ois = new ObjectInputStream(client.getInputStream());
 					 BaseMsg msg = (BaseMsg)ois.readObject();
+					 System.out.println("收到数据"+msg);
 					 msg.doBiz();
 			//		 ois.close();
 				}

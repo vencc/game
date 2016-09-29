@@ -9,7 +9,8 @@ import net.MyClient;
 public class ServerBackFail extends BaseMsg{
 
 	public void doBiz() {
-		//MyClient.getMyClient().getRoom().BackFail();
+		MyClient.getMyClient().getRoom().BackFail();
+		System.out.println("悔棋失败");
 	}
 
 }

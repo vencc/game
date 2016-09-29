@@ -62,3 +62,6 @@ public class ClientGameOver extends BaseMsg{
 		}
 	}
 }
+
+
+

@@ -10,7 +10,7 @@ import net.MyServer;
 public class ServerBackChess extends BaseMsg{
 
 	public void doBiz() {
-          //MyClient.getMyClient().getRoom().decide();  
+          MyClient.getMyClient().getRoom().decide();  
 	}
 
 }

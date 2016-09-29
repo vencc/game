@@ -40,5 +40,5 @@ public interface IChess {
    * @param y 纵坐标
    * @return
    */
-  int[] ComTurn(int x,int y);
+  int [] ComTurn(int x,int y);
 }

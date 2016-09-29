@@ -9,7 +9,7 @@ import net.MyClient;
 public class ServerWinMsg extends BaseMsg{
 
 	public void doBiz() {
-        //MyClient.getMyClient().getRoom().win();		
+        MyClient.getMyClient().getRoom().win();		
 	}
 
 }

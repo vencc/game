@@ -12,29 +12,40 @@ import net.MyServer;
  *
  */
 public class ServerMovePieces extends BaseMsg{
+	private boolean backChess;
 	private int [][] chess;
-	
-	
+
+
 	public int[][] getChess() {
 		return chess;
 	}
-	
-
-
-	public ServerMovePieces(int[][] chess) {
-		super();
-		this.chess = chess;
-	}
-
 
 
 	public void setChess(int[][] chess) {
 		this.chess = chess;
 	}
+	
 
+
+	public boolean isBackChess() {
+		return backChess;
+	}
+	
+
+
+	public void setBackChess(boolean backChess) {
+		this.backChess = backChess;
+	}
+
+
+	public ServerMovePieces( int[][] chess,boolean backChess) {
+		super();
+		this.chess=chess;
+		this.backChess = backChess;
+	}
 
 	public void doBiz() {
-		//MyClient.getMyClient().getRoom().receiveChess();
+		MyClient.getMyClient().getRoom().getChessPanel().receiveChess(chess,backChess);
 	}
 
 }
