@@ -103,6 +103,7 @@ public class ChessTable extends JPanel {
 					int[] XY = chessimpl.ComTurn(humanX, humanY);
 					mark[XY[0]][XY[1]] = 1;
 					repaint();
+					Moves++;
 					lock = false;
 					chessTable.notifyAll();
 				}
@@ -134,6 +135,7 @@ public class ChessTable extends JPanel {
 						}
 						lock = true;
 						chessTable.notifyAll();
+						repaint();
 					} else {
 						
 						if (model == 0) {// 网络对战
@@ -163,7 +165,6 @@ public class ChessTable extends JPanel {
 					
 							room.repaint();
 						}
-						repaint();
 					}
 				} else {
 					System.out.println("请将棋子放进棋盘内");
