@@ -29,6 +29,7 @@ import msg.ClientLogoutMsg;
 import msg.ClientOffMsg;
 import net.MyClient;
 import entity.RoomPojo;
+import entity.UpdatePicture;
 import entity.User;
 import util.ScrollbarUI;
 import util.TabbedPaneUI;
@@ -47,13 +48,11 @@ public class RoomList extends JFrame {
   User user = null;
   JList list = new JList();
   JTextArea textArea = new JTextArea();
+  JTextArea textArea_1 = new JTextArea();
   JButton button_1 = new JButton();
-  JTextField textField = new JTextField();
 
-  JPanel panel_2 = new JPanel();
   JButton btnNewButton_1 = new JButton("发送");
 
-  JScrollPane scrollPane = new JScrollPane();
   public RoomList(Home home, final User user) {
 
     this.home = home;
@@ -249,20 +248,20 @@ public class RoomList extends JFrame {
     button_1.setIcon(new ImageIcon(user.getFileName()));
     button_1.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) { //用户头像按钮
-        //new UpdatePictrue(user).setVisible(true);//进入个人信息界面
-        ClientClickUpdateMsg msg = new ClientClickUpdateMsg(user);
-        MyClient.getMyClient().sendMsg(msg);//发给服务器
+        new UpdatePicture(user).setVisible(true);//进入个人信息界面
       }
     });
     button_1.setBounds(113, 0, 45, 45);
     panel_3.add(button_1);
 
+    JPanel panel_2 = new JPanel();
     panel_2.setOpaque(false);
-    panel_2.setBounds(getWidth()/3, getHeight()/5-10, getWidth()/5*3, getHeight()/5*3+15);
+    panel_2.setBounds(330, 130, 590, 435);
     panel.add(panel_2);
     panel_2.setLayout(null);
 
-    scrollPane.setBounds(0, 4, getWidth()/7*4, getHeight()*6/10);
+    JScrollPane scrollPane = new JScrollPane();
+    scrollPane.setBounds(0, 4, 580, 425);
     scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
     scrollPane.getVerticalScrollBar().setUI(new ScrollbarUI());
     panel_2.add(scrollPane);
@@ -271,7 +270,7 @@ public class RoomList extends JFrame {
     scrollPane.getViewport().setOpaque(false);
     scrollPane.setViewportView(panel_4);
     panel_4.setOpaque(false);
-    panel_4.setLayout(new GridLayout(6, 2, 0, 0));
+    panel_4.setLayout(new GridLayout(6, 2, 15, 15));
 
 
     for (int i = 0; i < 12; i++) {
@@ -284,30 +283,68 @@ public class RoomList extends JFrame {
 
 
 
-
+    JScrollPane scrollPane_1 = new JScrollPane();
+    scrollPane_1.setBounds(0, 0, 250, 560);
+    panel_5.add(scrollPane_1);
+    
     textArea.setBackground(Color.YELLOW);
     textArea.setEditable(false);
     textArea.setBounds(23, 20, 205, 520);
     textArea.setOpaque(false);
     textArea.setLineWrap(true);
-    panel_5.add(textArea);
-
-    textField.setBounds(0, 583, 149, 25);
-    sendPanel.add(textField);
-    textField.setColumns(10);
-    textField.setVisible(false);
+    scrollPane_1.add(textArea);
+    
+    
 
     btnNewButton_1.setVisible(false);
     btnNewButton_1.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e) { //在线聊天发送按钮
-        String str = textField.getText();
-        //房间选择报文传输 聊天信息传输给其他用户的界面
-        ClientClickChatMsg msg = new ClientClickChatMsg(str, user);
-        MyClient.getMyClient().sendMsg(msg);//发给服务器
+    	  String str = textArea_1.getText();
+	        
+			int index=0;
+			for(int i=0;i<str.length();i++)
+				if(str.charAt(i)!=' ')
+					index++;
+			if(index==0)
+				JOptionPane.showMessageDialog(null,"消息不能为空，请重新输入！");
+			else{
+				//房间选择报文传输 聊天信息传输给其他用户的界面
+	        ClientClickChatMsg msg = new ClientClickChatMsg(str, user);
+	        MyClient.getMyClient().sendMsg(msg);//发给服务器
+	      
+			}
       }
     });
-    btnNewButton_1.setBounds(148, 583, 79, 25);
+    sendPanel.setLayout(null);
+    
+    textArea_1.addKeyListener(new KeyAdapter() {//聊天回车键事件
+    	@Override
+    	public void keyPressed(KeyEvent e) {
+    		if(e.getKeyCode()==KeyEvent.VK_ENTER){
+    			String str = textArea_1.getText();
+    	        
+				int index=0;
+				for(int i=0;i<str.length();i++)
+					if(str.charAt(i)!=' ')
+						index++;
+				if(index==0)
+					JOptionPane.showMessageDialog(null,"消息不能为空，请重新输入！");
+				else{
+					//房间选择报文传输 聊天信息传输给其他用户的界面
+    	        ClientClickChatMsg msg = new ClientClickChatMsg(str, user);
+    	        MyClient.getMyClient().sendMsg(msg);//发给服务器
+    	       
+    			}
+    		}
+    	}
+    });
+    
+    
+    textArea_1.setBounds(10, 5, 143, 24);
+    textArea_1.setLineWrap(true);
+    sendPanel.add(textArea_1);
+    btnNewButton_1.setBounds(163, 5, 57, 23);
     sendPanel.add(btnNewButton_1);
 
   }
@@ -345,19 +382,7 @@ public class RoomList extends JFrame {
 
     });
   }
-  /**
-   * 功能: 当窗口缩放拖动时重绘窗口
-   * 作者: 黄欢欢   时间: 2016-09-21
-   * @param time    重绘时间
-   * @param x       起点横坐标
-   * @param y       起点纵坐标
-   * @param width   窗体宽度
-   * @param height  窗体高度
-   */
-  public void repaint(long time, int x, int y, int width, int height){
-    panel_2.setBounds(getWidth()/3, getHeight()/5-10, getWidth()/5*3, getHeight()/5*3+15);
-    scrollPane.setBounds(0, 4, getWidth()/7*4, getHeight()*6/10);
-  }
+  
   //更新头像显示
   public void showPictrue(User user){
 	  button_1.setIcon(new ImageIcon(user.getFileName()));
@@ -372,6 +397,7 @@ public class RoomList extends JFrame {
   public void showChatMsg(String str) {
     String str1 = this.textArea.getText();
     this.textArea.setText(str1 + "\n" + str + "\n");
+    textArea_1.setText("");
   }
 
   //房间列表显示
