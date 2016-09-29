@@ -50,8 +50,10 @@ public class RoomList extends JFrame {
   JButton button_1 = new JButton();
   JTextField textField = new JTextField();
 
+  JPanel panel_2 = new JPanel();
   JButton btnNewButton_1 = new JButton("发送");
 
+  JScrollPane scrollPane = new JScrollPane();
   public RoomList(Home home, final User user) {
 
     this.home = home;
@@ -255,14 +257,12 @@ public class RoomList extends JFrame {
     button_1.setBounds(113, 0, 45, 45);
     panel_3.add(button_1);
 
-    JPanel panel_2 = new JPanel();
     panel_2.setOpaque(false);
-    panel_2.setBounds(330, 130, 590, 435);
+    panel_2.setBounds(getWidth()/3, getHeight()/5-10, getWidth()/5*3, getHeight()/5*3+15);
     panel.add(panel_2);
     panel_2.setLayout(null);
 
-    JScrollPane scrollPane = new JScrollPane();
-    scrollPane.setBounds(0, 4, 580, 425);
+    scrollPane.setBounds(0, 4, getWidth()/7*4, getHeight()*6/10);
     scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
     scrollPane.getVerticalScrollBar().setUI(new ScrollbarUI());
     panel_2.add(scrollPane);
@@ -345,7 +345,19 @@ public class RoomList extends JFrame {
 
     });
   }
-  
+  /**
+   * 功能: 当窗口缩放拖动时重绘窗口
+   * 作者: 黄欢欢   时间: 2016-09-21
+   * @param time    重绘时间
+   * @param x       起点横坐标
+   * @param y       起点纵坐标
+   * @param width   窗体宽度
+   * @param height  窗体高度
+   */
+  public void repaint(long time, int x, int y, int width, int height){
+    panel_2.setBounds(getWidth()/3, getHeight()/5-10, getWidth()/5*3, getHeight()/5*3+15);
+    scrollPane.setBounds(0, 4, getWidth()/7*4, getHeight()*6/10);
+  }
   //更新头像显示
   public void showPictrue(User user){
 	  button_1.setIcon(new ImageIcon(user.getFileName()));
