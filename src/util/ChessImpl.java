@@ -304,7 +304,7 @@ public class ChessImpl implements IChess {
 				}
 				icount++;
 			}
-		for (i = 0; i <= 1; i++)
+		for (i = 1; i <= 2; i++)
 			// 初始化黑子白子上的每个权值上的连子数
 			for (j = 0; j < 572; j++)
 				this.win[i][j] = 0;
