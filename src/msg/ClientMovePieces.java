@@ -60,19 +60,19 @@ public class ClientMovePieces extends BaseMsg{
 	public void setChess(int[][] chess) {
 		this.chess = chess;
 	}
-	
-
-
-	
+	private int x;
+	private int y;
 
 
 	public ClientMovePieces(int roomid, boolean isleft, int[][] chess,
-			boolean backChess) {
+													boolean backChess, int x, int y) {
 		super();
 		this.roomid = roomid;
 		this.isleft = isleft;
 		this.chess = chess;
 		this.backChess = backChess;
+		this.x=x;
+		this.y=y;
 	}
 
 
@@ -81,10 +81,10 @@ public class ClientMovePieces extends BaseMsg{
 		System.out.println(chess[0][0]);
 		RoomPojo roompojo =MyServer.getMyServer().getRooms().get(roomid);
 		if(isleft){
-			ServerMovePieces msg=new ServerMovePieces(chess,backChess);
+			ServerMovePieces msg=new ServerMovePieces(chess,backChess,x,y);
 			MyServer.getMyServer().sendMsgToClient(msg, roompojo.getRightPlayer());
 		}else{
-			ServerMovePieces msg=new ServerMovePieces(chess,backChess);
+			ServerMovePieces msg=new ServerMovePieces(chess,backChess,x,y);
 			MyServer.getMyServer().sendMsgToClient(msg, roompojo.getLeftPlayer());
 		}
 	}

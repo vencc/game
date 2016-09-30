@@ -36,16 +36,19 @@ public class ServerMovePieces extends BaseMsg{
 	public void setBackChess(boolean backChess) {
 		this.backChess = backChess;
 	}
+private int x;
+	private int y;
 
-
-	public ServerMovePieces( int[][] chess,boolean backChess) {
+	public ServerMovePieces( int[][] chess,boolean backChess,int x,int y) {
 		super();
+		this.x=x;
+		this.y=y;
 		this.chess=chess;
 		this.backChess = backChess;
 	}
 
 	public void doBiz() {
-		MyClient.getMyClient().getRoom().getChessPanel().receiveChess(chess,backChess);
+		MyClient.getMyClient().getRoom().getChessPanel().receiveChess(chess,backChess,x,y);
 	}
 
 }

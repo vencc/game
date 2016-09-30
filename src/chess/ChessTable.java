@@ -53,6 +53,9 @@ public class ChessTable extends JPanel {
   public static IChess getChessimpl() {
     return chessimpl;
   }
+  public void setMark(int x,int y){
+    mark[x][y]=1;
+  }
 
   /*
      * 制作棋盘的宽高;
@@ -150,34 +153,18 @@ public class ChessTable extends JPanel {
             }
           } else {
 
-            if (model == 0) {// 网络对战
               if (room.isCanplay() && paintItem(humanX, humanY)) {
                 Moves++;
                 room.setCanplay(false);
-                audioPlayer.run();
                 System.out.println("kjdhasjdakdhads+==========" + ChessImpl.chess[0][0]);
                 ClientMovePieces msg = new ClientMovePieces(
-                    room.getRid(), room.isleft, ChessImpl.chess, false);
+                    room.getRid(), room.isleft, ChessImpl.chess, false,humanX,humanY);
                 MyClient.getMyClient().sendMsg(msg);
+                room.getChessPanel().setMark(humanX,humanY);
+                room.repaint();
+                audioPlayer.run();
               }
-                /*if(room.isleft&&room.isLeftPlay()&&paintItem(humanX, humanY)){//黑房局时
-								System.out.println("黑棋下在这" + humanX + "," + humanY);
-								room.setLeftPlay(false);
-								room.setRightPlay(true);
-								ClientMovePieces msg = new ClientMovePieces(
-								room.getRid(), room.isleft, ChessImpl.chess);
-								MyClient.getMyClient().sendMsg(msg);
-							}else if((!room.isleft)&&room.isRightPlay()&&paintItem(humanX, humanY)){
-									System.out.println("白棋下在这" + humanX + "," + humanY);
-									room.setLeftPlay(true);
-									room.setRightPlay(false);
-									ClientMovePieces msg = new ClientMovePieces(room.getRid(), room.isleft, ChessImpl.chess);
-									MyClient.getMyClient().sendMsg(msg);
-								}*/
 
-
-              room.repaint();
-            }
           }
         } else {
           System.out.println("请将棋子放进棋盘内");
@@ -206,16 +193,24 @@ public class ChessTable extends JPanel {
           succeed = chessimpl.add(i, j, 2);
 
           if (chessimpl.compare(i, j, 2)) {//黑棋赢了，发送游戏结束报文
+            ClientMovePieces msg1 = new ClientMovePieces(
+                room.getRid(), room.isleft, ChessImpl.chess, false,humanX,humanY);
+            MyClient.getMyClient().sendMsg(msg1);
             ClientGameOver msg = new ClientGameOver(room.getRid(), room.isleft);
             MyClient.getMyClient().sendMsg(msg);
+            return false;
           }
         } else {// 白棋玩家
           Moves++;
           succeed = chessimpl.add(i, j, 1);
 
           if (chessimpl.compare(i, j, 1)) {//白棋赢了
+            ClientMovePieces msg1 = new ClientMovePieces(
+                room.getRid(), room.isleft, ChessImpl.chess, false,humanX,humanY);
+            MyClient.getMyClient().sendMsg(msg1);
             ClientGameOver msg = new ClientGameOver(room.getRid(), room.isleft);
             MyClient.getMyClient().sendMsg(msg);
+            return false;
           }
         }
         return succeed;
@@ -341,7 +336,7 @@ public class ChessTable extends JPanel {
     repaint();
   }
 
-  public void receiveChess(int[][] chess, boolean backChess) {
+  public void receiveChess(int[][] chess, boolean backChess,int x,int y) {
     if (!backChess) {
       room.setCanplay(true);
     }
@@ -353,7 +348,9 @@ public class ChessTable extends JPanel {
         ChessImpl.chess[i][j] = chess[i][j];
       }
     }
-    audioPlayer.run();
+    System.out.println(x+","+y);
+    room.getChessPanel().setMark(x,y);
     repaint();
+    audioPlayer.run();
   }
 }

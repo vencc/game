@@ -340,7 +340,7 @@ public class Room extends JFrame {
 	public void BackSucceed() {
 		setCanplay(true);
 		chessPanel.unpaintItem();//本身面板
-		ClientMovePieces msg=new ClientMovePieces(rid,isleft,ChessImpl.chess,true);
+		ClientMovePieces msg=new ClientMovePieces(rid,isleft,ChessImpl.chess,true,0,0);
 		MyClient.getMyClient().sendMsg(msg);
 		JOptionPane.showMessageDialog(this,
 				"alert", "对方同意了你的请求", JOptionPane.ERROR_MESSAGE); 
@@ -354,6 +354,7 @@ public class Room extends JFrame {
 	}
 
 	public void deafeat() {
+		setCanplay(false);
 		JOptionPane.showMessageDialog(this,
 				"你输了！", "胜败乃兵家常事，壮士请重新来过", JOptionPane.ERROR_MESSAGE); 
 	}
