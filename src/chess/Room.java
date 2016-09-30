@@ -218,7 +218,20 @@ public class Room extends JFrame {
 			}
 		});
 		But_ready.setBounds(157, 5, 73, 23);
+		if(model==0)
 		UIPanel.add(But_ready);
+		else{
+			JButton refresh = new JButton("重新开始");
+			refresh.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					chessPanel.getChessimpl().ResetGame();
+					repaint();
+				}
+			});
+			refresh.setBounds(150, 5, 80, 23);
+			UIPanel.add(refresh);
+		}
 
 		/**
 		 * 退出按钮
