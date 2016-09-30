@@ -20,6 +20,7 @@ import javax.swing.JPanel;
 import net.MyClient;
 import msg.ClientGameOver;
 import msg.ClientMovePieces;
+import util.AudioPlayer;
 import util.ChessImpl;
 import util.IChess;
 
@@ -32,6 +33,8 @@ public class ChessTable extends JPanel {
   private Executor pool = Executors.newFixedThreadPool(2); // 2个线程容量的线程池
   private RobotThread robotThread = new RobotThread(this, chessimpl); // 机器人线程
   private HumanThread humanThread = new HumanThread(this, chessimpl); // 人类线程
+  private AudioPlayer audioPlayer=new AudioPlayer("resource/audio/down.wav");
+  private AudioPlayer audioStopPlayer=new AudioPlayer("resource/audio/stop.wav");
   private ChessTable chessTable = this;
   private boolean lock = false; // 同步锁
   private int humanX; // 鼠标点击的坐标
@@ -111,6 +114,7 @@ public class ChessTable extends JPanel {
           Moves++;
           lock = false;
           chessTable.notifyAll();
+          audioPlayer.run();
         }
       }
     }
@@ -137,16 +141,20 @@ public class ChessTable extends JPanel {
               System.out.println("黑棋在这" + humanX + "," + humanY);
               System.out.println("is here!");
               mark[humanX][humanY] = 1;
+              lock = true;
+              repaint();
+              chessTable.notifyAll();
+              audioPlayer.run();
+            } else {
+              audioStopPlayer.run();
             }
-            lock = true;
-            chessTable.notifyAll();
-            repaint();
           } else {
 
             if (model == 0) {// 网络对战
               if (room.isCanplay() && paintItem(humanX, humanY)) {
                 Moves++;
                 room.setCanplay(false);
+                audioPlayer.run();
                 System.out.println("kjdhasjdakdhads+==========" + ChessImpl.chess[0][0]);
                 ClientMovePieces msg = new ClientMovePieces(
                     room.getRid(), room.isleft, ChessImpl.chess, false);
@@ -188,8 +196,10 @@ public class ChessTable extends JPanel {
     boolean succeed = false;
     if (i < 15 && j < 15) {
       if (model == 1) {// 人机
-        if (!chessimpl.add(i, j, 2))
+        if (!chessimpl.add(i, j, 2)) {
           return false;// 棋子不能下在这个位置
+        }
+        return true;
       } else {// 网络对战
         if (room.isleft) {// 黑棋玩家
           Moves++;
@@ -341,9 +351,9 @@ public class ChessTable extends JPanel {
       for (int j = 0; j < 17; j++) {
         // mark[i][j]=chess[i][j];
         ChessImpl.chess[i][j] = chess[i][j];
-        repaint();
       }
     }
-
+    audioPlayer.run();
+    repaint();
   }
 }
