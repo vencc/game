@@ -2,6 +2,7 @@ package chess;
 
 
 import com.jtattoo.plaf.mcwin.McWinLookAndFeel;
+import util.AudioPlayer;
 
 import javax.swing.*;
 
@@ -16,6 +17,7 @@ public class Main {
       public void run() {
         setLookAndFeel();
         new Home();
+        new Thread(new AudioPlayer("resource/audio/background.wav")).start();
       }
     });
   }

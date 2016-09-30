@@ -232,6 +232,7 @@ public class Room extends JFrame {
 					ClientOutRoomMsg msg = new ClientOutRoomMsg(rid, isleft);
 					MyClient.getMyClient().sendMsg(msg);
 				}
+				chessPanel.getChessimpl().ResetGame();
 				toRoomList();
 			}
 		});

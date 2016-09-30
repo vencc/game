@@ -14,12 +14,18 @@ public class ChessImpl implements IChess {
 	private static int h = 17;    //chess[0][type+14] chess[1][type+14] 保留黑子最近下的2颗棋
 	private static int w = 17;   //chess[2][15]标记当前最新下的棋子颜色
 	public static int[][] chess = new int[h][w];
-	public static int[] chessx = new int[3];
-	public static int[] chessy = new int[3];
-	public static int[] informxy = new int[2];
+	public static int[][] oldchess = new int[h][w];
+	private boolean[][][] oldblacktable = new boolean[15][15][572]; // 旧黑棋获胜组合
+	private boolean[][][] oldwhitetable = new boolean[15][15][572]; // 旧白棋获胜组合
+	private int[][] oldwnum = new int[15][15]; // 旧白棋在棋盘上各个位置的分值 
+	private int[][] oldbnum = new int[15][15]; // 旧黑棋在棋盘上各个位置的分值
+	private int[][] oldwin = new int[3][572]; // 旧的记录棋子在棋盘上的获胜组合中填入了多少棋子
+	
+	
+	
+	
 	boolean white = false;
 	boolean black = false;
-
 	public boolean add(int x, int y, int type) {
 		if (chess[x][y] != 0) {
 			System.out.println("这个位置已经放过棋子了");
@@ -47,11 +53,50 @@ public class ChessImpl implements IChess {
 		System.out.println("==============="+type);
 		System.out.println(chess[2][15]);
 		if (chess[2][15] != type) {
-			
 			chess[chess[0][15]][chess[1][15]] = 0;
 			chess[chess[0][16]][chess[1][16]] = 0;
+			for(int i=0;i<15;i++){
+				for(int j=0;j<15;j++){
+				for(int z=0;z<572;z++){
+			  blacktable[i][j][z]=oldblacktable[i][j][z];
+			  whitetable[i][j][z]=oldwhitetable[i][j][z];
+				}
+				}
+			}	
+			for(int i=0;i<3;i++){
+				for(int j=0;j<572;j++){
+			     win[i][j]=oldwin[i][j];
+				}
+			}
+			for(int i=0;i<15;i++){
+				for(int j=0;j<15;j++){
+					wnum[i][j]=oldwnum[i][j];
+			        bnum[i][j]=oldbnum[i][j];
+				}
+			}
+		
 		} else {
 			chess[chess[0][type+14]][chess[1][type+14]] = 0;
+			for(int i=0;i<15;i++){
+				for(int j=0;j<15;j++){
+				for(int z=0;z<572;z++){
+			  blacktable[i][j][z]=oldblacktable[i][j][z];
+			  whitetable[i][j][z]=oldwhitetable[i][j][z];
+				}
+				}
+			}	
+			for(int i=0;i<3;i++){
+				for(int j=0;j<572;j++){
+			     win[i][j]=oldwin[i][j];
+				}
+			}
+			for(int i=0;i<15;i++){
+				for(int j=0;j<15;j++){
+					wnum[i][j]=oldwnum[i][j];
+			        bnum[i][j]=oldbnum[i][j];
+				}
+			}
+			
 			//if (type == 1)
 			//	System.out.println("在" + i + "," + j + "处删了一个白棋");
 			//else {
@@ -212,6 +257,8 @@ public class ChessImpl implements IChess {
 	}
 
 	public void ResetGame() {
+		this.icount = 0;
+		this.start = true;
 		// 初始化棋盘
 		for (i = 0; i < 15; i++)
 			for (j = 0; j < 15; j++) {
@@ -221,7 +268,7 @@ public class ChessImpl implements IChess {
 			}
 		// 遍历所有的五连子可能情况的权值
 		// 横
-		for (i = 0; i < 15; i++)
+		for (i = 0; i < 15; i++){
 			for (j = 0; j < 11; j++) {
 				for (k = 0; k < 5; k++) {
 					this.blacktable[j + k][i][icount] = true;
@@ -229,6 +276,7 @@ public class ChessImpl implements IChess {
 				}
 				icount++;
 			}
+		}
 		// 竖
 		for (i = 0; i < 15; i++)
 			for (j = 0; j < 11; j++) {
@@ -260,18 +308,39 @@ public class ChessImpl implements IChess {
 			// 初始化黑子白子上的每个权值上的连子数
 			for (j = 0; j < 572; j++)
 				this.win[i][j] = 0;
-		this.icount = 0;
-		this.start = true;
+		
 	}
 
 	public int[] ComTurn(int x, int y) { // 找出电脑（白子）最佳落子点
+
 			int index[] = new int[2];
-		 
+			for(int i=0;i<15;i++){
+				for(int j=0;j<15;j++){
+				for(int z=0;z<572;z++){
+			 oldblacktable[i][j][z]= blacktable[i][j][z];
+			 oldwhitetable[i][j][z]=whitetable[i][j][z];
+				}
+				}
+			}	
+			for(int i=0;i<3;i++){
+				for(int j=0;j<572;j++){
+			     oldwin[i][j]=win[i][j];
+				}
+			}
+			for(int i=0;i<15;i++){
+				for(int j=0;j<15;j++){
+					oldwnum[i][j]=wnum[i][j];
+			        oldbnum[i][j]=bnum[i][j];
+				}
+			}
 				for(i=0;i<572;i++){
-					if(this.blacktable[x][y][i] && this.win[2][i] != 7)
-						this.win[2][i]++;     //给黑子的所有五连子可能的加载当前连子数
+					if(this.blacktable[x][y][i] && this.win[2][i] != 7){
+						this.win[2][i]++;//给黑子的所有五连子可能的加载当前连子数
+					  
+					    }
 					if(this.whitetable[x][y][i]){
 						this.whitetable[x][y][i] = false;
+						
 						this.win[1][i]=7;
 					}
 				}
@@ -320,8 +389,14 @@ public class ChessImpl implements IChess {
 								}
 					}
 				if (this.start) { // 开始时白子落子坐标
-					m = x + 1;
-					n = y;
+					if(chess[7][7]==0){
+						m = 7;
+					   n = 7;
+					}else{
+						m=7;
+						n=8;
+					}
+					
 					this.start = false;
 				} else {
 					for (i = 0; i < 15; i++)
@@ -352,11 +427,14 @@ public class ChessImpl implements IChess {
 				System.out.println("电脑下在了" + m + "," + n);
 				add(m,n,1);
 				compare(m, n, 1);
+				
 				for (i = 0; i < 572; i++) {
 					if (this.whitetable[m][n][i] && this.win[1][i] != 7)
 						this.win[1][i]++; // 给白子的所有五连子可能的加载当前连子数
+					   
 					if (this.blacktable[m][n][i]) {
 						this.blacktable[m][n][i] = false;
+				
 						this.win[2][i] = 7;
 					}
 				}

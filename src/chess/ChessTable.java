@@ -46,9 +46,14 @@ public class ChessTable extends JPanel {
   public int Moves;// 本局比赛已下的总步数
   private int[][] mark = new int[15][15];
   public static IChess chessimpl = new ChessImpl();
+
+  public static IChess getChessimpl() {
+    return chessimpl;
+  }
+
   /*
-   * 制作棋盘的宽高;
-   */
+     * 制作棋盘的宽高;
+     */
   public static final int BOARD_WIDTH = 515;
   /*
    * 计算棋盘表格坐标(单元格宽高相等)
