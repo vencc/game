@@ -229,7 +229,7 @@ public class Room extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if(model==0) {
-					ClientOutRoomMsg msg = new ClientOutRoomMsg(rid, false);
+					ClientOutRoomMsg msg = new ClientOutRoomMsg(rid, isleft);
 					MyClient.getMyClient().sendMsg(msg);
 				}
 				toRoomList();
@@ -239,7 +239,7 @@ public class Room extends JFrame {
 			@Override
 			public void windowClosing(WindowEvent e) {
 				if(model==0) {
-					ClientOutRoomMsg msg = new ClientOutRoomMsg(rid, false);
+					ClientOutRoomMsg msg = new ClientOutRoomMsg(rid, isleft);
 					MyClient.getMyClient().sendMsg(msg);
 					ClientOffMsg msg1 = new ClientOffMsg();
 					MyClient.getMyClient().sendMsg(msg1);

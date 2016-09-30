@@ -20,6 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.WindowConstants;
+import entity.UpdatePicture;
 
 import msg.ClientClickChatMsg;
 import msg.ClientClickRoomMsg;
@@ -271,7 +272,7 @@ public class RoomList extends JFrame {
     scrollPane.getViewport().setOpaque(false);
     scrollPane.setViewportView(panel_4);
     panel_4.setOpaque(false);
-    panel_4.setLayout(new GridLayout(6, 2, 0, 0));
+    panel_4.setLayout(new GridLayout(6, 2, 15, 15));
 
 
     for (int i = 0; i < 12; i++) {
@@ -279,9 +280,6 @@ public class RoomList extends JFrame {
       rooms.add(r);
     }
     showRoomList(rooms);
-
-
-
 
 
 
@@ -297,14 +295,49 @@ public class RoomList extends JFrame {
     textField.setColumns(10);
     textField.setVisible(false);
 
+    textField.addKeyListener(new KeyAdapter() {//聊天回车键事件
+      @Override
+      public void keyPressed(KeyEvent e) {
+        if(e.getKeyCode()==KeyEvent.VK_ENTER){
+          String str = textField.getText();
+
+          int index=0;
+          for(int i=0;i<str.length();i++)
+            if(str.charAt(i)!=' ')
+              index++;
+          if(index==0)
+            JOptionPane.showMessageDialog(null,"消息不能为空，请重新输入！");
+          else{
+            //房间选择报文传输 聊天信息传输给其他用户的界面
+            ClientClickChatMsg msg = new ClientClickChatMsg(str, user);
+            MyClient.getMyClient().sendMsg(msg);//发给服务器
+
+          }
+        }
+      }
+    });
+
+
     btnNewButton_1.setVisible(false);
     btnNewButton_1.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e) { //在线聊天发送按钮
         String str = textField.getText();
         //房间选择报文传输 聊天信息传输给其他用户的界面
-        ClientClickChatMsg msg = new ClientClickChatMsg(str, user);
-        MyClient.getMyClient().sendMsg(msg);//发给服务器
+
+        int index=0;
+        for(int i=0;i<str.length();i++)
+          if(str.charAt(i)!=' ')
+            index++;
+        if(index==0)
+          JOptionPane.showMessageDialog(null,"消息不能为空，请重新输入！");
+        else{
+          //房间选择报文传输 聊天信息传输给其他用户的界面
+          ClientClickChatMsg msg = new ClientClickChatMsg(str, user);
+          MyClient.getMyClient().sendMsg(msg);//发给服务器
+
+        }
+
       }
     });
     btnNewButton_1.setBounds(148, 583, 79, 25);
@@ -372,6 +405,8 @@ public class RoomList extends JFrame {
   public void showChatMsg(String str) {
     String str1 = this.textArea.getText();
     this.textArea.setText(str1 + "\n" + str + "\n");
+    textField.setText("");
+
   }
 
   //房间列表显示
@@ -387,8 +422,9 @@ public class RoomList extends JFrame {
       jpanel.setName(i + "");
       jpanel.setOpaque(false);
       JButton leftjbutton1 = new JButton();
+      System.out.println("左边玩家退了吗"+r1.toString());
       if (r1.getLeftPlayer() != null)
-        leftjbutton1.setIcon(new ImageIcon(r1.getLeftPlayer().getFileName()));
+        leftjbutton1.setIcon(new ImageIcon(rooms.get(i).getLeftPlayer().getFileName()));
       else
         leftjbutton1.setIcon(new ImageIcon("resource/imag/kong.png"));
       leftjbutton1.setSize(45, 45);
@@ -415,7 +451,7 @@ public class RoomList extends JFrame {
 
       JButton rightjbutton3 = new JButton();
       if (r1.getRightPlayer() != null)
-        rightjbutton3.setIcon(new ImageIcon(rooms.get(i).getRightPlayer().getFileName()));
+        rightjbutton3.setIcon(new ImageIcon(r1.getRightPlayer().getFileName()));
       else
         rightjbutton3.setIcon(new ImageIcon("resource/imag/kong.png"));
       rightjbutton3.setSize(45, 45);

@@ -51,10 +51,13 @@ public class ClientOutRoomMsg extends BaseMsg {
     }else{
       room.setStatus(RoomPojo.IDLE);
     }
-    if(isleft){
-      room.setLeftPlayer(null);
-    }else{
+    if(!isleft){
+      System.out.println("右边玩家设置null");
       room.setRightPlayer(null);
+    }
+    if(isleft){
+      System.out.println("左边玩家设置null");
+      room.setLeftPlayer(null);
     }
     ServerRoomListMsg msg=new ServerRoomListMsg(MyServer.getMyServer().getRooms());
     MyServer.getMyServer().sendMsgToAll(msg);
