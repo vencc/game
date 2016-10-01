@@ -81,10 +81,11 @@ public class ChessTable extends JPanel {
     this.addMouseListener(new MouseHandler());
   }
 
-  public ChessTable() {// 人机
+  public ChessTable(Room room,int flag) {// 人机
     super(null);
     Moves = 0;
     model = 1;
+    this.room=room;
     chessimpl.ResetGame();
 
     this.setBounds(0, 0, BOARD_WIDTH, BOARD_WIDTH);
@@ -116,8 +117,11 @@ public class ChessTable extends JPanel {
           repaint();
           Moves++;
           lock = false;
-          chessTable.notifyAll();
           audioPlayer.run();
+          if(chessimpl.compare(XY[0],XY[1],1)){
+            room.deafeat();
+          }else
+          chessTable.notifyAll();
         }
       }
     }
@@ -146,8 +150,11 @@ public class ChessTable extends JPanel {
               mark[humanX][humanY] = 1;
               lock = true;
               repaint();
-              chessTable.notifyAll();
               audioPlayer.run();
+              if(chessimpl.compare(humanX,humanY,2)){
+                room.win();
+              }else
+              chessTable.notifyAll();
             } else {
               audioStopPlayer.run();
             }
@@ -227,12 +234,7 @@ public class ChessTable extends JPanel {
    */
   @Override
   public void paintComponent(Graphics g) {
-    super.paintComponent(g);
-    // if (room.getStatus() == 1) {
-    // g.drawImage(new ImageIcon("resource/imag/table_ready.png")
-    // .getImage(), 45, 45, 570, 570, this);
-    // } else {
-    g.drawImage(new ImageIcon("resource/imag/pan.png").getImage(), 0, 0,
+    g.drawImage(new ImageIcon("resource/imag/pan.png").getImage(), -8, -8,
         565, 565, this);
     // }
     Graphics2D g2 = (Graphics2D) g;
@@ -341,7 +343,6 @@ public class ChessTable extends JPanel {
       room.setCanplay(true);
     }
     System.out.println("我是TRUE：" + room.isCanplay());
-    room.labelnow.setText("isCanplay=" + room.isCanplay());
     for (int i = 0; i < 15; i++) {
       for (int j = 0; j < 17; j++) {
         // mark[i][j]=chess[i][j];

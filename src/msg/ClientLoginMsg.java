@@ -1,5 +1,6 @@
 package msg;
 
+
 import entity.User;
 import net.MyServer;
 /**
@@ -30,8 +31,7 @@ public class ClientLoginMsg extends BaseMsg{
 	public void doBiz() {
 		if(!username.isEmpty()){
 			//1.生成response報文
-
-			User user=new User(username);
+			User user= MyServer.getMyServer().findUser(username);
 			ServerLoginSucMsg msg=new ServerLoginSucMsg(user);
 			//2.服务器发送报文给指定客户
 			System.out.println(msg);

@@ -166,7 +166,7 @@ setVisible(true);
 		getContentPane().add(btnNewButton);
 		
 		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon("resource\\imag\\sendmail.jpg"));
+		lblNewLabel.setIcon(new ImageIcon("resource/imag/sendmail.jpg"));
 		lblNewLabel.setBounds(0, 0, 384, 361);
 		getContentPane().add(lblNewLabel);
 

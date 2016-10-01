@@ -2,6 +2,7 @@ package msg;
 
 import chess.Room;
 import entity.RoomPojo;
+import net.MyClient;
 import net.MyServer;
 import entity.User;
 /**
@@ -47,6 +48,9 @@ public class ClientClickRoomMsg extends BaseMsg{
 
 	public void doBiz() {
 		RoomPojo room=MyServer.getMyServer().getRooms().get(roomid);
+		if (room.getStatus() == RoomPojo.PLAYING) {
+			return;
+		}
 		if(room.getStatus()==RoomPojo.IDLE){
 			room.setStatus(room.WAIT);
 			if(isleft){
@@ -54,6 +58,7 @@ public class ClientClickRoomMsg extends BaseMsg{
 			}else{
 				room.setRightPlayer(user);
 			}
+			MyServer.getMyServer().getRooms().set(roomid,room);
 			//添加进入房间代码
 			//此处
 			ServerEnterRoomMsg msg1=new ServerEnterRoomMsg(roomid,isleft);
@@ -63,13 +68,14 @@ public class ClientClickRoomMsg extends BaseMsg{
 			ServerRoomListMsg msg=new ServerRoomListMsg(MyServer.getMyServer().getRooms());
 			MyServer.getMyServer().sendMsgToAll(msg);
 			System.out.println();
+			ServerRoomPlayerMsg msg2=new ServerRoomPlayerMsg(room);
+			MyServer.getMyServer().sendMsgToAll(msg2);
 			/*System.out.println("==========================");
 			System.out.println("测试"+room.getRid());
 			System.out.println("测试"+room.getStatus());
 			System.out.println("测试"+room.getLeftPlayer());
 			System.out.println("测试"+room.getRightPlayer());
 			System.out.println("==========================");*/
-			return;
 		}
 		if (room.getStatus() == RoomPojo.WAIT) {
 			if (isleft) {
@@ -82,9 +88,9 @@ public class ClientClickRoomMsg extends BaseMsg{
 				MyServer.getMyServer().sendMsgToClient(msg1, this.client);
 				ServerRoomListMsg msg = new ServerRoomListMsg(MyServer.getMyServer().getRooms());
 				MyServer.getMyServer().sendMsgToAll(msg);
-				return;
+				ServerRoomPlayerMsg msg2=new ServerRoomPlayerMsg(room);
+				MyServer.getMyServer().sendMsgToAll(msg2);
 			} else {
-				
 				if (room.getRightPlayer() != null) {
 					return;
 				}	
@@ -95,12 +101,12 @@ public class ClientClickRoomMsg extends BaseMsg{
 				ServerRoomListMsg msg = new ServerRoomListMsg(MyServer
 						.getMyServer().getRooms());
 				MyServer.getMyServer().sendMsgToAll(msg);
-				return;
+				ServerRoomPlayerMsg msg2=new ServerRoomPlayerMsg(room);
+				MyServer.getMyServer().sendMsgToAll(msg2);
 			}
+			MyServer.getMyServer().getRooms().set(roomid,room);
 		}
-		if (room.getStatus() == RoomPojo.PLAYING) {
-			return;
-		}
+
 	}
 	
 

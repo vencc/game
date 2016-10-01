@@ -2,7 +2,7 @@ package chess;
 
 import entity.User;
 import msg.ClientLoginMsg;
-import msg.ClientOffMsg;
+import msg.ClientLogoutMsg;
 import net.MyClient;
 
 import javax.swing.*;
@@ -16,22 +16,22 @@ import java.awt.event.WindowEvent;
  * 功能: 登录界面
  * 作者: 黄欢欢  时间: 2016-09-20
  */
-public class Home extends JFrame{
-  private User user=new User("游客");
-  private Home home=this;
-  private  JButton userButton=new JButton();       // 用户已登录显示自己姓名的按钮
-  private JButton netButton=new JButton("联网对战");    // 联网对战按钮
-  private JButton robotButton=new JButton("人机对战");  // 人机对战按钮
-  private JButton logoffButton=new JButton("退出");  // 退出按钮
-  private JPanel contentPane=new JPanel(){
-    protected void paintComponent(Graphics g){
-      Image image=new ImageIcon("resource/imag/home.png").getImage();
-      g.drawImage(image,0,0,getWidth(),getHeight(),this);
+public class Home extends JFrame {
+  private User user = new User("游客");
+  private Home home = this;
+  private JButton userButton = new JButton();       // 用户已登录显示自己姓名的按钮
+  private JButton netButton = new JButton("联网对战");    // 联网对战按钮
+  private JButton robotButton = new JButton("人机对战");  // 人机对战按钮
+  private JButton logoffButton = new JButton("退出");  // 退出按钮
+  private JPanel contentPane = new JPanel() {
+    protected void paintComponent(Graphics g) {
+      Image image = new ImageIcon("resource/imag/home.png").getImage();
+      g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
     }
 
   };
 
-  public Home(){
+  public Home() {
     init();
   }
 
@@ -47,11 +47,11 @@ public class Home extends JFrame{
     contentPane.setLayout(null);
 
     // 初始化组件
-    netButton.setBounds((int)(this.getWidth()*0.2),(int)(this.getHeight()*0.5),this.getWidth()/6,this.getHeight()/14);
+    netButton.setBounds((int) (this.getWidth() * 0.2), (int) (this.getHeight() * 0.5), this.getWidth() / 6, this.getHeight() / 14);
     netButton.setFocusPainted(false);
-    userButton.setBounds((int)(this.getWidth()*0.2),(int)(this.getHeight()*0.5),this.getWidth()/6,this.getHeight()/14);
-    robotButton.setBounds((int)(this.getWidth()*0.2),(int)(this.getHeight()*0.6),this.getWidth()/6,this.getHeight()/14);
-    logoffButton.setBounds((int)(this.getWidth()*0.2),(int)(this.getHeight()*0.7),this.getWidth()/6,this.getHeight()/14);
+    userButton.setBounds((int) (this.getWidth() * 0.2), (int) (this.getHeight() * 0.5), this.getWidth() / 6, this.getHeight() / 14);
+    robotButton.setBounds((int) (this.getWidth() * 0.2), (int) (this.getHeight() * 0.6), this.getWidth() / 6, this.getHeight() / 14);
+    logoffButton.setBounds((int) (this.getWidth() * 0.2), (int) (this.getHeight() * 0.7), this.getWidth() / 6, this.getHeight() / 14);
 
     // 初始化事件监听
     addAction();
@@ -68,11 +68,18 @@ public class Home extends JFrame{
    * 功能: 给成员属性添加监听事件
    * 作者: 黄欢欢   时间: 2016-09-21
    */
-  private void addAction(){
+  private void addAction() {
+    logoffButton.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        home.dispose();
+        new Home();
+      }
+    });
     netButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-    	  new NameDialog(home);
+        new NameDialog(home);
       }
     });
 
@@ -97,54 +104,49 @@ public class Home extends JFrame{
      * 功能: 监听窗体关闭按钮
      * 作者:黄欢欢  时间: 2016-09-23
      */
-    addWindowListener(new WindowAdapter(){
+    addWindowListener(new WindowAdapter() {
       @Override
       public void windowClosing(WindowEvent e) {
         System.out.println("退出程序");
-        ClientOffMsg msg=new ClientOffMsg();
+        ClientLogoutMsg msg = new ClientLogoutMsg(user);
         MyClient.getMyClient().sendMsg(msg);
       }
     });
 
-    logoffButton.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        home.dispose();
-        new Home();
-      }
-    });
+
   }
 
   /**
    * 功能: 当窗口缩放拖动时重绘窗口
    * 作者: 黄欢欢   时间: 2016-09-21
-   * @param time    重绘时间
-   * @param x       起点横坐标
-   * @param y       起点纵坐标
-   * @param width   窗体宽度
-   * @param height  窗体高度
+   *
+   * @param time   重绘时间
+   * @param x      起点横坐标
+   * @param y      起点纵坐标
+   * @param width  窗体宽度
+   * @param height 窗体高度
    */
-  public void repaint(long time, int x, int y, int width, int height){
-    netButton.setBounds((int)(this.getWidth()*0.2),(int)(this.getHeight()*0.5),this.getWidth()/6,this.getHeight()/13);
-    robotButton.setBounds((int)(this.getWidth()*0.2),(int)(this.getHeight()*0.6),this.getWidth()/6,this.getHeight()/13);
+  public void repaint(long time, int x, int y, int width, int height) {
+    netButton.setBounds((int) (this.getWidth() * 0.2), (int) (this.getHeight() * 0.5), this.getWidth() / 6, this.getHeight() / 13);
+    robotButton.setBounds((int) (this.getWidth() * 0.2), (int) (this.getHeight() * 0.6), this.getWidth() / 6, this.getHeight() / 13);
   }
 
   /**
    * 功能: 跳转至房间列表界面
    * 作者: 黄欢欢  时间: 2016-09-21
    */
-  public void toRoomList(User user){
-    this.user=user;
-    new RoomList(this,user);
+  public void toRoomList(User user) {
+    this.user = user;
+    new RoomList(this, user);
     userButton.setText(user.getName());
     contentPane.remove(netButton);
     contentPane.add(userButton);
     contentPane.add(logoffButton);
     this.setVisible(false);
   }
-  
-  public void toRoom(){
-	  new Room(this);
-	  this.setVisible(false);
+
+  public void toRoom() {
+    new Room(this);
+    this.setVisible(false);
   }
 }

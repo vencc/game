@@ -2,9 +2,6 @@ package chess;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.geom.Area;
-import java.awt.geom.Rectangle2D;
-import java.awt.geom.RoundRectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +17,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.WindowConstants;
-import entity.UpdatePicture;
 
 import msg.ClientClickChatMsg;
 import msg.ClientClickRoomMsg;
@@ -32,9 +28,7 @@ import net.MyClient;
 import entity.RoomPojo;
 import entity.User;
 import util.ScrollbarUI;
-import util.TabbedPaneUI;
 
-import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
@@ -380,7 +374,7 @@ public class RoomList extends JFrame {
   }
   /**
    * 功能: 当窗口缩放拖动时重绘窗口
-   * 作者: 黄欢欢   时间: 2016-09-21
+   * 作者: 黄欢欢   时间: 2016-09-29
    * @param time    重绘时间
    * @param x       起点横坐标
    * @param y       起点纵坐标
@@ -422,7 +416,6 @@ public class RoomList extends JFrame {
       jpanel.setName(i + "");
       jpanel.setOpaque(false);
       JButton leftjbutton1 = new JButton();
-      System.out.println("左边玩家退了吗"+r1.toString());
       if (r1.getLeftPlayer() != null)
         leftjbutton1.setIcon(new ImageIcon(rooms.get(i).getLeftPlayer().getFileName()));
       else
@@ -476,7 +469,7 @@ public class RoomList extends JFrame {
 
   public void toRoom(int roomid, boolean isleft) {
 
-	  new Room(roomid,isleft,this);
+	  new Room(roomid,isleft,this,user);
     this.setVisible(false);
   }
 

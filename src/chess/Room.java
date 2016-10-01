@@ -1,18 +1,8 @@
 package chess;
 
 
-import java.awt.AlphaComposite;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GradientPaint;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.*;
+import java.awt.event.*;
 import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 
@@ -25,6 +15,8 @@ import javax.swing.JPanel;
 
 import msg.*;
 import net.MyClient;
+import net.MyServer;
+import util.AudioPlayer;
 import util.ChessImpl;
 import util.IChess;
 import entity.RoomPojo;
@@ -39,7 +31,12 @@ public class Room extends JFrame {
 	private User rightPlayer;// 房间内右边玩家
 	private static boolean canplay=false;
 	private static boolean beforeRegret=false;
-	public static JLabel labelnow =null;
+  public boolean visible=false;
+  JPanel gamer1 = new JPanel();
+  JLabel jLabellll=new JLabel();
+  JLabel jLabelll=new JLabel();
+  JLabel ready=new JLabel();
+  JLabel ready1=new JLabel();
 	//private boolean isLeftPlay=false;//左边玩家是否可落子
 	//private boolean isRightPlay=false;//右边玩家是否可落子
 	
@@ -56,6 +53,7 @@ public class Room extends JFrame {
 	private int status;// 房间的状态
 	private ChessTable chessPanel;
 	public static boolean isleft;
+  private User user;
 
 	public ChessTable getChessPanel() {
 		return chessPanel;
@@ -69,7 +67,8 @@ public class Room extends JFrame {
 	 * @wbp.parser.constructor
 	 */
      
-	public Room(int roomid, boolean isleft,RoomList roomList) {
+	public Room(int roomid, boolean isleft,RoomList roomList,User user) {
+    this.user=user;
 		this.roomList=roomList;  
 		MyClient.getMyClient().setRoom(this);
 		System.out.println("网络对战");
@@ -115,10 +114,13 @@ public class Room extends JFrame {
 		return status;
 	}
 
+
 	public void setStatus(int status) {
 		this.status = status;
 	}
 
+  JLabel label = new JLabel();
+  JLabel lblNewLabel = new JLabel();
 	public Room(Home home) {
 		this.home = home;
 		init(1);// 人机
@@ -128,9 +130,9 @@ public class Room extends JFrame {
 	 * 功能：初始化房间、棋盘 作者：林珊珊
 	 * */
 	public void init(final int model) {// 联网对战0 人机对战1
+    this.setIconImage(new ImageIcon("resource/imag/logo.png").getImage());
 
 		this.setTitle("五子棋");
-		this.setLocation(345, 120);
 		this.setSize(1000, 800);
 		this.setResizable(false);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -141,41 +143,65 @@ public class Room extends JFrame {
 		if(model==0)//网络对战
 		chessPanel = new ChessTable(this);
 		else{
-			chessPanel = new ChessTable();
+			chessPanel = new ChessTable(this,0);
 		}
-		chessPanel.setBounds(210, 100, 568, 568);
-		getContentPane().add(chessPanel);
 
-		JPanel gamer1 = new JPanel();
-		gamer1.setBounds(10, 111, 180, 250);
-		getContentPane().add(gamer1);
-		gamer1.setLayout(null);
 
-		JLabel lblNewLabel = new JLabel("对手信息标签");
-		lblNewLabel.setBounds(48, 109, 72, 15);
-		gamer1.add(lblNewLabel);
 
-		JLabel label = new JLabel("假装有头像");
-		label.setBackground(Color.PINK);
-		label.setBounds(48, 45, 95, 54);
-		gamer1.add(label);
 
 		JPanel gamer2 = new JPanel();
-		gamer2.setBounds(10, 408, 180, 250);
+		gamer2.setBounds(10, 408, 180, 290);
 		getContentPane().add(gamer2);
 		gamer2.setLayout(null);
+    gamer2.setOpaque(false);
 
-		JLabel lblNewLabel_1 = new JLabel("个人信息标签");
-		lblNewLabel_1.setBounds(53, 108, 72, 15);
+		JLabel lblNewLabel_1 = new JLabel(user.getName());
+		lblNewLabel_1.setBounds(85, 110, 130, 45);
 		gamer2.add(lblNewLabel_1);
 
-		JLabel label_2 = new JLabel("假装有头像");
-		label_2.setBackground(Color.PINK);
-		label_2.setBounds(53, 41, 117, 57);
+		JLabel label_2 = new JLabel();
+    label_2.setIcon(new ImageIcon(user.getFileName()));
+		label_2.setBounds(72, 41, 45, 45);
+    label_2.setOpaque(false);
 		gamer2.add(label_2);
-		 labelnow = new JLabel("isCanplay()="+isCanplay());
-		labelnow.setBounds(300, 400, 150, 150);
-		chessPanel.add(labelnow);
+
+    JLabel label_3=new JLabel(user.getWinNum()+"");
+    label_3.setBounds(85,190,45,45);
+    gamer2.add(label_3);
+
+    JLabel label_4=new JLabel(user.getLoseNum()+"");
+    label_4.setBounds(85,240,45,45);
+    gamer2.add(label_4);
+    ready.setBounds(122,53,40,25);
+    ready.setIcon(new ImageIcon("resource/imag/ready.png"));
+    ready.setVisible(false);
+    gamer2.add(ready);
+    gamer1.setBounds(10, 78, 180, 290);
+
+    getContentPane().add(gamer1);
+    gamer1.setLayout(null);
+    gamer1.setOpaque(false);
+
+    ready1.setBounds(122,53,40,25);
+    ready1.setIcon(new ImageIcon("resource/imag/ready.png"));
+    ready1.setVisible(false);
+    gamer1.add(ready1);
+
+    jLabelll.setBounds(85,190,45,45);
+    jLabelll.setOpaque(false);
+    gamer1.add(jLabelll);
+
+    jLabellll.setBounds(85,240,45,45);
+    jLabellll.setOpaque(false);
+    gamer1.add(jLabellll);
+
+    lblNewLabel.setBounds(85, 110, 130, 45);
+    lblNewLabel.setOpaque(false);
+    gamer1.add(lblNewLabel);
+
+    label.setBounds(72, 41, 45, 45);
+    label.setOpaque(false);
+    gamer1.add(label);
 		/*
 		 * ImageIcon icon_ready=new ImageIcon("resource/imag/ready_icon.png");
 		 * JLabel Icon_ready = new JLabel(icon_ready); JPanel toastPanel = new
@@ -185,34 +211,43 @@ public class Room extends JFrame {
 		 */
 
 		JPanel chatRoom = new JPanel();
-		chatRoom.setBounds(797, 100, 197, 658);
+		chatRoom.setBounds(778, 100, 222, 658);
 		getContentPane().add(chatRoom);
 		chatRoom.setLayout(null);
+    chatRoom.setOpaque(false);
 
 		JLabel label_1 = new JLabel("聊天室");
 		label_1.setBounds(71, 147, 60, 348);
 		chatRoom.add(label_1);
+    label_1.setOpaque(false);
 
-		JPanel logoPanel = new JPanel();
-		logoPanel.setBounds(0, 0, 994, 101);
+		JPanel logoPanel = new JPanel(){
+      protected void paintComponent(Graphics g) {
+        Image image = new ImageIcon("resource/imag/room.png").getImage();
+        g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
+      }
+    };
+		logoPanel.setBounds(0, 0, 1000, 800);
 		getContentPane().add(logoPanel);
 		logoPanel.setLayout(null);
+    logoPanel.setOpaque(false);
 
-		JLabel lblNewLabel_2 = new JLabel("New label");
-		lblNewLabel_2.setBounds(0, 0, 994, 769);
-		logoPanel.add(lblNewLabel_2);
-		lblNewLabel_2.setIcon(new ImageIcon(
-				"resource/imag/home.png"));
+    chessPanel.setBounds(215, 100, 545, 545);
+    logoPanel.add(chessPanel);
 
 		JPanel UIPanel = new JPanel();
 		UIPanel.setBounds(173, 670, 515, 33);
-		getContentPane().add(UIPanel);
+		logoPanel.add(UIPanel);
 		UIPanel.setLayout(null);
+    UIPanel.setOpaque(false);
+
 
 		JButton But_ready = new JButton("准备");
 		But_ready.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+        visible=!visible;
+        ready.setVisible(visible);
 				ClientBeReady msg = new ClientBeReady(rid,isleft);
 				MyClient.getMyClient().sendMsg(msg);//发给服务器
 			}
@@ -267,16 +302,21 @@ public class Room extends JFrame {
 		But_regret.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if(model==0){//联机
-				beforeRegret=isCanplay();
-				setCanplay(false);
-				labelnow.setText("isCanplay="+isCanplay());
-				ClientBackChess msg=new ClientBackChess(rid,isleft);
-				MyClient.getMyClient().sendMsg(msg);//发给服务器
-				
-				}else{//人机
-					chessPanel.unpaintItem();
-				}
+        String[] options = { "爸爸", "不叫"  };
+        int res=JOptionPane.showOptionDialog(null, "叫爸爸", "还想悔棋?",
+            JOptionPane.DEFAULT_OPTION, JOptionPane.YES_NO_OPTION,
+            null, options, options[0]);
+        if(res==0) {
+          if (model == 0) {//联机
+            beforeRegret = isCanplay();
+            setCanplay(false);
+            ClientBackChess msg = new ClientBackChess(rid, isleft);
+            MyClient.getMyClient().sendMsg(msg);//发给服务器
+
+          } else {//人机
+            chessPanel.unpaintItem();
+          }
+        }
 				//if (ChessTable.Moves > 0){
 					//chessPanel.unpaintItem();
 					
@@ -289,10 +329,66 @@ public class Room extends JFrame {
 		UIPanel.add(But_regret);
 
 		JButton But_sur = new JButton("认输");
+    But_sur.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        if(model==1) {
+          String[] options = {"我还可以再战!", "我认怂 T T"};
+          int res = JOptionPane.showOptionDialog(null, "你连机器人都打不过,还好意思认输~~", "这样真的好吗?",
+              JOptionPane.DEFAULT_OPTION, JOptionPane.YES_NO_OPTION,
+              null, options, options[0]);
+          if (res == 1) {
+            chessPanel.getChessimpl().ResetGame();
+            repaint();
+          }
+        }else{
+          String[] options = {"我还可以再战!", "我认怂 T T"};
+          int res = JOptionPane.showOptionDialog(null, "对方把你吓尿了~~", "这样真的好吗?",
+              JOptionPane.DEFAULT_OPTION, JOptionPane.YES_NO_OPTION,
+              null, options, options[0]);
+          if(res==1){
+            ClientGameOver msg = new ClientGameOver(getRid(), !isleft);
+            MyClient.getMyClient().sendMsg(msg);
+          }
+        }
+      }
+    });
 		But_sur.setBounds(328, 5, 78, 23);
 		UIPanel.add(But_sur);
 	}
 
+  public void setAnotherPlayer(RoomPojo roomPojo){
+    System.out.println(roomPojo);
+    if(roomPojo.getRid()!=rid) return;
+    User user;
+    if(isleft){
+      user=roomPojo.getRightPlayer();
+    }else{
+      user=roomPojo.getLeftPlayer();
+    }
+    if(user!=null) {
+      label.setIcon(new ImageIcon(user.getFileName()));
+      lblNewLabel.setText(user.getName());
+      jLabelll.setText(user.getWinNum()+"");
+      jLabellll.setText(user.getLoseNum()+"");
+    }else{
+      label.setIcon(null);
+      lblNewLabel.setText("");
+      jLabelll.setText("");
+      jLabellll.setText("");
+    }
+  }
+  public void setReady(RoomPojo roomPojo){
+    if(roomPojo.getRid()!=rid) return;
+    if(isleft){
+      ready1.setVisible(roomPojo.isRightReady());
+    }else
+      ready1.setVisible(roomPojo.isLeftReady());
+  }
+  public void resetReady(RoomPojo roomPojo){
+    if(roomPojo.getRid()!=rid) return;
+    ready1.setVisible(false);
+  }
 	/**
 	 * 功能：跳转至房间列表页面 作者：林珊珊
 	 * */
@@ -312,7 +408,8 @@ public class Room extends JFrame {
 
 	public void gameStart() {
 		if(isleft){
-			setCanplay(true);			
+			setCanplay(true);
+      new AudioPlayer("resource/audio/start.wav").run();
 		}
 		
 		
@@ -323,8 +420,8 @@ public class Room extends JFrame {
 
 	public void decide() {
 		boolean result;
-		 String[] options = { "同意", "不同意"  }; 
-		 int res=JOptionPane.showOptionDialog(this, "对方请求悔棋", "是否同意", 
+		 String[] options = { "收", "滚"  };
+		 int res=JOptionPane.showOptionDialog(this, "收不收", "对方为了悔棋认你做爸爸",
 		JOptionPane.DEFAULT_OPTION, JOptionPane.YES_NO_OPTION, 
 		null, options, options[0]); 
 
@@ -345,7 +442,7 @@ public class Room extends JFrame {
 			setCanplay(true);
 		}
 		JOptionPane.showMessageDialog(this,
-				"对方不同意你的请求", "", JOptionPane.ERROR_MESSAGE); 
+				"对方儿子太多", "对方拒绝了你的请求", JOptionPane.ERROR_MESSAGE);
 		
 		
 	}
@@ -356,19 +453,30 @@ public class Room extends JFrame {
 		ClientMovePieces msg=new ClientMovePieces(rid,isleft,ChessImpl.chess,true,0,0);
 		MyClient.getMyClient().sendMsg(msg);
 		JOptionPane.showMessageDialog(this,
-				"alert", "对方同意了你的请求", JOptionPane.ERROR_MESSAGE); 
+				"乖儿子", "对方同意了你的请求", JOptionPane.ERROR_MESSAGE);
 	}
 
 	public void win() {
 		setCanplay(false);
+    ready.setVisible(false);
+    ready1.setVisible(false);
+    new Thread(new AudioPlayer("resource/audio/winner.wav")).start();
 		JOptionPane.showMessageDialog(this,
-				"你赢了！", "大侠，在下甘拜下风！！", JOptionPane.ERROR_MESSAGE); 
-		
+				"大侠，在下甘拜下风！！", "你赢了！", JOptionPane.ERROR_MESSAGE);
+    chessPanel.getChessimpl().ResetGame();
+    repaint();
+    visible=false;
 	}
 
 	public void deafeat() {
 		setCanplay(false);
-		JOptionPane.showMessageDialog(this,
-				"你输了！", "胜败乃兵家常事，壮士请重新来过", JOptionPane.ERROR_MESSAGE); 
+    ready.setVisible(false);
+    ready1.setVisible(false);
+    new Thread(new AudioPlayer("resource/audio/loser.wav")).start();
+    JOptionPane.showMessageDialog(this,
+				"胜败乃兵家常事，壮士请重新来过", "你输了！", JOptionPane.ERROR_MESSAGE);
+    chessPanel.getChessimpl().ResetGame();
+    repaint();
+    visible=false;
 	}
 }

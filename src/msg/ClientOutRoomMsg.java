@@ -61,5 +61,7 @@ public class ClientOutRoomMsg extends BaseMsg {
     }
     ServerRoomListMsg msg=new ServerRoomListMsg(MyServer.getMyServer().getRooms());
     MyServer.getMyServer().sendMsgToAll(msg);
+    ServerRoomPlayerMsg msg2=new ServerRoomPlayerMsg(room);
+    MyServer.getMyServer().sendMsgToAll(msg2);
   }
 }

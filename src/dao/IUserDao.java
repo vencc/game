@@ -43,8 +43,14 @@ public interface IUserDao {
 
   /**
    * 功能: 更新胜利局数
-   * @param winNum 当前胜利局数
+   * @param new_winNum 当前胜利局数
    */
   void update(int new_winNum,String name);
+
+  /**
+   * 功能: 创建新玩家
+   * @param user
+   */
+  void insertUser(User user);
 
 }

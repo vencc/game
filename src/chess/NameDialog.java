@@ -1,11 +1,14 @@
 package chess;
 
+
+import entity.UpdatePicture;
 import entity.User;
 
 import javax.swing.*;
 
 import msg.ClientLoginMsg;
 import net.MyClient;
+import net.MyServer;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -53,17 +56,30 @@ public class NameDialog extends JDialog {
     ok.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        if (MyClient.getMyClient().isConnected()) {
-          return;
+        if (!MyClient.getMyClient().isConnected()) {
+          if(!MyClient.getMyClient().connect()) return;
+        }else{
+
         }
-        System.out.println(MyClient.getMyClient());
-        if (MyClient.getMyClient().connect()) {
-          ClientLoginMsg msg = new ClientLoginMsg(nameTextField.getText());
-          MyClient.getMyClient().sendMsg(msg);
-          nameDialog.dispose();
-        } else {
-          System.out.println("连接失败");
-        }
+          System.out.println("网络成功连接");
+          String name=nameTextField.getText();
+          User user=MyServer.getMyServer().findUser(name);
+          if(user==null){
+            String[] options = { "创建", "重新输入"  };
+            int res=JOptionPane.showOptionDialog(null, "确定创建新用户吗", "当前输入的名字是新用户",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.YES_NO_OPTION,
+                null, options, options[0]);
+            if(res==0){
+              nameDialog.dispose();
+              user=new User(name);
+              new UpdatePicture(user,home).setVisible(true);
+            }
+          }else{
+            nameDialog.dispose();
+            ClientLoginMsg msg = new ClientLoginMsg(user.getName());
+            MyClient.getMyClient().sendMsg(msg);
+          }
+
 
       }
     });

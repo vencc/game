@@ -14,7 +14,6 @@ public class ChessImpl implements IChess {
 	private static int h = 17;    //chess[0][type+14] chess[1][type+14] 保留黑子最近下的2颗棋
 	private static int w = 17;   //chess[2][15]标记当前最新下的棋子颜色
 	public static int[][] chess = new int[h][w];
-	public static int[][] oldchess = new int[h][w];
 	private boolean[][][] oldblacktable = new boolean[15][15][572]; // 旧黑棋获胜组合
 	private boolean[][][] oldwhitetable = new boolean[15][15][572]; // 旧白棋获胜组合
 	private int[][] oldwnum = new int[15][15]; // 旧白棋在棋盘上各个位置的分值 
@@ -49,6 +48,20 @@ public class ChessImpl implements IChess {
 	}
 
 	public void delete(int type) {
+		int flag=0;
+		for(int i=0;i<15;i++){
+			for(int j=0;j<15;j++){
+				if(chess[i][j]==1){
+					flag=1;
+				}
+			}
+			if(flag==1){
+				break;
+			}
+		}
+		if(flag==0){
+			return;
+		}
 		// 刪除棋子類型位tupe的棋子上次下的棋子
 		System.out.println("==============="+type);
 		System.out.println(chess[2][15]);
@@ -308,6 +321,8 @@ public class ChessImpl implements IChess {
 			// 初始化黑子白子上的每个权值上的连子数
 			for (j = 0; j < 572; j++)
 				this.win[i][j] = 0;
+		white=false;
+		black=false;
 		
 	}
 

@@ -13,9 +13,9 @@ import java.sql.Statement;
  */
 public class BaseDao {
 	// 1.四个静态常量的参数
-	public static final String url = "jdbc:mysql://localhost:3306/fivechess";
+	public static final String url = "jdbc:mysql://localhost:3306/game";
 	public static final String username = "root";
-	public static final String password = "root";
+	public static final String password = "hhh";
 	public static final String classname = "com.mysql.jdbc.Driver";
 
 	// 2.加载驱动并获取连接
@@ -120,6 +120,30 @@ public class BaseDao {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+	}
+	public boolean doInsert(String sql,String[] paras){
+		Connection connection = getConnection();
+		if (connection == null)
+			return false;
+		// 执行操作
+		PreparedStatement psm = null;
+		try {
+			psm = connection.prepareStatement(sql);
+			if (paras != null) {
+				// 设置动态参数 --> ?
+				int index = 1;
+				for (String str : paras) {
+					psm.setString(index++, str);
+				}
+			}
+			boolean result = psm.execute();
+			return result;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}finally{
+			doClose(connection,psm,null);
 		}
 	}
 }

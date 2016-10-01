@@ -27,7 +27,7 @@ public class IUserDaoImp implements IUserDao {
 		try {
 			while(r.next())
 			{
-				u=new User(r.getString(1),r.getString(2),r.getInt(3));
+				u=new User(r.getString(1),r.getString(2),Integer.parseInt(r.getString(3)));
 				return u;
 			}
 		} catch (SQLException e) {
@@ -101,7 +101,7 @@ public class IUserDaoImp implements IUserDao {
 		try {
 			while(rs.next())
 			{
-				u=new User(rs.getString("name"),rs.getString("fileName"),rs.getInt("winNum"));
+				u=new User(rs.getString("name"),rs.getString("fileName"),Integer.parseInt(rs.getString("winNum")));
 			    t=u.getWinNum();
 			}
 		} catch (SQLException e) {
@@ -123,7 +123,13 @@ public class IUserDaoImp implements IUserDao {
 		String[] paras={new_winNum+"",name};
 		b.doUpdate(sql, paras);
 	}
-	
+
+	public void insertUser(User user){
+		sql="insert into user(name,winNum,loseNum,tiedNum) values(?,?,?,?)";
+    System.out.println("新增用户");
+    String[] paras={user.getName(),0+"",0+"",0+""};
+    b.doInsert(sql,paras);
+	}
 }
 	
   

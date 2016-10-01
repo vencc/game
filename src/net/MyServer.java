@@ -10,6 +10,8 @@ import java.util.List;
 
 import javax.management.MBeanServer;
 
+import dao.IUserDao;
+import dao.IUserDaoImp;
 import entity.RoomPojo;
 import entity.User;
 import net.MyServer;
@@ -24,6 +26,7 @@ import msg.BaseMsg;
  */
 public class MyServer {
 	private static MyServer myserver;
+	public IUserDao userDao=new IUserDaoImp();
 	private MyServer(){}
 	/**
 	 * 单例获取服务器对象
@@ -138,7 +141,7 @@ public class MyServer {
 	 * @author john
 	 *
 	 */
-	class ClientChatThread extends Thread {
+	public class ClientChatThread extends Thread {
 		private User user;
 		private Socket client;
         
@@ -270,4 +273,13 @@ public class MyServer {
 			}
 		}
 	}
+  public User findUser(String name){
+    return userDao.findUser(name);
+  }
+  public void updateUserImag(String filename,String user){
+    userDao.updateUserImag(filename,user);
+  }
+  public void insertUser(User user){
+    userDao.insertUser(user);
+  }
 }

@@ -48,6 +48,9 @@ public class ClientGameOver extends BaseMsg{
 
 	public void doBiz() {
 		RoomPojo roompojo=MyServer.getMyServer().getRooms().get(roomid);
+		roompojo.setLeftReady(false);
+		roompojo.setRightReady(false);
+		MyServer.getMyServer().getRooms().set(roomid,roompojo);
 		if(isleft){
 			ServerWinMsg msg=new ServerWinMsg();
 			MyServer.getMyServer().sendMsgToClient(msg, roompojo.getLeftPlayer());
