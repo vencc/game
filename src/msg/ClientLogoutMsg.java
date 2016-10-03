@@ -7,9 +7,6 @@ import net.MyServer;
  * 功能: 退出发送报文
  */
 public class ClientLogoutMsg extends BaseMsg{
-  public ClientLogoutMsg(User user) {
-		// TODO Auto-generated constructor stub
-	}
 
 public void doBiz() {
     MyServer.getMyServer().deleteUserCilent(this.client);

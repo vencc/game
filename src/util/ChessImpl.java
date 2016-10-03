@@ -10,7 +10,7 @@ public class ChessImpl implements IChess {
 	private int wgrade, bgrade;             
 	private int[][] win = new int[3][572]; // 记录棋子在棋盘上的获胜组合中填入了多少棋子
 	private boolean start;
-	private int wmat, wnat, bmde, bnde,nowchess;
+	private int wmat, wnat, bmde, bnde;
 	private static int h = 17;    //chess[0][type+14] chess[1][type+14] 保留黑子最近下的2颗棋
 	private static int w = 17;   //chess[2][15]标记当前最新下的棋子颜色
 	public static int[][] chess = new int[h][w];
@@ -129,7 +129,7 @@ public class ChessImpl implements IChess {
 		// System.out.println(chess[5][10]+" 9");
 
 		// 纵向判断
-		for (int i = x, j = 0; j < 10; j++) {
+		for (int i = x, j = 0; j <= 10; j++) {
 			int s = 0, z = 0;
 			for (int a = j; a < j + 5; a++) {
 				if (chess[x][a] == 1) {
@@ -154,7 +154,7 @@ public class ChessImpl implements IChess {
 		// System.out.println("白色");
 		// }
 		// 横向判断
-		for (int i = 0, j = y; i < 10; i++) {
+		for (int i = 0, j = y; i <= 10; i++) {
 			int s = 0, z = 0;
 			for (int a = i; a < i + 5; a++) {
 				if (chess[a][y] == 1) {

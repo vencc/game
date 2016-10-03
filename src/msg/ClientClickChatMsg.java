@@ -20,7 +20,7 @@ public class ClientClickChatMsg extends BaseMsg{
 	}
 
 	public void setUser(User user) {
-		this.user = user;
+		this.user = MyServer.getMyServer().findUser(user.getName());
 	}
 	
 

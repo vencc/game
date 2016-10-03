@@ -52,5 +52,11 @@ public interface IUserDao {
    * @param user
    */
   void insertUser(User user);
+  /**
+   * 功能: 更新失败局数
+   * @param loseNum 当前失败局数
+   * @param name 姓名
+   */
+  void updateLoseNum(int loseNum,String name);
 
 }

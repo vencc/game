@@ -237,7 +237,15 @@ public class MyServer {
 			}
 		}
 	}
-
+public boolean loged(User user){
+  for(ClientChatThread c:pool){
+    if(user.equals(c.getUser())){
+      System.out.println(user.getName()+"   判断相等   "+c.getUser().getName());
+      return false;
+    }
+  }
+  return true;
+}
 	/**
 	 * 功能: 客户端断开连接
 	 * @param client
@@ -282,4 +290,10 @@ public class MyServer {
   public void insertUser(User user){
     userDao.insertUser(user);
   }
+	public void updateWinNum(User user){
+		userDao.update(user.getWinNum()+1,user.getName());
+	}
+	public void updateLoseNum(User user){
+		userDao.updateLoseNum(user.getLoseNum()+1,user.getName());
+	}
 }

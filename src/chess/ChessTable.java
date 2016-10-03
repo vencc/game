@@ -20,6 +20,7 @@ import javax.swing.JPanel;
 import net.MyClient;
 import msg.ClientGameOver;
 import msg.ClientMovePieces;
+import net.MyServer;
 import util.AudioPlayer;
 import util.ChessImpl;
 import util.IChess;
@@ -39,7 +40,7 @@ public class ChessTable extends JPanel {
   private boolean lock = false; // 同步锁
   private int humanX; // 鼠标点击的坐标
   private int humanY; // 鼠标点击的坐标
-  private int model;
+  public int model;
   private Room room;
 
   public static final int chess_BLACK = 2;
@@ -118,7 +119,9 @@ public class ChessTable extends JPanel {
           Moves++;
           lock = false;
           audioPlayer.run();
-          if(chessimpl.compare(XY[0],XY[1],1)){
+          if(Moves==225)
+            room.pingju();
+          else if(chessimpl.compare(XY[0],XY[1],1)){
             room.deafeat();
           }else
           chessTable.notifyAll();
@@ -144,6 +147,7 @@ public class ChessTable extends JPanel {
           humanY = (y - 21) / 34;
           if (model == 1) {// 人机
             if (paintItem(humanX, humanY)) {
+              room.backGame=true;
               Moves++;
               System.out.println("黑棋在这" + humanX + "," + humanY);
               System.out.println("is here!");
@@ -151,7 +155,9 @@ public class ChessTable extends JPanel {
               lock = true;
               repaint();
               audioPlayer.run();
-              if(chessimpl.compare(humanX,humanY,2)){
+              if(Moves==225)
+                room.pingju();
+              else if(chessimpl.compare(humanX,humanY,2)){
                 room.win();
               }else
               chessTable.notifyAll();
@@ -160,17 +166,35 @@ public class ChessTable extends JPanel {
             }
           } else {
 
-              if (room.isCanplay() && paintItem(humanX, humanY)) {
+            if(room.isCanplay()) {
+              if (paintItem(humanX, humanY)) {
+                room.backGame=true;
                 Moves++;
+                if (Moves == 225)
+                  room.pingju();
                 room.setCanplay(false);
                 System.out.println("kjdhasjdakdhads+==========" + ChessImpl.chess[0][0]);
                 ClientMovePieces msg = new ClientMovePieces(
-                    room.getRid(), room.isleft, ChessImpl.chess, false,humanX,humanY);
+                    room.getRid(), room.isleft, ChessImpl.chess, false, humanX, humanY);
                 MyClient.getMyClient().sendMsg(msg);
-                room.getChessPanel().setMark(humanX,humanY);
+                room.getChessPanel().setMark(humanX, humanY);
                 room.repaint();
                 audioPlayer.run();
+                if(room.isleft) {
+                  if (chessimpl.compare(humanX, humanY, 2)) {//黑棋赢了，发送游戏结束报文
+                    ClientGameOver msg1 = new ClientGameOver(room.getRid(), room.isleft);
+                    MyClient.getMyClient().sendMsg(msg1);
+                  }
+                }else{
+                  if (chessimpl.compare(humanX, humanY, 1)) {//白棋赢了
+                    ClientGameOver msg1 = new ClientGameOver(room.getRid(), room.isleft);
+                    MyClient.getMyClient().sendMsg(msg1);
+                  }
+                }
               }
+              else
+                audioStopPlayer.run();
+            }
 
           }
         } else {
@@ -199,26 +223,12 @@ public class ChessTable extends JPanel {
           Moves++;
           succeed = chessimpl.add(i, j, 2);
 
-          if (chessimpl.compare(i, j, 2)) {//黑棋赢了，发送游戏结束报文
-            ClientMovePieces msg1 = new ClientMovePieces(
-                room.getRid(), room.isleft, ChessImpl.chess, false,humanX,humanY);
-            MyClient.getMyClient().sendMsg(msg1);
-            ClientGameOver msg = new ClientGameOver(room.getRid(), room.isleft);
-            MyClient.getMyClient().sendMsg(msg);
-            return false;
-          }
+
         } else {// 白棋玩家
           Moves++;
           succeed = chessimpl.add(i, j, 1);
 
-          if (chessimpl.compare(i, j, 1)) {//白棋赢了
-            ClientMovePieces msg1 = new ClientMovePieces(
-                room.getRid(), room.isleft, ChessImpl.chess, false,humanX,humanY);
-            MyClient.getMyClient().sendMsg(msg1);
-            ClientGameOver msg = new ClientGameOver(room.getRid(), room.isleft);
-            MyClient.getMyClient().sendMsg(msg);
-            return false;
-          }
+
         }
         return succeed;
         // System.out.println("未能明确棋子颜色");
@@ -246,7 +256,7 @@ public class ChessTable extends JPanel {
 		 * 功能：加载单元格间距
 		 */
 
-    for (int i = 0, WIDTH = 42; i < draw.length; i++, WIDTH += 34) {
+    for (int i = 0, WIDTH = 35; i < draw.length; i++, WIDTH += 34) {
       draw[i] = WIDTH;
     }
 
@@ -254,8 +264,8 @@ public class ChessTable extends JPanel {
       for (int j = 0; j < 15; j++) {
         if (ChessImpl.chess[i][j] != 0) {
           int m, n;
-          m = i * 34 + 42;
-          n = j * 34 + 42;
+          m = i * 34 + 35;
+          n = j * 34 + 35;
           Ellipse2D ellipse = new Ellipse2D.Double();
           Ellipse2D ellipse2D = new Ellipse2D.Double();
           ellipse.setFrameFromCenter(m, n, m + 14, n + 14);

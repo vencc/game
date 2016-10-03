@@ -63,24 +63,25 @@ public class NameDialog extends JDialog {
         }
           System.out.println("网络成功连接");
           String name=nameTextField.getText();
-          User user=MyServer.getMyServer().findUser(name);
-          if(user==null){
-            String[] options = { "创建", "重新输入"  };
-            int res=JOptionPane.showOptionDialog(null, "确定创建新用户吗", "当前输入的名字是新用户",
+        if(name.trim()!="") {
+          User user = MyServer.getMyServer().findUser(name);
+          if (user == null) {
+            String[] options = {"创建", "重新输入"};
+            int res = JOptionPane.showOptionDialog(null, "确定创建新用户吗", "当前输入的名字是新用户",
                 JOptionPane.DEFAULT_OPTION, JOptionPane.YES_NO_OPTION,
                 null, options, options[0]);
-            if(res==0){
+            if (res == 0) {
               nameDialog.dispose();
-              user=new User(name);
-              new UpdatePicture(user,home).setVisible(true);
+              user = new User(name);
+              new UpdatePicture(user,1);
             }
-          }else{
+          } else {
             nameDialog.dispose();
             ClientLoginMsg msg = new ClientLoginMsg(user.getName());
             MyClient.getMyClient().sendMsg(msg);
           }
 
-
+        }
       }
     });
     cancel.addActionListener(new ActionListener() {
@@ -94,6 +95,9 @@ public class NameDialog extends JDialog {
   public void loginSuc(User user) {
     home.toRoomList(user);
     nameDialog.dispose();
+  }
+  public void showMessage(){
+    JOptionPane.showMessageDialog(null,"该帐号已登录","",JOptionPane.WARNING_MESSAGE);
   }
 
   public void loginFail() {

@@ -19,7 +19,7 @@ public class RoomPojo implements Serializable{
 	private boolean isRightReady=false;//右边玩家是否准备
 	private boolean isLeftPlay=false;//左边玩家是否可落子
 	private boolean isRightPlay=false;//右边玩家是否可落子
-	
+
 	public boolean isLeftReady() {
 		return isLeftReady;
 	}
@@ -76,7 +76,7 @@ public class RoomPojo implements Serializable{
 		this.status = status;
 	}
 	public String toString(){
-		return "状态: "+status+", 左边玩家: "+leftPlayer+", 右边玩家: "+rightPlayer;
+		return "房间号: "+rid+"状态: "+status+", 左边玩家: "+leftPlayer+",是否准备"+isLeftReady()+", 右边玩家: "+rightPlayer;
 	}
 	
 	

@@ -2,15 +2,17 @@ package entity;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JButton;
+import javax.swing.JLabel;
 
 import chess.Home;
+import chess.RoomList;
 import dao.IUserDao;
 import dao.IUserDaoImp;
 import msg.ClientLoginMsg;
 import net.MyClient;
 import net.MyServer;
 
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.ActionListener;
@@ -18,62 +20,124 @@ import java.awt.event.ActionEvent;
 
 public class UpdatePicture extends JFrame {
   public UpdatePicture u = this;
-  private MyServer idi=MyServer.getMyServer();
+  private MyServer idi = MyServer.getMyServer();
+  private User user;
+  private JLabel btnNewButton;
+  private JLabel btnNewButton_1;
+  private JLabel btnNewButton_2;
+  private JLabel btnNewButton_3;
+  private JLabel btnNewButton_4;
+  private JLabel btnNewButton_5;
+  private JLabel btnNewButton_6;
+  private JLabel btnNewButton_7;
+  private JLabel btnNewButton_8;
+  private JLabel btnNewButton_9;
+  JLabel btnNewButton_10;
+  JLabel btnNewButton_11;
+  JLabel btnNewButton_12;
+  JLabel btnNewButton_13;
+  JLabel btnNewButton_14;
+  JLabel btnNewButton_15;
+  JLabel btnNewButton_16;
+  JLabel btnNewButton_17;
+  JLabel btnNewButton_18;
 
-  public UpdatePicture(User user, Home home) {
+  public UpdatePicture(User user,int flag) {
+    this.user = user;
     idi.insertUser(user);
     this.setBounds(100, 100, 400, 400);
     this.setResizable(false);
-    getContentPane().setLayout(null);
-    JButton btnNewButton = new JButton(new ImageIcon("resource/photo/10.jpg"));
+    setVisible(true);
+    getContentPane().setLayout(new GridLayout(5, 10));
+    btnNewButton = new JLabel(new ImageIcon("resource/photo/1.jpg"));
+    getContentPane().add(btnNewButton);
+    btnNewButton_1 = new JLabel(new ImageIcon("resource/photo/2.jpg"));
+    getContentPane().add(btnNewButton_1);
+    btnNewButton_2 = new JLabel(new ImageIcon("resource/photo/3.jpg"));
+    getContentPane().add(btnNewButton_2);
+    btnNewButton_3 = new JLabel(new ImageIcon("resource/photo/4.jpg"));
+    getContentPane().add(btnNewButton_3);
+    btnNewButton_4 = new JLabel(new ImageIcon("resource/photo/5.jpg"));
+    getContentPane().add(btnNewButton_4);
+    btnNewButton_5 = new JLabel(new ImageIcon("resource/photo/6.jpg"));
+    getContentPane().add(btnNewButton_5);
+    btnNewButton_6 = new JLabel(new ImageIcon("resource/photo/7.jpg"));
+    getContentPane().add(btnNewButton_6);
+    btnNewButton_7 = new JLabel(new ImageIcon("resource/photo/8.jpg"));
+    getContentPane().add(btnNewButton_7);
+    btnNewButton_8 = new JLabel(new ImageIcon("resource/photo/9.jpg"));
+    getContentPane().add(btnNewButton_8);
+    btnNewButton_9 = new JLabel(new ImageIcon("resource/photo/10.jpg"));
+    getContentPane().add(btnNewButton_9);
+    btnNewButton_10 = new JLabel(new ImageIcon("resource/photo/11.jpg"));
+    getContentPane().add(btnNewButton_10);
+    btnNewButton_11 = new JLabel(new ImageIcon("resource/photo/12.jpg"));
+    getContentPane().add(btnNewButton_11);
+    btnNewButton_12 = new JLabel(new ImageIcon("resource/photo/13.jpg"));
+    getContentPane().add(btnNewButton_12);
+    btnNewButton_13 = new JLabel(new ImageIcon("resource/photo/14.jpg"));
+    getContentPane().add(btnNewButton_13);
+    btnNewButton_14 = new JLabel(new ImageIcon("resource/photo/15.jpg"));
+    getContentPane().add(btnNewButton_14);
+    btnNewButton_15 = new JLabel(new ImageIcon("resource/photo/16.jpg"));
+    getContentPane().add(btnNewButton_15);
+    btnNewButton_16 = new JLabel(new ImageIcon("resource/photo/17.jpg"));
+    getContentPane().add(btnNewButton_16);
+    btnNewButton_17 = new JLabel(new ImageIcon("resource/photo/18.jpg"));
+    getContentPane().add(btnNewButton_17);
+    btnNewButton_18 = new JLabel(new ImageIcon("resource/photo/19.jpg"));
+    getContentPane().add(btnNewButton_18);
+    frameInit(flag);
+  }
+
+  public void frameInit(int flag) {
 
     btnNewButton.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e) {
-        String root1 = "resource/photo/10.jpg";
+        String root1 = "resource/photo/1.jpg";
         idi.updateUserImag(root1, user.getName());
         user.setFileName(root1);
-        dispose();
-        ClientLoginMsg msg = new ClientLoginMsg(user.getName());
-        MyClient.getMyClient().sendMsg(msg);
+        if(flag==1) login();
+        else updatePhoto();
       }
 
     });
-    btnNewButton.setBounds(10, 10, 93, 82);
-    getContentPane().add(btnNewButton);
 
-    JButton btnNewButton_1 = new JButton(new ImageIcon("resource/photo/2.jpg"));
     btnNewButton_1.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e) {
-        String root1 = "resource/photo/3.jpg";
+        String root1 = "resource/photo/2.jpg";
         idi.updateUserImag(root1, user.getName());
         user.setFileName(root1);
-        dispose();
-        ClientLoginMsg msg = new ClientLoginMsg(user.getName());
-        MyClient.getMyClient().sendMsg(msg);
+        if(flag==1) login();
+        else updatePhoto();
       }
     });
-    btnNewButton_1.setBounds(10, 102, 93, 76);
-    getContentPane().add(btnNewButton_1);
 
-    JButton btnNewButton_2 = new JButton(new ImageIcon("resource/photo/3.jpg"));
     btnNewButton_2.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e) {
-        String root1 = "resource/photo/2.jpg";
+        String root1 = "resource/photo/3.jpg";
 
         idi.updateUserImag(root1, user.getName());
         user.setFileName(root1);
-        dispose();
-        ClientLoginMsg msg = new ClientLoginMsg(user.getName());
-        MyClient.getMyClient().sendMsg(msg);
+        if(flag==1) login();
+        else updatePhoto();
       }
     });
-    btnNewButton_2.setBounds(10, 191, 93, 74);
-    getContentPane().add(btnNewButton_2);
 
-    JButton btnNewButton_4 = new JButton(new ImageIcon("resource/photo/5.jpg"));
+    btnNewButton_3.addMouseListener(new MouseAdapter() {
+      @Override
+      public void mouseClicked(MouseEvent e) {
+        String root1 = "resource/photo/4.jpg";
+
+        idi.updateUserImag(root1, user.getName());
+        user.setFileName(root1);
+        if(flag==1) login();
+        else updatePhoto();
+      }
+    });
     btnNewButton_4.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e) {
@@ -81,15 +145,11 @@ public class UpdatePicture extends JFrame {
 
         idi.updateUserImag(root1, user.getName());
         user.setFileName(root1);
-        dispose();
-        ClientLoginMsg msg = new ClientLoginMsg(user.getName());
-        MyClient.getMyClient().sendMsg(msg);
+        if(flag==1) login();
+        else updatePhoto();
       }
     });
-    btnNewButton_4.setBounds(103, 102, 93, 76);
-    getContentPane().add(btnNewButton_4);
 
-    JButton btnNewButton_5 = new JButton(new ImageIcon("resource/photo/6.jpg"));
     btnNewButton_5.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e) {
@@ -97,43 +157,34 @@ public class UpdatePicture extends JFrame {
 
         idi.updateUserImag(root1, user.getName());
         user.setFileName(root1);
-        dispose();
-        ClientLoginMsg msg = new ClientLoginMsg(user.getName());
-        MyClient.getMyClient().sendMsg(msg);
+        if(flag==1) login();
+        else updatePhoto();
       }
     });
-    btnNewButton_5.setBounds(103, 191, 93, 74);
-    getContentPane().add(btnNewButton_5);
 
-    JButton btnNewButton_6 = new JButton(new ImageIcon("resource/photo/7.jpg"));
     btnNewButton_6.addMouseListener(new MouseAdapter() {
-      @Override
       public void mouseClicked(MouseEvent e) {
         String root1 = "resource/photo/7.jpg";
 
         idi.updateUserImag(root1, user.getName());
         user.setFileName(root1);
-        dispose();
-        ClientLoginMsg msg = new ClientLoginMsg(user.getName());
-        MyClient.getMyClient().sendMsg(msg);
+        if(flag==1) login();
+        else updatePhoto();
       }
     });
-    btnNewButton_6.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent e) {
+
+    btnNewButton_7.addMouseListener(new MouseAdapter() {
+      @Override
+      public void mouseClicked(MouseEvent e) {
         String root1 = "resource/photo/8.jpg";
 
         idi.updateUserImag(root1, user.getName());
         user.setFileName(root1);
-        dispose();
-        ClientLoginMsg msg = new ClientLoginMsg(user.getName());
-        MyClient.getMyClient().sendMsg(msg);
-
+        if(flag==1) login();
+        else updatePhoto();
       }
     });
-    btnNewButton_6.setBounds(197, 10, 93, 82);
-    getContentPane().add(btnNewButton_6);
 
-    JButton btnNewButton_8 = new JButton(new ImageIcon("resource/photo/9.jpg"));
     btnNewButton_8.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e) {
@@ -141,173 +192,139 @@ public class UpdatePicture extends JFrame {
 
         idi.updateUserImag(root1, user.getName());
         user.setFileName(root1);
-        dispose();
-        ClientLoginMsg msg = new ClientLoginMsg(user.getName());
-        MyClient.getMyClient().sendMsg(msg);
+        if(flag==1) login();
+        else updatePhoto();
       }
     });
-    btnNewButton_8.setBounds(197, 191, 93, 74);
-    getContentPane().add(btnNewButton_8);
 
-    JButton btnNewButton_9 = new JButton(new ImageIcon("resource/photo/11.jpg"));
     btnNewButton_9.addMouseListener(new MouseAdapter() {
+      @Override
+      public void mouseClicked(MouseEvent e) {
+        String root1 = "resource/photo/10.jpg";
+
+        idi.updateUserImag(root1, user.getName());
+        user.setFileName(root1);
+        if(flag==1) login();
+        else updatePhoto();
+      }
+    });
+
+    btnNewButton_10.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e) {
         String root1 = "resource/photo/11.jpg";
 
         idi.updateUserImag(root1, user.getName());
         user.setFileName(root1);
-        dispose();
-        ClientLoginMsg msg = new ClientLoginMsg(user.getName());
-        MyClient.getMyClient().sendMsg(msg);
+        if(flag==1) login();
+        else updatePhoto();
       }
     });
-    btnNewButton_9.setBounds(291, 10, 93, 82);
-    getContentPane().add(btnNewButton_9);
 
-    JButton btnNewButton_10 = new JButton(new ImageIcon("resource/photo/12.jpg"));
-    btnNewButton_10.addMouseListener(new MouseAdapter() {
+    btnNewButton_11.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e) {
         String root1 = "resource/photo/12.jpg";
 
         idi.updateUserImag(root1, user.getName());
         user.setFileName(root1);
-        dispose();
-        ClientLoginMsg msg = new ClientLoginMsg(user.getName());
-        MyClient.getMyClient().sendMsg(msg);
+        if(flag==1) login();
+        else updatePhoto();
       }
     });
-    btnNewButton_10.setBounds(291, 102, 93, 76);
-    getContentPane().add(btnNewButton_10);
 
-    JButton btnNewButton_11 = new JButton(new ImageIcon("resource/photo/13.jpg"));
-    btnNewButton_11.addMouseListener(new MouseAdapter() {
+    btnNewButton_12.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e) {
         String root1 = "resource/photo/13.jpg";
 
         idi.updateUserImag(root1, user.getName());
         user.setFileName(root1);
-        dispose();
-        ClientLoginMsg msg = new ClientLoginMsg(user.getName());
-        MyClient.getMyClient().sendMsg(msg);
+        if(flag==1) login();
+        else updatePhoto();
       }
     });
-    btnNewButton_11.setBounds(291, 191, 93, 74);
-    getContentPane().add(btnNewButton_11);
 
-    JButton btnNewButton_12 = new JButton(new ImageIcon("resource/photo/14.jpg"));
-    btnNewButton_12.addMouseListener(new MouseAdapter() {
+    btnNewButton_13.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e) {
         String root1 = "resource/photo/14.jpg";
 
         idi.updateUserImag(root1, user.getName());
         user.setFileName(root1);
-        dispose();
-        ClientLoginMsg msg = new ClientLoginMsg(user.getName());
-        MyClient.getMyClient().sendMsg(msg);
+        if(flag==1) login();
+        else updatePhoto();
       }
     });
-    btnNewButton_12.setBounds(10, 272, 93, 79);
-    getContentPane().add(btnNewButton_12);
 
-    JButton btnNewButton_13 = new JButton(new ImageIcon("resource/photo/15.jpg"));
-    btnNewButton_13.addMouseListener(new MouseAdapter() {
+    btnNewButton_14.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e) {
         String root1 = "resource/photo/15.jpg";
 
         idi.updateUserImag(root1, user.getName());
         user.setFileName(root1);
-        dispose();
-        ClientLoginMsg msg = new ClientLoginMsg(user.getName());
-        MyClient.getMyClient().sendMsg(msg);
+        if(flag==1) login();
+        else updatePhoto();
       }
     });
-    btnNewButton_13.setBounds(103, 272, 93, 79);
-    getContentPane().add(btnNewButton_13);
 
-    JButton btnNewButton_14 = new JButton(new ImageIcon("resource/photo/16.jpg"));
-    btnNewButton_14.addMouseListener(new MouseAdapter() {
+    btnNewButton_15.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e) {
         String root1 = "resource/photo/16.jpg";
 
         idi.updateUserImag(root1, user.getName());
         user.setFileName(root1);
-        dispose();
-        ClientLoginMsg msg = new ClientLoginMsg(user.getName());
-        MyClient.getMyClient().sendMsg(msg);
+        if(flag==1) login();
+        else updatePhoto();
       }
     });
-    btnNewButton_14.setBounds(197, 272, 93, 79);
-    getContentPane().add(btnNewButton_14);
 
-    JButton btnNewButton_15 = new JButton(new ImageIcon("resource/photo/17.jpg"));
-    btnNewButton_15.addMouseListener(new MouseAdapter() {
+    btnNewButton_16.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e) {
         String root1 = "resource/photo/17.jpg";
 
         idi.updateUserImag(root1, user.getName());
         user.setFileName(root1);
-        dispose();
-        ClientLoginMsg msg = new ClientLoginMsg(user.getName());
-        MyClient.getMyClient().sendMsg(msg);
+        if(flag==1) login();
+        else updatePhoto();
       }
     });
-    btnNewButton_15.setBounds(291, 272, 93, 79);
-    getContentPane().add(btnNewButton_15);
 
-    JButton btnNewButton_3 = new JButton(new ImageIcon("resource/photo/21.jpg"));
-    btnNewButton_3.addMouseListener(new MouseAdapter() {
+    btnNewButton_17.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e) {
-        String root1 = "resource/photo/21.jpg";
+        String root1 = "resource/photo/18.jpg";
 
         idi.updateUserImag(root1, user.getName());
         user.setFileName(root1);
-        dispose();
-        ClientLoginMsg msg = new ClientLoginMsg(user.getName());
-        MyClient.getMyClient().sendMsg(msg);
+        if(flag==1) login();
+        else updatePhoto();
       }
     });
-    //btnNewButton_3.setBounds(103, 10, 93, 82);
-    getContentPane().add(btnNewButton_3);
 
-    JButton btnNewButton_7 = new JButton(new ImageIcon("resource/photo/22.jpg"));
-    btnNewButton_7.addMouseListener(new MouseAdapter() {
+    btnNewButton_18.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e) {
-        String root1 = "resource/photo/22.jpg";
+        String root1 = "resource/photo/19.jpg";
 
         idi.updateUserImag(root1, user.getName());
         user.setFileName(root1);
-        dispose();
-        ClientLoginMsg msg = new ClientLoginMsg(user.getName());
-        MyClient.getMyClient().sendMsg(msg);
+        if(flag==1) login();
+        else updatePhoto();
       }
     });
-    btnNewButton_7.setBounds(197, 102, 93, 76);
-    getContentPane().add(btnNewButton_7);
 
-    JButton btnNewButton_16 = new JButton(new ImageIcon("resource/photo/23.jpg"));
-    btnNewButton_16.addMouseListener(new MouseAdapter() {
-      @Override
-      public void mouseClicked(MouseEvent e) {
-        String root1 = "resource/photo/23.jpg";
-
-        idi.updateUserImag(root1, user.getName());
-        user.setFileName(root1);
-        dispose();
-        ClientLoginMsg msg = new ClientLoginMsg(user.getName());
-        MyClient.getMyClient().sendMsg(msg);
-      }
-    });
-    btnNewButton_16.setBounds(103, 10, 93, 82);
-    getContentPane().add(btnNewButton_16);
+  }
+  public void login(){
+    dispose();
+    ClientLoginMsg msg = new ClientLoginMsg(user.getName());
+    MyClient.getMyClient().sendMsg(msg);
+  }
+  public void updatePhoto(){
+    dispose();
   }
 
   /*public static void main(String[] args) {

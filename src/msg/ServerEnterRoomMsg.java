@@ -1,5 +1,6 @@
 package msg;
 
+import entity.User;
 import net.MyClient;
 import entity.RoomPojo;
 /**
@@ -10,6 +11,7 @@ import entity.RoomPojo;
 public class ServerEnterRoomMsg extends BaseMsg{
 	private int roomid;
 	private boolean isleft;
+	private User user;
 
 
 	public int getRoomid() {
@@ -32,15 +34,16 @@ public class ServerEnterRoomMsg extends BaseMsg{
 	}
 
 
-	public ServerEnterRoomMsg(int roomid, boolean isleft) {
+	public ServerEnterRoomMsg(int roomid, boolean isleft, User user) {
 		super();
 		this.roomid = roomid;
+		this.user=user;
 		this.isleft = isleft;
 	}
 
 
 	public void doBiz() {
-	    MyClient.getMyClient().getRoomlist().toRoom(roomid,isleft);
+	    MyClient.getMyClient().getRoomlist().toRoom(roomid,isleft,user);
 	}
 	
 

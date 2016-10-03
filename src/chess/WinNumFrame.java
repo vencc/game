@@ -5,6 +5,7 @@ import javax.swing.JScrollPane;
 
 import java.awt.Rectangle;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JTextArea;
 import javax.swing.JPanel;
@@ -13,9 +14,9 @@ import javax.swing.JLabel;
 import entity.User;
 
 public class WinNumFrame extends JFrame{
-	static ArrayList<User> userlist = null;
+	static List<User> userlist = null;
 	String str = null;
-	public WinNumFrame(ArrayList<User> userlist) {
+	public WinNumFrame(List<User> userlist) {
 		this.userlist = userlist;
 		getContentPane().setBounds(new Rectangle(0, 0, 434, 261));
 		getContentPane().setLayout(null);

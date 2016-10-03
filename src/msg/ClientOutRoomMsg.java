@@ -46,6 +46,10 @@ public class ClientOutRoomMsg extends BaseMsg {
   }
   public void doBiz(){
     RoomPojo room= MyServer.getMyServer().getRooms().get(roomid);
+    if(room.isLeftReady()&&room.isRightReady()){
+      room.setRightReady(false);
+      room.setLeftReady(false);
+    }
     if(room.getStatus()==RoomPojo.PLAYING){
       room.setStatus(RoomPojo.WAIT);
     }else{
@@ -59,6 +63,7 @@ public class ClientOutRoomMsg extends BaseMsg {
       System.out.println("左边玩家设置null");
       room.setLeftPlayer(null);
     }
+    MyServer.getMyServer().getRooms().set(roomid,room);
     ServerRoomListMsg msg=new ServerRoomListMsg(MyServer.getMyServer().getRooms());
     MyServer.getMyServer().sendMsgToAll(msg);
     ServerRoomPlayerMsg msg2=new ServerRoomPlayerMsg(room);

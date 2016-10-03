@@ -27,7 +27,7 @@ public class IUserDaoImp implements IUserDao {
 		try {
 			while(r.next())
 			{
-				u=new User(r.getString(1),r.getString(2),Integer.parseInt(r.getString(3)));
+				u=new User(r.getString(1),r.getString(2),Integer.parseInt(r.getString(3)),Integer.parseInt(r.getString(4)),Integer.parseInt(r.getString(5)));
 				return u;
 			}
 		} catch (SQLException e) {
@@ -49,7 +49,7 @@ public class IUserDaoImp implements IUserDao {
 	  	 try {
 			while(rs.next())
 			 {
-		 ui=new User(rs.getString(1),rs.getString(2),rs.getInt(3));
+		 ui=new User(rs.getString(1),rs.getString(2),Integer.parseInt(rs.getString(3)),Integer.parseInt(rs.getString(4)),Integer.parseInt(rs.getString(5)));
          list.add(ui);
 			 }
 		} catch (SQLException e) {
@@ -101,7 +101,7 @@ public class IUserDaoImp implements IUserDao {
 		try {
 			while(rs.next())
 			{
-				u=new User(rs.getString("name"),rs.getString("fileName"),Integer.parseInt(rs.getString("winNum")));
+				u=new User(rs.getString("name"),rs.getString("fileName"),Integer.parseInt(rs.getString("winNum")),Integer.parseInt(rs.getString("loseNum")),Integer.parseInt(rs.getString("tiedNum")));
 			    t=u.getWinNum();
 			}
 		} catch (SQLException e) {
@@ -129,6 +129,11 @@ public class IUserDaoImp implements IUserDao {
     System.out.println("新增用户");
     String[] paras={user.getName(),0+"",0+"",0+""};
     b.doInsert(sql,paras);
+	}
+	public void updateLoseNum(int loseNum,String name){
+		sql="update user set loseNum=? where name=?";
+		String[] paras={loseNum+"",name};
+		b.doUpdate(sql, paras);
 	}
 }
 	

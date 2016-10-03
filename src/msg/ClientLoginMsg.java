@@ -2,6 +2,7 @@ package msg;
 
 
 import entity.User;
+import net.MyClient;
 import net.MyServer;
 /**
  * 用户登录报文类，由客户端发送至服务器端
@@ -32,6 +33,11 @@ public class ClientLoginMsg extends BaseMsg{
 		if(!username.isEmpty()){
 			//1.生成response報文
 			User user= MyServer.getMyServer().findUser(username);
+			if(!MyServer.getMyServer().loged(user)) {
+				ServerDidLogMsg msg3=new ServerDidLogMsg();
+				MyServer.getMyServer().sendMsgToClient(msg3, this.client);
+				return;
+			}
 			ServerLoginSucMsg msg=new ServerLoginSucMsg(user);
 			//2.服务器发送报文给指定客户
 			System.out.println(msg);

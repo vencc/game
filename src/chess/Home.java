@@ -108,7 +108,7 @@ public class Home extends JFrame {
       @Override
       public void windowClosing(WindowEvent e) {
         System.out.println("退出程序");
-        ClientLogoutMsg msg = new ClientLogoutMsg(user);
+        ClientLogoutMsg msg = new ClientLogoutMsg();
         MyClient.getMyClient().sendMsg(msg);
       }
     });

@@ -28,7 +28,7 @@ public class ClientClickRoomMsg extends BaseMsg{
 	}
 
 	public void setUser(User user) {
-		this.user = user;
+		this.user = MyServer.getMyServer().findUser(user.getName());
 	}
 
 	public boolean isIsleft() {
@@ -42,12 +42,13 @@ public class ClientClickRoomMsg extends BaseMsg{
 	public ClientClickRoomMsg(int roomid, User user, boolean isleft) {
 		super();
 		this.roomid = roomid;
-		this.user = user;
+		this.user = MyServer.getMyServer().findUser(user.getName());
 		this.isleft = isleft;
 	}
 
 	public void doBiz() {
 		RoomPojo room=MyServer.getMyServer().getRooms().get(roomid);
+    System.out.println("进入房间前======"+room);
 		if (room.getStatus() == RoomPojo.PLAYING) {
 			return;
 		}
@@ -58,24 +59,16 @@ public class ClientClickRoomMsg extends BaseMsg{
 			}else{
 				room.setRightPlayer(user);
 			}
-			MyServer.getMyServer().getRooms().set(roomid,room);
 			//添加进入房间代码
 			//此处
-			ServerEnterRoomMsg msg1=new ServerEnterRoomMsg(roomid,isleft);
+			ServerEnterRoomMsg msg1=new ServerEnterRoomMsg(roomid,isleft,user);
 			System.out.println("=========1111"+room);
 			MyServer.getMyServer().sendMsgToClient(msg1, this.client);
 			//
 			ServerRoomListMsg msg=new ServerRoomListMsg(MyServer.getMyServer().getRooms());
 			MyServer.getMyServer().sendMsgToAll(msg);
-			System.out.println();
 			ServerRoomPlayerMsg msg2=new ServerRoomPlayerMsg(room);
 			MyServer.getMyServer().sendMsgToAll(msg2);
-			/*System.out.println("==========================");
-			System.out.println("测试"+room.getRid());
-			System.out.println("测试"+room.getStatus());
-			System.out.println("测试"+room.getLeftPlayer());
-			System.out.println("测试"+room.getRightPlayer());
-			System.out.println("==========================");*/
 		}
 		if (room.getStatus() == RoomPojo.WAIT) {
 			if (isleft) {
@@ -84,7 +77,8 @@ public class ClientClickRoomMsg extends BaseMsg{
 				}				
 				room.setStatus(RoomPojo.PLAYING);
 				room.setLeftPlayer(user);
-				ServerEnterRoomMsg msg1=new ServerEnterRoomMsg(roomid,isleft);
+				room.setRightPlayer(MyServer.getMyServer().findUser(room.getRightPlayer().getName()));
+				ServerEnterRoomMsg msg1=new ServerEnterRoomMsg(roomid,isleft,user);
 				MyServer.getMyServer().sendMsgToClient(msg1, this.client);
 				ServerRoomListMsg msg = new ServerRoomListMsg(MyServer.getMyServer().getRooms());
 				MyServer.getMyServer().sendMsgToAll(msg);
@@ -96,7 +90,8 @@ public class ClientClickRoomMsg extends BaseMsg{
 				}	
 				room.setStatus(RoomPojo.PLAYING);
 				room.setRightPlayer(user);
-				ServerEnterRoomMsg msg1=new ServerEnterRoomMsg(roomid,isleft);
+				room.setLeftPlayer(MyServer.getMyServer().findUser(room.getLeftPlayer().getName()));
+				ServerEnterRoomMsg msg1=new ServerEnterRoomMsg(roomid,isleft,user);
 				MyServer.getMyServer().sendMsgToClient(msg1, this.client);
 				ServerRoomListMsg msg = new ServerRoomListMsg(MyServer
 						.getMyServer().getRooms());
@@ -104,7 +99,6 @@ public class ClientClickRoomMsg extends BaseMsg{
 				ServerRoomPlayerMsg msg2=new ServerRoomPlayerMsg(room);
 				MyServer.getMyServer().sendMsgToAll(msg2);
 			}
-			MyServer.getMyServer().getRooms().set(roomid,room);
 		}
 
 	}
