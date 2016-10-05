@@ -174,7 +174,7 @@ public class ChessImpl implements IChess {
 		}
 		// 二四象限判断
 		if (x > y) {
-			for (int i = x - y, j = 0; i < 15 - x + y; i++, j++) {
+			for (int i = x - y, j = 0; i < 15; i++, j++) {
 				int s = 0, z = 0;
 				for (int a = i, b = j; a < i + 5 && a < 15; a++, b++) {
 					if (chess[a][b] == 1) {
@@ -193,7 +193,7 @@ public class ChessImpl implements IChess {
 				}
 			}
 		} else {
-			for (int i = 0, j = y - x; j <= 15 - y + x; i++, j++) {
+			for (int i = 0, j = y - x; j <15; i++, j++) {
 				int s = 0, z = 0;
 				for (int a = i, b = j; a < i + 5 && b < 15; a++, b++) {
 					// System.out.println(a);
