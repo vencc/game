@@ -34,8 +34,8 @@ public class ChessTable extends JPanel {
   private Executor pool = Executors.newFixedThreadPool(2); // 2个线程容量的线程池
   private RobotThread robotThread = new RobotThread(this, chessimpl); // 机器人线程
   private HumanThread humanThread = new HumanThread(this, chessimpl); // 人类线程
-  private AudioPlayer audioPlayer=new AudioPlayer("resource/audio/down.wav");
-  private AudioPlayer audioStopPlayer=new AudioPlayer("resource/audio/stop.wav");
+  private AudioPlayer audioPlayer=new AudioPlayer("resource/audio/down.wav",false);
+  private AudioPlayer audioStopPlayer=new AudioPlayer("resource/audio/stop.wav",false);
   private ChessTable chessTable = this;
   private boolean lock = false; // 同步锁
   private int humanX; // 鼠标点击的坐标
