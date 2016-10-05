@@ -4,13 +4,11 @@ import entity.User;
 import msg.ClientLoginMsg;
 import msg.ClientLogoutMsg;
 import net.MyClient;
+import util.AudioPlayer;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 
 /**
  * 功能: 登录界面
@@ -19,6 +17,7 @@ import java.awt.event.WindowEvent;
 public class Home extends JFrame {
   private User user = new User("游客");
   private Home home = this;
+  private JLabel vol=new JLabel();
   private JButton userButton = new JButton();       // 用户已登录显示自己姓名的按钮
   private JButton netButton = new JButton("联网对战");    // 联网对战按钮
   private JButton robotButton = new JButton("人机对战");  // 人机对战按钮
@@ -32,6 +31,11 @@ public class Home extends JFrame {
   };
 
   public Home() {
+    if(Main.VOL==true){
+      vol.setIcon(new ImageIcon("resource/imag/volon.png"));
+    }else{
+      vol.setIcon(new ImageIcon("resource/imag/voloff.png"));
+    }
     init();
   }
 
@@ -47,6 +51,7 @@ public class Home extends JFrame {
     contentPane.setLayout(null);
 
     // 初始化组件
+    vol.setBounds((int) (this.getWidth() * 0.8), (int) (this.getHeight() * 0.1), 45,45);
     netButton.setBounds((int) (this.getWidth() * 0.2), (int) (this.getHeight() * 0.5), this.getWidth() / 6, this.getHeight() / 14);
     netButton.setFocusPainted(false);
     userButton.setBounds((int) (this.getWidth() * 0.2), (int) (this.getHeight() * 0.5), this.getWidth() / 6, this.getHeight() / 14);
@@ -57,6 +62,7 @@ public class Home extends JFrame {
     addAction();
 
     // 添加组件
+    contentPane.add(vol);
     contentPane.add(netButton);
     contentPane.add(robotButton);
 
@@ -69,6 +75,12 @@ public class Home extends JFrame {
    * 作者: 黄欢欢   时间: 2016-09-21
    */
   private void addAction() {
+    vol.addMouseListener(new MouseAdapter() {
+      @Override
+      public void mouseClicked(MouseEvent e) {
+        Main.setVOL(vol);
+      }
+    });
     logoffButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
@@ -127,6 +139,7 @@ public class Home extends JFrame {
    * @param height 窗体高度
    */
   public void repaint(long time, int x, int y, int width, int height) {
+    vol.setBounds((int) (this.getWidth() * 0.8), (int) (this.getHeight() * 0.1), 45,45);
     netButton.setBounds((int) (this.getWidth() * 0.2), (int) (this.getHeight() * 0.5), this.getWidth() / 6, this.getHeight() / 13);
     robotButton.setBounds((int) (this.getWidth() * 0.2), (int) (this.getHeight() * 0.6), this.getWidth() / 6, this.getHeight() / 13);
   }
