@@ -442,7 +442,7 @@ public class Room extends JFrame {
 
   public void gameStart() {
     gameStart = true;
-    new AudioPlayer("resource/audio/start.wav").run();
+    new AudioPlayer("resource/audio/start.wav",false).run();
     if (isleft) {
       ready.setIcon(new ImageIcon("resource/imag/black.png"));
       ready1.setIcon(new ImageIcon("resource/imag/white.png"));
@@ -516,7 +516,7 @@ public class Room extends JFrame {
       label_3.setText(user.getWinNum() + "");
       label_4.setText(user.getLoseNum()+"");
     }
-    new Thread(new AudioPlayer("resource/audio/winner.wav")).start();
+    new Thread(new AudioPlayer("resource/audio/winner.wav",false)).start();
     JOptionPane.showMessageDialog(this,
         "大侠，在下甘拜下风！！", "你赢了！", JOptionPane.ERROR_MESSAGE, new ImageIcon("resource/imag/winner.png"));
     resetGame();
@@ -527,14 +527,14 @@ public class Room extends JFrame {
       jLabelll.setText("" + (Integer.parseInt(jLabelll.getText()) + 1));
       jLabellll.setText(""+(Integer.parseInt(jLabellll.getText())+1));
     }
-    new Thread(new AudioPlayer("resource/audio/loser.wav")).start();
+    new Thread(new AudioPlayer("resource/audio/loser.wav",false)).start();
     JOptionPane.showMessageDialog(this,
         "胜败乃兵家常事，壮士请重新来过", "你输了！", JOptionPane.ERROR_MESSAGE, new ImageIcon("resource/imag/loser.png"));
     resetGame();
   }
 
   public void pingju() {
-    new Thread(new AudioPlayer("resource/audio/pingju.wav")).start();
+    new Thread(new AudioPlayer("resource/audio/pingju.wav",false)).start();
     JOptionPane.showMessageDialog(this,
         "相亲相爱一家人~~", "平局！", JOptionPane.ERROR_MESSAGE);
     resetGame();
