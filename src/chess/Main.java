@@ -11,15 +11,29 @@ import javax.swing.*;
  * 作者: 黄欢欢  时间: 2016-09-20
  *************************************************/
 public class Main {
+  public static boolean VOL=true;
+  public static Thread backMusic=new Thread(new AudioPlayer("resource/audio/background.aiff",true));
   public static void main(String[] args) {
     SwingUtilities.invokeLater(new Runnable() {
       @Override
       public void run() {
         setLookAndFeel();
+        backMusic.start();
         new Home();
-        new Thread(new AudioPlayer("resource/audio/background.wav")).start();
       }
     });
+  }
+  public static void setVOL(JLabel jLabel){
+    if(Main.VOL==true){
+      jLabel.setIcon(new ImageIcon("resource/imag/voloff.png"));
+      Main.backMusic.stop();
+      Main.VOL=false;
+    }else{
+      jLabel.setIcon(new ImageIcon("resource/imag/volon.png"));
+      Main.backMusic=new Thread(new AudioPlayer("resource/audio/background.aiff",true));
+      Main.backMusic.start();
+      Main.VOL=true;
+    }
   }
   /*************************************************
    * 功能: 设置窗体风格
@@ -27,7 +41,6 @@ public class Main {
    *************************************************/
   private static void setLookAndFeel() {
     try {
-      UIManager.put("TabbedPane.contentOpaque", false);
       UIManager.setLookAndFeel(new McWinLookAndFeel());
       UIManager.put("CheckBox.font", new java.awt.Font("宋体", 0, 14));
       UIManager.put("Tree.font", new java.awt.Font("宋体", 0, 14));
