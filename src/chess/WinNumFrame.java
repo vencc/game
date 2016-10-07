@@ -4,7 +4,6 @@ import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 
 import java.awt.Rectangle;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JTextArea;

@@ -1,5 +1,6 @@
 package msg;
 
+import entity.User;
 import net.MyServer;
 import entity.RoomPojo;
 /**
@@ -53,18 +54,20 @@ public class ClientGameOver extends BaseMsg{
 		MyServer.getMyServer().getRooms().set(roomid,roompojo);
 		if(isleft){
 			MyServer.getMyServer().updateWinNum(roompojo.getLeftPlayer());
-			MyServer.getMyServer().updateLoseNum(roompojo.getLeftPlayer());
-			ServerWinMsg msg=new ServerWinMsg();
+			MyServer.getMyServer().updateLoseNum(roompojo.getRightPlayer());
+			User user=MyServer.getMyServer().findUser(roompojo.getLeftPlayer().getName());
+			ServerWinMsg msg=new ServerWinMsg(user,MyServer.getMyServer().findUser(roompojo.getRightPlayer().getName()));
 			MyServer.getMyServer().sendMsgToClient(msg, roompojo.getLeftPlayer());
-			ServerDefeatmsg msg2=new ServerDefeatmsg();
+			ServerDefeatmsg msg2=new ServerDefeatmsg(user,MyServer.getMyServer().findUser(roompojo.getRightPlayer().getName()));
 			MyServer.getMyServer().sendMsgToClient(msg2, roompojo.getRightPlayer());
 		}
 		else{
 			MyServer.getMyServer().updateWinNum(roompojo.getRightPlayer());
-			MyServer.getMyServer().updateLoseNum(roompojo.getRightPlayer());
-			ServerWinMsg msg=new ServerWinMsg();
+			MyServer.getMyServer().updateLoseNum(roompojo.getLeftPlayer());
+			User user=MyServer.getMyServer().findUser(roompojo.getLeftPlayer().getName());
+			ServerWinMsg msg=new ServerWinMsg(MyServer.getMyServer().findUser(roompojo.getRightPlayer().getName()),user);
 			MyServer.getMyServer().sendMsgToClient(msg, roompojo.getRightPlayer());
-			ServerDefeatmsg msg2=new ServerDefeatmsg();
+			ServerDefeatmsg msg2=new ServerDefeatmsg(MyServer.getMyServer().findUser(roompojo.getRightPlayer().getName()),user);
 			MyServer.getMyServer().sendMsgToClient(msg2, roompojo.getLeftPlayer());
 		}
 	}

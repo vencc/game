@@ -6,9 +6,10 @@ import entity.User;
 
 import javax.swing.*;
 
+import msg.ClientCheckLogMsg;
 import msg.ClientLoginMsg;
+import msg.ClientSaveUserMsg;
 import net.MyClient;
-import net.MyServer;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -64,23 +65,8 @@ public class NameDialog extends JDialog {
           System.out.println("网络成功连接");
           String name=nameTextField.getText();
         if(name.trim()!="") {
-          User user = MyServer.getMyServer().findUser(name);
-          if (user == null) {
-            String[] options = {"创建", "重新输入"};
-            int res = JOptionPane.showOptionDialog(null, "确定创建新用户吗", "当前输入的名字是新用户",
-                JOptionPane.DEFAULT_OPTION, JOptionPane.YES_NO_OPTION,
-                null, options, options[0]);
-            if (res == 0) {
-              nameDialog.dispose();
-              user = new User(name);
-              new UpdatePicture(user,1);
-            }
-          } else {
-            nameDialog.dispose();
-            ClientLoginMsg msg = new ClientLoginMsg(user.getName());
-            MyClient.getMyClient().sendMsg(msg);
-          }
-
+          ClientCheckLogMsg msg=new ClientCheckLogMsg(name);
+          MyClient.getMyClient().sendMsg(msg);
         }
       }
     });
@@ -91,7 +77,25 @@ public class NameDialog extends JDialog {
       }
     });
   }
-
+public void loginCheck(String name){
+  String[] options = {"创建", "重新输入"};
+  int res = JOptionPane.showOptionDialog(null, "确定创建新用户吗", "当前输入的名字是新用户",
+      JOptionPane.DEFAULT_OPTION, JOptionPane.YES_NO_OPTION,
+      null, options, options[0]);
+  if (res == 0) {
+    ClientSaveUserMsg msg=new ClientSaveUserMsg(name);
+    MyClient.getMyClient().sendMsg(msg);
+  }
+}
+  public void sendLogMsg(User user){
+    nameDialog.dispose();
+    ClientLoginMsg msg = new ClientLoginMsg(user.getName());
+    MyClient.getMyClient().sendMsg(msg);
+  }
+  public void toUpdatePicture(User user){
+    nameDialog.dispose();
+    new UpdatePicture(home,user,1);
+  }
   public void loginSuc(User user) {
     home.toRoomList(user);
     nameDialog.dispose();

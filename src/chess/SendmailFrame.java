@@ -9,9 +9,6 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMessage.RecipientType;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-
-import java.awt.BorderLayout;
 import java.awt.Rectangle;
 
 import javax.swing.JLabel;
@@ -26,9 +23,7 @@ import java.awt.event.MouseEvent;
 import java.util.Properties;
 import java.awt.SystemColor;
 import java.awt.Font;
-import javax.swing.JScrollBar;
 import javax.swing.ImageIcon;
-import javax.swing.JTextPane;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;

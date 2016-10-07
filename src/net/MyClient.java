@@ -7,11 +7,11 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.net.UnknownHostException;
 
 import chess.NameDialog;
 import chess.Room;
 import chess.RoomList;
+import entity.UpdatePicture;
 import msg.BaseMsg;
 /**
  * 客户端类
@@ -19,15 +19,22 @@ import msg.BaseMsg;
  *
  */
 public class MyClient {
-	
+	private UpdatePicture updatePicture;
 	private static MyClient myclient;
 	private MyClient(){}
 	private  NameDialog namedialog;
 	private boolean connected=false;
 	private Socket client=null;
 	private Room room;
-	
-	
+
+	public UpdatePicture getUpdatePicture() {
+		return updatePicture;
+	}
+
+	public void setUpdatePicture(UpdatePicture updatePicture) {
+		this.updatePicture = updatePicture;
+	}
+
 	public Room getRoom() {
 		return room;
 	}

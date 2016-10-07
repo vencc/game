@@ -5,22 +5,17 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import chess.Home;
-import chess.RoomList;
-import dao.IUserDao;
-import dao.IUserDaoImp;
 import msg.ClientLoginMsg;
+import msg.ClientSavePictureMsg;
 import net.MyClient;
-import net.MyServer;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class UpdatePicture extends JFrame {
+  public Home home;
   public UpdatePicture u = this;
-  private MyServer idi = MyServer.getMyServer();
   private User user;
   private JLabel btnNewButton;
   private JLabel btnNewButton_1;
@@ -42,9 +37,10 @@ public class UpdatePicture extends JFrame {
   JLabel btnNewButton_17;
   JLabel btnNewButton_18;
 
-  public UpdatePicture(User user,int flag) {
+  public UpdatePicture(Home home,User user,int flag) {
+    MyClient.getMyClient().setUpdatePicture(this);
+    this.home=home;
     this.user = user;
-    idi.insertUser(user);
     this.setBounds(100, 100, 400, 400);
     this.setResizable(false);
     setVisible(true);
@@ -96,10 +92,8 @@ public class UpdatePicture extends JFrame {
       @Override
       public void mouseClicked(MouseEvent e) {
         String root1 = "resource/photo/1.jpg";
-        idi.updateUserImag(root1, user.getName());
-        user.setFileName(root1);
-        if(flag==1) login();
-        else updatePhoto();
+        ClientSavePictureMsg msg=new ClientSavePictureMsg(root1,user,flag);
+        MyClient.getMyClient().sendMsg(msg);
       }
 
     });
@@ -108,10 +102,8 @@ public class UpdatePicture extends JFrame {
       @Override
       public void mouseClicked(MouseEvent e) {
         String root1 = "resource/photo/2.jpg";
-        idi.updateUserImag(root1, user.getName());
-        user.setFileName(root1);
-        if(flag==1) login();
-        else updatePhoto();
+        ClientSavePictureMsg msg=new ClientSavePictureMsg(root1,user,flag);
+        MyClient.getMyClient().sendMsg(msg);
       }
     });
 
@@ -119,11 +111,8 @@ public class UpdatePicture extends JFrame {
       @Override
       public void mouseClicked(MouseEvent e) {
         String root1 = "resource/photo/3.jpg";
-
-        idi.updateUserImag(root1, user.getName());
-        user.setFileName(root1);
-        if(flag==1) login();
-        else updatePhoto();
+        ClientSavePictureMsg msg=new ClientSavePictureMsg(root1,user,flag);
+        MyClient.getMyClient().sendMsg(msg);
       }
     });
 
@@ -131,22 +120,16 @@ public class UpdatePicture extends JFrame {
       @Override
       public void mouseClicked(MouseEvent e) {
         String root1 = "resource/photo/4.jpg";
-
-        idi.updateUserImag(root1, user.getName());
-        user.setFileName(root1);
-        if(flag==1) login();
-        else updatePhoto();
+        ClientSavePictureMsg msg=new ClientSavePictureMsg(root1,user,flag);
+        MyClient.getMyClient().sendMsg(msg);
       }
     });
     btnNewButton_4.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e) {
         String root1 = "resource/photo/5.jpg";
-
-        idi.updateUserImag(root1, user.getName());
-        user.setFileName(root1);
-        if(flag==1) login();
-        else updatePhoto();
+        ClientSavePictureMsg msg=new ClientSavePictureMsg(root1,user,flag);
+        MyClient.getMyClient().sendMsg(msg);
       }
     });
 
@@ -154,22 +137,16 @@ public class UpdatePicture extends JFrame {
       @Override
       public void mouseClicked(MouseEvent e) {
         String root1 = "resource/photo/6.jpg";
-
-        idi.updateUserImag(root1, user.getName());
-        user.setFileName(root1);
-        if(flag==1) login();
-        else updatePhoto();
+        ClientSavePictureMsg msg=new ClientSavePictureMsg(root1,user,flag);
+        MyClient.getMyClient().sendMsg(msg);
       }
     });
 
     btnNewButton_6.addMouseListener(new MouseAdapter() {
       public void mouseClicked(MouseEvent e) {
         String root1 = "resource/photo/7.jpg";
-
-        idi.updateUserImag(root1, user.getName());
-        user.setFileName(root1);
-        if(flag==1) login();
-        else updatePhoto();
+        ClientSavePictureMsg msg=new ClientSavePictureMsg(root1,user,flag);
+        MyClient.getMyClient().sendMsg(msg);
       }
     });
 
@@ -177,11 +154,8 @@ public class UpdatePicture extends JFrame {
       @Override
       public void mouseClicked(MouseEvent e) {
         String root1 = "resource/photo/8.jpg";
-
-        idi.updateUserImag(root1, user.getName());
-        user.setFileName(root1);
-        if(flag==1) login();
-        else updatePhoto();
+        ClientSavePictureMsg msg=new ClientSavePictureMsg(root1,user,flag);
+        MyClient.getMyClient().sendMsg(msg);
       }
     });
 
@@ -189,11 +163,8 @@ public class UpdatePicture extends JFrame {
       @Override
       public void mouseClicked(MouseEvent e) {
         String root1 = "resource/photo/9.jpg";
-
-        idi.updateUserImag(root1, user.getName());
-        user.setFileName(root1);
-        if(flag==1) login();
-        else updatePhoto();
+        ClientSavePictureMsg msg=new ClientSavePictureMsg(root1,user,flag);
+        MyClient.getMyClient().sendMsg(msg);
       }
     });
 
@@ -201,11 +172,8 @@ public class UpdatePicture extends JFrame {
       @Override
       public void mouseClicked(MouseEvent e) {
         String root1 = "resource/photo/10.jpg";
-
-        idi.updateUserImag(root1, user.getName());
-        user.setFileName(root1);
-        if(flag==1) login();
-        else updatePhoto();
+        ClientSavePictureMsg msg=new ClientSavePictureMsg(root1,user,flag);
+        MyClient.getMyClient().sendMsg(msg);
       }
     });
 
@@ -213,11 +181,8 @@ public class UpdatePicture extends JFrame {
       @Override
       public void mouseClicked(MouseEvent e) {
         String root1 = "resource/photo/11.jpg";
-
-        idi.updateUserImag(root1, user.getName());
-        user.setFileName(root1);
-        if(flag==1) login();
-        else updatePhoto();
+        ClientSavePictureMsg msg=new ClientSavePictureMsg(root1,user,flag);
+        MyClient.getMyClient().sendMsg(msg);
       }
     });
 
@@ -225,11 +190,8 @@ public class UpdatePicture extends JFrame {
       @Override
       public void mouseClicked(MouseEvent e) {
         String root1 = "resource/photo/12.jpg";
-
-        idi.updateUserImag(root1, user.getName());
-        user.setFileName(root1);
-        if(flag==1) login();
-        else updatePhoto();
+        ClientSavePictureMsg msg=new ClientSavePictureMsg(root1,user,flag);
+        MyClient.getMyClient().sendMsg(msg);
       }
     });
 
@@ -237,11 +199,8 @@ public class UpdatePicture extends JFrame {
       @Override
       public void mouseClicked(MouseEvent e) {
         String root1 = "resource/photo/13.jpg";
-
-        idi.updateUserImag(root1, user.getName());
-        user.setFileName(root1);
-        if(flag==1) login();
-        else updatePhoto();
+        ClientSavePictureMsg msg=new ClientSavePictureMsg(root1,user,flag);
+        MyClient.getMyClient().sendMsg(msg);
       }
     });
 
@@ -249,11 +208,8 @@ public class UpdatePicture extends JFrame {
       @Override
       public void mouseClicked(MouseEvent e) {
         String root1 = "resource/photo/14.jpg";
-
-        idi.updateUserImag(root1, user.getName());
-        user.setFileName(root1);
-        if(flag==1) login();
-        else updatePhoto();
+        ClientSavePictureMsg msg=new ClientSavePictureMsg(root1,user,flag);
+        MyClient.getMyClient().sendMsg(msg);
       }
     });
 
@@ -261,11 +217,8 @@ public class UpdatePicture extends JFrame {
       @Override
       public void mouseClicked(MouseEvent e) {
         String root1 = "resource/photo/15.jpg";
-
-        idi.updateUserImag(root1, user.getName());
-        user.setFileName(root1);
-        if(flag==1) login();
-        else updatePhoto();
+        ClientSavePictureMsg msg=new ClientSavePictureMsg(root1,user,flag);
+        MyClient.getMyClient().sendMsg(msg);
       }
     });
 
@@ -273,11 +226,8 @@ public class UpdatePicture extends JFrame {
       @Override
       public void mouseClicked(MouseEvent e) {
         String root1 = "resource/photo/16.jpg";
-
-        idi.updateUserImag(root1, user.getName());
-        user.setFileName(root1);
-        if(flag==1) login();
-        else updatePhoto();
+        ClientSavePictureMsg msg=new ClientSavePictureMsg(root1,user,flag);
+        MyClient.getMyClient().sendMsg(msg);
       }
     });
 
@@ -285,11 +235,8 @@ public class UpdatePicture extends JFrame {
       @Override
       public void mouseClicked(MouseEvent e) {
         String root1 = "resource/photo/17.jpg";
-
-        idi.updateUserImag(root1, user.getName());
-        user.setFileName(root1);
-        if(flag==1) login();
-        else updatePhoto();
+        ClientSavePictureMsg msg=new ClientSavePictureMsg(root1,user,flag);
+        MyClient.getMyClient().sendMsg(msg);
       }
     });
 
@@ -297,11 +244,8 @@ public class UpdatePicture extends JFrame {
       @Override
       public void mouseClicked(MouseEvent e) {
         String root1 = "resource/photo/18.jpg";
-
-        idi.updateUserImag(root1, user.getName());
-        user.setFileName(root1);
-        if(flag==1) login();
-        else updatePhoto();
+        ClientSavePictureMsg msg=new ClientSavePictureMsg(root1,user,flag);
+        MyClient.getMyClient().sendMsg(msg);
       }
     });
 
@@ -309,16 +253,16 @@ public class UpdatePicture extends JFrame {
       @Override
       public void mouseClicked(MouseEvent e) {
         String root1 = "resource/photo/19.jpg";
-
-        idi.updateUserImag(root1, user.getName());
-        user.setFileName(root1);
-        if(flag==1) login();
-        else updatePhoto();
+        ClientSavePictureMsg msg=new ClientSavePictureMsg(root1,user,flag);
+        MyClient.getMyClient().sendMsg(msg);
       }
     });
 
   }
-  public void login(){
+  public void setDispose(){
+    dispose();
+  }
+  public void login(User user){
     dispose();
     ClientLoginMsg msg = new ClientLoginMsg(user.getName());
     MyClient.getMyClient().sendMsg(msg);
@@ -327,10 +271,6 @@ public class UpdatePicture extends JFrame {
     dispose();
   }
 
-  /*public static void main(String[] args) {
-    new UpdatePicture(new User("czf")).setVisible(true);
-		
-	}*/
 
 }
 

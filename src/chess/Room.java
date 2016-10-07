@@ -3,8 +3,6 @@ package chess;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.geom.Ellipse2D;
-import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -15,10 +13,8 @@ import javax.swing.JPanel;
 
 import msg.*;
 import net.MyClient;
-import net.MyServer;
 import util.AudioPlayer;
 import util.ChessImpl;
-import util.IChess;
 import entity.RoomPojo;
 import entity.User;
 
@@ -346,7 +342,7 @@ public class Room extends JFrame {
               JOptionPane.DEFAULT_OPTION, JOptionPane.YES_NO_OPTION,
               new ImageIcon("resource/imag/touxiang.png"), options, options[0]);
           if (res == 1) {
-            deafeat();
+            deafeat(null,null);
           }
         } else {
           if (gameStart == true) {
@@ -510,11 +506,12 @@ public class Room extends JFrame {
     chessPanel.Moves = 0;
   }
 
-  public void win() {
+  public void win(User userLeft,User userRight) {
     if(chessPanel.model==0) {
-      user = MyServer.getMyServer().findUser(user.getName());
-      label_3.setText(user.getWinNum() + "");
-      label_4.setText(user.getLoseNum()+"");
+      label_3.setText(userLeft.getWinNum() + "");
+      label_4.setText(userLeft.getLoseNum()+"");
+      jLabelll.setText("" +userRight.getWinNum());
+      jLabellll.setText(""+userRight.getLoseNum());
     }
     new Thread(new AudioPlayer("resource/audio/winner.wav",false)).start();
     JOptionPane.showMessageDialog(this,
@@ -522,10 +519,12 @@ public class Room extends JFrame {
     resetGame();
   }
 
-  public void deafeat() {
+  public void deafeat(User userLeft,User userRight) {
     if(chessPanel.model==0) {
-      jLabelll.setText("" + (Integer.parseInt(jLabelll.getText()) + 1));
-      jLabellll.setText(""+(Integer.parseInt(jLabellll.getText())+1));
+      label_3.setText(userLeft.getWinNum() + "");
+      label_4.setText(userLeft.getLoseNum()+"");
+      jLabelll.setText("" +userRight.getWinNum());
+      jLabellll.setText(""+userRight.getLoseNum());
     }
     new Thread(new AudioPlayer("resource/audio/loser.wav",false)).start();
     JOptionPane.showMessageDialog(this,

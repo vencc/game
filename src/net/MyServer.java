@@ -8,15 +8,11 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.management.MBeanServer;
 
 import dao.IUserDao;
 import dao.IUserDaoImp;
 import entity.RoomPojo;
 import entity.User;
-import net.MyServer;
-import net.MyServer.ClientChatThread;
-import net.MyServer.WaitForClientThread;
 import msg.BaseMsg;
 
 /**

@@ -1,6 +1,5 @@
 package util;
 
-import com.jtattoo.plaf.BaseTabbedPaneUI;
 
 import javax.swing.plaf.basic.BasicGraphicsUtils;
 import javax.swing.plaf.basic.BasicTabbedPaneUI;

@@ -3,7 +3,6 @@ package chess;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.*;
@@ -13,7 +12,6 @@ import msg.*;
 import net.MyClient;
 import entity.RoomPojo;
 import entity.User;
-import net.MyServer;
 import util.MyListCellRender;
 import util.ScrollbarUI;
 
@@ -197,7 +195,7 @@ public class RoomList extends JFrame {
     button_2.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        new WinNumFrame(MyServer.getMyServer().getUserList()).setVisible(true);
+      //  new WinNumFrame(MyServer.getMyServer().getUserList()).setVisible(true);
       }
     });
     button_2.setBounds(352, 13, 93, 30);
@@ -214,9 +212,7 @@ public class RoomList extends JFrame {
     button_1.setIcon(new ImageIcon(user.getFileName()));
     button_1.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) { //用户头像按钮
-        new UpdatePicture(user,0);//进入个人信息界面
-        ClientClickUpdateMsg msg = new ClientClickUpdateMsg(user);
-        MyClient.getMyClient().sendMsg(msg);//发给服务器
+        new UpdatePicture(null,user,0);//进入个人信息界面
       }
     });
     button_1.addMouseMotionListener(new MouseMotionAdapter() {
@@ -446,7 +442,6 @@ public class RoomList extends JFrame {
 	  new Room(roomid,isleft,this,user);
     this.setVisible(false);
   }
-
   //返回大厅
   public void tohome() {
     // TODO Auto-generated method stub

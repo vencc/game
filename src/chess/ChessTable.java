@@ -12,7 +12,6 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.Ellipse2D;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
@@ -20,7 +19,6 @@ import javax.swing.JPanel;
 import net.MyClient;
 import msg.ClientGameOver;
 import msg.ClientMovePieces;
-import net.MyServer;
 import util.AudioPlayer;
 import util.ChessImpl;
 import util.IChess;
@@ -122,7 +120,7 @@ public class ChessTable extends JPanel {
           if(Moves==225)
             room.pingju();
           else if(chessimpl.compare(XY[0],XY[1],1)){
-            room.deafeat();
+            room.deafeat(null,null);
           }else
           chessTable.notifyAll();
         }
@@ -158,7 +156,7 @@ public class ChessTable extends JPanel {
               if(Moves==225)
                 room.pingju();
               else if(chessimpl.compare(humanX,humanY,2)){
-                room.win();
+                room.win(null,null);
               }else
               chessTable.notifyAll();
             } else {
