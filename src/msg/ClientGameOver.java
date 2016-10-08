@@ -54,7 +54,9 @@ public class ClientGameOver extends BaseMsg{
 		MyServer.getMyServer().getRooms().set(roomid,roompojo);
 		if(isleft){
 			MyServer.getMyServer().updateWinNum(roompojo.getLeftPlayer());
+			roompojo.setLeftPlayer(MyServer.getMyServer().findUser(roompojo.getLeftPlayer().getName()));
 			MyServer.getMyServer().updateLoseNum(roompojo.getRightPlayer());
+			roompojo.setRightPlayer(MyServer.getMyServer().findUser(roompojo.getRightPlayer().getName()));
 			User user=MyServer.getMyServer().findUser(roompojo.getLeftPlayer().getName());
 			ServerWinMsg msg=new ServerWinMsg(user,MyServer.getMyServer().findUser(roompojo.getRightPlayer().getName()));
 			MyServer.getMyServer().sendMsgToClient(msg, roompojo.getLeftPlayer());
@@ -63,7 +65,9 @@ public class ClientGameOver extends BaseMsg{
 		}
 		else{
 			MyServer.getMyServer().updateWinNum(roompojo.getRightPlayer());
+			roompojo.setLeftPlayer(MyServer.getMyServer().findUser(roompojo.getLeftPlayer().getName()));
 			MyServer.getMyServer().updateLoseNum(roompojo.getLeftPlayer());
+			roompojo.setRightPlayer(MyServer.getMyServer().findUser(roompojo.getRightPlayer().getName()));
 			User user=MyServer.getMyServer().findUser(roompojo.getLeftPlayer().getName());
 			ServerWinMsg msg=new ServerWinMsg(MyServer.getMyServer().findUser(roompojo.getRightPlayer().getName()),user);
 			MyServer.getMyServer().sendMsgToClient(msg, roompojo.getRightPlayer());
