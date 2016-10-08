@@ -503,6 +503,7 @@ public class Room extends JFrame {
     chessPanel.getChessimpl().ResetGame();
     repaint();
     visible = false;
+    backGame=false;
     chessPanel.Moves = 0;
   }
 
