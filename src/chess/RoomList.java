@@ -32,7 +32,7 @@ public class RoomList extends JFrame {
   User user = null;
   JList list = new JList();
   JTextArea textArea = new JTextArea();
-  JButton button_1 = new JButton();
+  public JButton button_1 = new JButton();
   JTextField textField = new JTextField();
 
   JPanel panel_2 = new JPanel();
