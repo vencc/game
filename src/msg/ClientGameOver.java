@@ -60,18 +60,18 @@ public class ClientGameOver extends BaseMsg{
 			User user=MyServer.getMyServer().findUser(roompojo.getLeftPlayer().getName());
 			ServerWinMsg msg=new ServerWinMsg(user,MyServer.getMyServer().findUser(roompojo.getRightPlayer().getName()));
 			MyServer.getMyServer().sendMsgToClient(msg, roompojo.getLeftPlayer());
-			ServerDefeatmsg msg2=new ServerDefeatmsg(user,MyServer.getMyServer().findUser(roompojo.getRightPlayer().getName()));
+			ServerDefeatmsg msg2=new ServerDefeatmsg(MyServer.getMyServer().findUser(roompojo.getRightPlayer().getName()),user);
 			MyServer.getMyServer().sendMsgToClient(msg2, roompojo.getRightPlayer());
 		}
 		else{
 			MyServer.getMyServer().updateWinNum(roompojo.getRightPlayer());
-			roompojo.setLeftPlayer(MyServer.getMyServer().findUser(roompojo.getLeftPlayer().getName()));
 			MyServer.getMyServer().updateLoseNum(roompojo.getLeftPlayer());
+			roompojo.setLeftPlayer(MyServer.getMyServer().findUser(roompojo.getLeftPlayer().getName()));
 			roompojo.setRightPlayer(MyServer.getMyServer().findUser(roompojo.getRightPlayer().getName()));
 			User user=MyServer.getMyServer().findUser(roompojo.getLeftPlayer().getName());
 			ServerWinMsg msg=new ServerWinMsg(MyServer.getMyServer().findUser(roompojo.getRightPlayer().getName()),user);
 			MyServer.getMyServer().sendMsgToClient(msg, roompojo.getRightPlayer());
-			ServerDefeatmsg msg2=new ServerDefeatmsg(MyServer.getMyServer().findUser(roompojo.getRightPlayer().getName()),user);
+			ServerDefeatmsg msg2=new ServerDefeatmsg(user,MyServer.getMyServer().findUser(roompojo.getRightPlayer().getName()));
 			MyServer.getMyServer().sendMsgToClient(msg2, roompojo.getLeftPlayer());
 		}
 	}
