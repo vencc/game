@@ -2,7 +2,14 @@ package chess;
 
 
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -10,11 +17,24 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 
-import msg.*;
+import msg.ClientBackChess;
+import msg.ClientBackResult;
+import msg.ClientBeReady;
+import msg.ClientClickChatMsg;
+import msg.ClientGameOver;
+import msg.ClientMovePieces;
+import msg.ClientOffMsg;
+import msg.ClientOutRoomMsg;
+import msg.ClientToClentChatMsg;
 import net.MyClient;
 import util.AudioPlayer;
 import util.ChessImpl;
+import util.ScrollbarUI;
 import entity.RoomPojo;
 import entity.User;
 
@@ -128,6 +148,9 @@ public class Room extends JFrame {
   /**
    * 功能：初始化房间、棋盘 作者：林珊珊
    */
+  private JTextField textField;
+  JTextArea chatArea;
+  JScrollPane scrollPane;
   public void init(final int model) {// 联网对战0 人机对战1
     this.setIconImage(new ImageIcon("resource/imag/logo.png").getImage());
 
@@ -208,16 +231,7 @@ public class Room extends JFrame {
 		 * BorderLayout.SOUTH); toastPanel.setVisible(false);
 		 */
 
-    JPanel chatRoom = new JPanel();
-    chatRoom.setBounds(778, 100, 222, 658);
-    getContentPane().add(chatRoom);
-    chatRoom.setLayout(null);
-    chatRoom.setOpaque(false);
 
-    JLabel label_1 = new JLabel("聊天室");
-    label_1.setBounds(71, 147, 60, 348);
-    chatRoom.add(label_1);
-    label_1.setOpaque(false);
 
     JPanel logoPanel = new JPanel() {
       protected void paintComponent(Graphics g) {
@@ -360,8 +374,95 @@ public class Room extends JFrame {
     });
     But_sur.setBounds(328, 5, 78, 23);
     UIPanel.add(But_sur);
-  }
+  /*
+   * *聊天面板
+   */
+  
+      JPanel chatRoom = new JPanel();
+      scrollPane = new JScrollPane();
+      scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+      scrollPane.setSize(180, 479);
+      scrollPane.setLocation(10, 10);
+      chatArea=new JTextArea();
+      chatArea.setLineWrap(true);
+      
+      chatRoom.setBounds(780, 126, 200, 499);
+    chatRoom.setOpaque(false);
+      chatRoom.setLayout(null);
+      scrollPane.setBorder(null);
+      
+      
+      chatArea.setEditable(false);
+    chatArea.setBackground(Color.white);
+      chatArea.setBounds(0, 0, 205, 490);
+      scrollPane.setViewportView(chatArea);
+      scrollPane.getVerticalScrollBar().setUI(new ScrollbarUI(1));
+    scrollPane.setOpaque(false);
+      scrollPane.getViewport().setOpaque(false);
+      chatRoom.add(scrollPane);
+      logoPanel.add(chatRoom);
 
+      
+      JPanel sendpanel = new JPanel();
+      sendpanel.setBounds(780, 630, 200, 49);
+      logoPanel.add(sendpanel);
+      sendpanel.setLayout(null);
+      
+      textField = new JTextField();
+      textField.setBounds(10, 10, 110, 29);
+      sendpanel.add(textField);
+      textField.setColumns(10);
+      
+      JButton button = new JButton("发送");
+      button.setBounds(125, 10, 65, 29);
+      sendpanel.add(button);
+    sendpanel.setOpaque(false);
+      textField.addKeyListener(new KeyAdapter() {//聊天回车键事件
+          @Override
+          public void keyPressed(KeyEvent e) {
+            if(e.getKeyCode()==KeyEvent.VK_ENTER){
+              String str = textField.getText().trim();
+              if(str.length()!=0){
+                //房间选择报文传输 聊天信息传输给其他用户的界面
+         
+            	  ClientToClentChatMsg msg = new ClientToClentChatMsg(rid, isleft,str);
+                MyClient.getMyClient().sendMsg(msg);//发给服务器
+
+              }
+
+            }
+          }
+        });
+     // button.setVisible(false);
+      button.addMouseListener(new MouseAdapter() {
+        @Override
+        public void mouseClicked(MouseEvent e) { //在线聊天发送按钮
+          String str = textField.getText().trim();
+          //房间选择报文传输 聊天信息传输给其他用户的界面
+        
+          if(str.length()!=0) {
+            //房间选择报文传输 聊天信息传输给其他用户的界面
+        	
+            ClientToClentChatMsg msg = new ClientToClentChatMsg(rid,isleft,str);
+            MyClient.getMyClient().sendMsg(msg);//发给服务器
+
+          }
+          System.out.println(str);
+        }
+      });
+
+
+}
+//聊天信息显示
+public void chat(String str) {
+  String str1 = this.chatArea.getText();
+  this.chatArea.setText(str1 + "\n" + str + "\n");
+  textField.setText("");
+  int height=10;
+  Point p = new Point();
+  p.setLocation(0,this.chatArea.getLineCount()*height);
+  this.scrollPane.getViewport().setViewPosition(p);
+}
   public void setAnotherPlayer(RoomPojo roomPojo) {
     System.out.println(roomPojo);
     if (roomPojo.getRid() != rid) return;

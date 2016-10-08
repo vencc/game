@@ -22,7 +22,10 @@ public class ClientSavePictureMsg extends BaseMsg {
       ServertoRoomListMsg msg = new ServertoRoomListMsg(user);
       MyServer.getMyServer().sendMsgToClient(msg, this.client);
     }else{
-      ServerClickUpdateMsg msg=new ServerClickUpdateMsg();
+      MyServer.getMyServer().bindUsername(user, client);
+      ServerUserListMsg msg2=new ServerUserListMsg(MyServer.getMyServer().getUserList());
+      MyServer.getMyServer().sendMsgToAll(msg2);
+      ServerClickUpdateMsg msg=new ServerClickUpdateMsg(fileName);
       MyServer.getMyServer().sendMsgToClient(msg, this.client);
     }
   }

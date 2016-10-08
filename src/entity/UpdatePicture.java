@@ -1,10 +1,9 @@
 package entity;
 
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
+import javax.swing.*;
 
 import chess.Home;
+import chess.RoomList;
 import msg.ClientLoginMsg;
 import msg.ClientSavePictureMsg;
 import net.MyClient;
@@ -259,7 +258,8 @@ public class UpdatePicture extends JFrame {
     });
 
   }
-  public void setDispose(){
+  public void setDispose(RoomList roomList,String fileName){
+    roomList.button_1.setIcon(new ImageIcon(fileName));
     dispose();
   }
   public void login(User user){

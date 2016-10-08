@@ -63,8 +63,8 @@ public class NameDialog extends JDialog {
 
         }
           System.out.println("网络成功连接");
-          String name=nameTextField.getText();
-        if(name.trim()!="") {
+          String name=nameTextField.getText().trim();
+        if(name.length()!=0) {
           ClientCheckLogMsg msg=new ClientCheckLogMsg(name);
           MyClient.getMyClient().sendMsg(msg);
         }

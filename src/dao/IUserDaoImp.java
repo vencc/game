@@ -42,7 +42,7 @@ public class IUserDaoImp implements IUserDao {
 	   */
 	public List<User> findAll() {
 		// TODO Auto-generated method stub
-		String sql="select * from userinfo";
+		String sql="select * from user";
 		ResultSet rs=b.doQuery(sql);
 		ArrayList list=new ArrayList();
 		User ui=null;
