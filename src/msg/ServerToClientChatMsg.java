@@ -21,7 +21,7 @@ public class ServerToClientChatMsg extends BaseMsg{
 
 	@Override
 	public void doBiz() {
-		//MyClient.getMyClient().getRoom().chat(str);
+		MyClient.getMyClient().getRoom().chat(str);
 		
 	}
 

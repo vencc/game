@@ -37,11 +37,17 @@ public class ClientToClentChatMsg extends BaseMsg{
 		if(isleft){
 			str=roompojo.getLeftPlayer().getName()+":"+str;
 			ServerToClientChatMsg msg=new ServerToClientChatMsg(str);
-			MyServer.getMyServer().sendMsgToClient(msg, roompojo.getRightPlayer());			
+			MyServer.getMyServer().sendMsgToClient(msg, roompojo.getLeftPlayer());
+			if(roompojo.getRightPlayer()!=null){				
+				MyServer.getMyServer().sendMsgToClient(msg, roompojo.getRightPlayer());			
+			}
 		}else{
 			str=roompojo.getRightPlayer().getName()+":"+str;
 			ServerToClientChatMsg msg=new ServerToClientChatMsg(str);
-			MyServer.getMyServer().sendMsgToClient(msg, roompojo.getLeftPlayer());
+			if(roompojo.getLeftPlayer()!=null){				
+				MyServer.getMyServer().sendMsgToClient(msg, roompojo.getLeftPlayer());		
+			}
+			MyServer.getMyServer().sendMsgToClient(msg, roompojo.getRightPlayer());			
 		}
 	}
 	
