@@ -38,7 +38,7 @@ public class WinNumFrame extends JFrame{
 		panel.add(label);
 		
 		for(int i = 0;i< userlist.size();i++){
-			str += userlist.get(i).getName()+"  "+userlist.get(i).getWinNum()+"\n\r"+"  "+userlist.get(i).getLoseNum()+"\n\r";
+			str += userlist.get(i).getName()+"  "+userlist.get(i).getWinNum()+"\n\r";
 		}
 		textArea.setText(str);
 	}

@@ -195,9 +195,7 @@ public class RoomList extends JFrame {
     button_2.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-    	  
-    	  ClientClickWinNumMsg msg = new ClientClickWinNumMsg();
-          MyClient.getMyClient().sendMsg(msg);
+      //  new WinNumFrame(MyServer.getMyServer().getUserList()).setVisible(true);
       }
     });
     button_2.setBounds(352, 13, 93, 30);
@@ -359,10 +357,6 @@ public class RoomList extends JFrame {
 	  button_1.setIcon(new ImageIcon(user.getFileName()));
   }
 
-  //战绩排名显示
-  public void showWinNum(ArrayList<User> userlist){
-	  new WinNumFrame(userlist).setVisible(true);
-  }
 
   //聊天信息显示
   public void showChatMsg(String str) {
