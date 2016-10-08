@@ -14,9 +14,10 @@ import java.util.List;
 public class ClientQuickEnterMsg extends BaseMsg{
   private User user;
   public ClientQuickEnterMsg(User user){
-    this.user=MyServer.getMyServer().findUser(user.getName());
+    this.user=user;
   }
   public void doBiz(){
+    user=MyServer.getMyServer().findUser(user.getName());
     List<RoomPojo> list=MyServer.getMyServer().getRooms();
     System.out.println(list);
     Iterator<RoomPojo> it=list.iterator();

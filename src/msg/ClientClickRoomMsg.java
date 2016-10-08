@@ -27,9 +27,6 @@ public class ClientClickRoomMsg extends BaseMsg{
 		return user;
 	}
 
-	public void setUser(User user) {
-		this.user = MyServer.getMyServer().findUser(user.getName());
-	}
 
 	public boolean isIsleft() {
 		return isleft;
@@ -42,12 +39,13 @@ public class ClientClickRoomMsg extends BaseMsg{
 	public ClientClickRoomMsg(int roomid, User user, boolean isleft) {
 		super();
 		this.roomid = roomid;
-		this.user = MyServer.getMyServer().findUser(user.getName());
+		this.user = user;
 		this.isleft = isleft;
 	}
 
 	public void doBiz() {
 		RoomPojo room=MyServer.getMyServer().getRooms().get(roomid);
+		user=MyServer.getMyServer().findUser(user.getName());
     System.out.println("进入房间前======"+room);
 		if (room.getStatus() == RoomPojo.PLAYING) {
 			return;
