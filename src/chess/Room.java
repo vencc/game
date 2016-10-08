@@ -1,9 +1,7 @@
 package chess;
 
 
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.Point;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -389,17 +387,21 @@ public class Room extends JFrame {
       chatArea.setLineWrap(true);
       
       chatRoom.setBounds(780, 126, 200, 499);
+    chatRoom.setOpaque(false);
       chatRoom.setLayout(null);
       scrollPane.setBorder(null);
       
       
       chatArea.setEditable(false);
+    chatArea.setBackground(Color.white);
       chatArea.setBounds(0, 0, 205, 490);
       scrollPane.setViewportView(chatArea);
-      scrollPane.getVerticalScrollBar().setUI(new ScrollbarUI());
+      scrollPane.getVerticalScrollBar().setUI(new ScrollbarUI(1));
+    scrollPane.setOpaque(false);
       scrollPane.getViewport().setOpaque(false);
       chatRoom.add(scrollPane);
       logoPanel.add(chatRoom);
+
       
       JPanel sendpanel = new JPanel();
       sendpanel.setBounds(780, 630, 200, 49);
@@ -414,6 +416,7 @@ public class Room extends JFrame {
       JButton button = new JButton("发送");
       button.setBounds(125, 10, 65, 29);
       sendpanel.add(button);
+    sendpanel.setOpaque(false);
       textField.addKeyListener(new KeyAdapter() {//聊天回车键事件
           @Override
           public void keyPressed(KeyEvent e) {

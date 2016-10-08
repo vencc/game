@@ -15,6 +15,14 @@ import javax.swing.plaf.basic.BasicScrollBarUI;
  * @date 2016年9月27日
  */
 public class ScrollbarUI extends BasicScrollBarUI {
+  int flag;
+  public ScrollbarUI(){
+    super();
+  }
+  public ScrollbarUI(int flag){
+    super();
+    this.flag=flag;
+  }
 
   @Override
   protected void configureScrollBarColors() {
@@ -25,6 +33,9 @@ public class ScrollbarUI extends BasicScrollBarUI {
 //		thumbLightShadowColor = Color.YELLOW;
 
     // 滑道
+    if(flag==1)
+      trackColor = Color.white;
+    else
     trackColor = new Color(203f/255f,198f/255f,170f/255f,0.87f);
 //		trackHighlightColor = Color.GREEN;
   }
