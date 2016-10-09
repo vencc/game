@@ -15,7 +15,7 @@ public class BaseDao {
 	// 1.四个静态常量的参数
 	public static final String url = "jdbc:mysql://localhost:3306/game";
 	public static final String username = "root";
-	public static final String password = "123456";
+	public static final String password = "hhh";
 	public static final String classname = "com.mysql.jdbc.Driver";
 
 	// 2.加载驱动并获取连接

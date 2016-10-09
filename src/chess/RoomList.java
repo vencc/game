@@ -361,7 +361,7 @@ public class RoomList extends JFrame {
 
   //战绩排名显示
   public void showWinNum(ArrayList<User> userlist){
-	  new WinNumFrame(userlist);
+	  new WinNumFrame(userlist).setVisible(true);
   }
 
   //聊天信息显示

@@ -9,15 +9,29 @@ import entity.User;
 
 public class ClientClickWinNumMsg extends BaseMsg{
  
+	IUserDaoImp iu = new IUserDaoImp();
+	public IUserDaoImp getIu() {
+		return iu;
+	}
+	public void setIu(IUserDaoImp iu) {
+		this.iu = iu;
+	}
+	ArrayList<User> userlist = null;
+	public ArrayList<User> getUserlist() {
+		return userlist;
+	}
+	public void setUserlist(ArrayList<User> userlist) {
+		this.userlist = userlist;
+	}
+	@Override
 	public void doBiz() {
 		// TODO Auto-generated method stub
-		 IUserDaoImp iu = new IUserDaoImp();
-		 ArrayList<User> userlist = (ArrayList<User>) iu.findAll();
+		 userlist = (ArrayList<User>) iu.findAll();
 		 User user1 = null;
 		 User user2 = null;
 		 
-         for(int j=1;j<userlist.size();j++){
-        	 for(int i=0;i<userlist.size()-j;i++){
+         for(int i=0;i<userlist.size()-1;i++){
+        	 for(int j=0;j<userlist.size()-i;i++){
          
              if(userlist.get(i).getWinNum()<userlist.get(i+1).getWinNum()){
             	user1 = userlist.get(i);

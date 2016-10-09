@@ -85,7 +85,7 @@ public class UpdatePicture extends JFrame {
     frameInit(flag);
   }
 
-  public void frameInit(final int flag) {
+  public void frameInit(int flag) {
 
     btnNewButton.addMouseListener(new MouseAdapter() {
       @Override
