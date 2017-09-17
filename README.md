@@ -5,3 +5,4 @@
 本地测试不需要修改任何东西就可以启动并玩人机对战。
 
 如果想联机，就需要创建数据库，并创建 user 表，里面包含的字段顺序为 name,fileName,winNum,loseNum,tiedNum.
+并修改 BaseDao 中的数据库变量，和 ClientThread 中的 ip 地址，就可以进行联机对战了。
