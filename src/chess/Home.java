@@ -1,6 +1,7 @@
 package chess;
 
 import entity.User;
+import game.DelveGame;
 import msg.ClientLoginMsg;
 import msg.ClientLogoutMsg;
 import net.MyClient;
@@ -22,6 +23,7 @@ public class Home extends JFrame {
   private JButton userButton = new JButton();       // 用户已登录显示自己姓名的按钮
   private JButton netButton = new JButton("联网对战");    // 联网对战按钮
   private JButton robotButton = new JButton("人机对战");  // 人机对战按钮
+  private JButton dungeonButton = new JButton("深渊远征"); // 表格驱动的地牢游戏
   private JButton logoffButton = new JButton("退出");  // 退出按钮
   private JPanel contentPane = new JPanel() {
     protected void paintComponent(Graphics g) {
@@ -51,7 +53,8 @@ public class Home extends JFrame {
     netButton.setFocusPainted(false);
     userButton.setBounds((int) (this.getWidth() * 0.2), (int) (this.getHeight() * 0.5), this.getWidth() / 6, this.getHeight() / 14);
     robotButton.setBounds((int) (this.getWidth() * 0.2), (int) (this.getHeight() * 0.6), this.getWidth() / 6, this.getHeight() / 14);
-    logoffButton.setBounds((int) (this.getWidth() * 0.2), (int) (this.getHeight() * 0.7), this.getWidth() / 6, this.getHeight() / 14);
+    dungeonButton.setBounds((int) (this.getWidth() * 0.2), (int) (this.getHeight() * 0.8), this.getWidth() / 6, this.getHeight() / 14);
+    logoffButton.setBounds((int) (this.getWidth() * 0.2), (int) (this.getHeight() * 0.9), this.getWidth() / 6, this.getHeight() / 14);
 
     // 初始化事件监听
     addAction();
@@ -59,6 +62,7 @@ public class Home extends JFrame {
     // 添加组件
     contentPane.add(netButton);
     contentPane.add(robotButton);
+    contentPane.add(dungeonButton);
 
     this.add(contentPane);
     this.setVisible(true);
@@ -87,6 +91,19 @@ public class Home extends JFrame {
       @Override
       public void actionPerformed(ActionEvent e) {
         toRoom();
+      }
+    });
+
+    dungeonButton.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        home.setVisible(false);
+        new DelveGame(new Runnable() {
+          @Override
+          public void run() {
+            home.setVisible(true);
+          }
+        });
       }
     });
 
@@ -129,6 +146,8 @@ public class Home extends JFrame {
   public void repaint(long time, int x, int y, int width, int height) {
     netButton.setBounds((int) (this.getWidth() * 0.2), (int) (this.getHeight() * 0.5), this.getWidth() / 6, this.getHeight() / 13);
     robotButton.setBounds((int) (this.getWidth() * 0.2), (int) (this.getHeight() * 0.6), this.getWidth() / 6, this.getHeight() / 13);
+    dungeonButton.setBounds((int) (this.getWidth() * 0.2), (int) (this.getHeight() * 0.8), this.getWidth() / 6, this.getHeight() / 13);
+    logoffButton.setBounds((int) (this.getWidth() * 0.2), (int) (this.getHeight() * 0.9), this.getWidth() / 6, this.getHeight() / 13);
   }
 
   /**
