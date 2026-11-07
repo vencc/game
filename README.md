@@ -17,6 +17,8 @@ and item spreadsheets. Pick a character, clear two combat rooms and a floor
 boss, choose rewards, then continue down to the Abyss. XP and character
 unlocks are saved in `.vencc-delver.properties` under your home directory.
 Run `chess.Main` and choose **深渊远征** from the home screen.
+On Windows, you can also double-click `Run-Game.bat` in the repository folder.
+It checks for JDK 8 or later, compiles the game, and starts it automatically.
 
 Controls: WASD or arrow keys to move; hold Space or the mouse button to attack;
 Q uses the character ability; R uses a healing potion; F throws a bomb; T
