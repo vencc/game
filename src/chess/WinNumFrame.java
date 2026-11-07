@@ -34,7 +34,7 @@ public class WinNumFrame extends JFrame{
 		textArea.setBounds(0, 31, 432, 228);
 		panel.add(textArea);
 		
-		JLabel label = new JLabel("战绩排行");
+		JLabel label = new JLabel("전적 순위");
 		label.setBounds(0, 0, 432, 29);
 		panel.add(label);
 		

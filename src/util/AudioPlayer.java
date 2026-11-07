@@ -15,7 +15,7 @@ public class AudioPlayer implements Runnable {
   public void run(){
     File soundFile=new File(fileName);
     if (!soundFile.exists()) {
-      System.err.println("Wave file not found:" + fileName);
+      System.err.println("오디오 파일을 찾을 수 없습니다: " + fileName);
       return;
     }
 

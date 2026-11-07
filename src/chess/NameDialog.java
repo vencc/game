@@ -21,9 +21,9 @@ public class NameDialog extends JDialog {
   private Home home;
   private NameDialog nameDialog = this;
   private JTextField nameTextField = new JTextField();
-  private JLabel nameTip = new JLabel("请输入姓名");
-  private JButton ok = new JButton("确定");
-  private JButton cancel = new JButton("取消");
+  private JLabel nameTip = new JLabel("이름을 입력하세요");
+  private JButton ok = new JButton("확인");
+  private JButton cancel = new JButton("취소");
 
   public NameDialog(Home home) {
     MyClient.getMyClient().setNamedialog(this);
@@ -61,13 +61,13 @@ public class NameDialog extends JDialog {
         }else{
 
         }
-          System.out.println("网络成功连接");
+          System.out.println("네트워크에 연결되었습니다.");
           String name=nameTextField.getText();
         if(name.trim()!="") {
           User user = MyServer.getMyServer().findUser(name);
           if (user == null) {
-            String[] options = {"创建", "重新输入"};
-            int res = JOptionPane.showOptionDialog(null, "确定创建新用户吗", "当前输入的名字是新用户",
+            String[] options = {"만들기", "다시 입력"};
+            int res = JOptionPane.showOptionDialog(null, "새 사용자를 만드시겠습니까?", "등록되지 않은 이름입니다",
                 JOptionPane.DEFAULT_OPTION, JOptionPane.YES_NO_OPTION,
                 null, options, options[0]);
             if (res == 0) {
@@ -97,7 +97,7 @@ public class NameDialog extends JDialog {
     nameDialog.dispose();
   }
   public void showMessage(){
-    JOptionPane.showMessageDialog(null,"该帐号已登录","",JOptionPane.WARNING_MESSAGE);
+    JOptionPane.showMessageDialog(null, "이미 로그인한 계정입니다.", "로그인 알림", JOptionPane.WARNING_MESSAGE);
   }
 
   public void loginFail() {

@@ -44,13 +44,13 @@ public class SendmailFrame extends JFrame {
 
 	public SendmailFrame() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage("resource/imag/Sendmailframe.png"));
-		getContentPane().setFont(new Font("宋体", Font.BOLD, 14));
+		getContentPane().setFont(new Font("맑은 고딕", Font.BOLD, 14));
 setVisible(true);
 		setBounds(new Rectangle(200, 200, 50, 50));
 		setSize(394, 394);
 
 		getContentPane().setBackground(SystemColor.control);
-		setTitle("欢迎来到邮件反馈箱");
+		setTitle("게임 의견 보내기");
 		getContentPane().setLayout(null);
 
 		  /**
@@ -58,13 +58,13 @@ setVisible(true);
 		   * 作者: 王小明   时间: 2016-09-23
 		   */
 
-    JButton sendButton = new JButton("发送");
+    JButton sendButton = new JButton("보내기");
     sendButton.addActionListener(new ActionListener() {
     	public void actionPerformed(ActionEvent e) {
     	}
     });
     sendButton.setForeground(Color.BLUE);
-    sendButton.setFont(new Font("宋体", Font.BOLD, 18));
+    sendButton.setFont(new Font("맑은 고딕", Font.BOLD, 18));
   sendButton.addMouseListener(new MouseAdapter() {
          @Override
     public void mouseClicked(MouseEvent e) {
@@ -89,7 +89,7 @@ setVisible(true);
 	   if((index1==0)||(index2==0))        
 	   {
 		 init();
-	    JOptionPane.showMessageDialog(null,"邮件内容或主题不能为空,点击确定返回重新输入", "邮件发送提示框",
+	    JOptionPane.showMessageDialog(null, "내용과 제목을 모두 입력해 주세요.", "의견 보내기",
 				JOptionPane.CLOSED_OPTION);
 	    init1();
 	    }
@@ -97,7 +97,7 @@ setVisible(true);
 		try {			
 			sendmail();
 			init();
-			JOptionPane.showMessageDialog(null,"已收到您的建议，我们会做最大改善", "邮件发送框",JOptionPane.CLOSED_OPTION);
+			JOptionPane.showMessageDialog(null, "의견을 보내 주셔서 감사합니다.", "의견 접수", JOptionPane.CLOSED_OPTION);
               
 			} 
 	   catch (Exception e1)
@@ -118,27 +118,27 @@ setVisible(true);
 
 		textArea.setLineWrap(true);
 		
-		JLabel lblNewLabel_1 = new JLabel("您希望我们游戏哪里还有待改善");
+		JLabel lblNewLabel_1 = new JLabel("게임에서 개선할 점을 알려 주세요");
 		lblNewLabel_1.setForeground(Color.BLUE);
-		lblNewLabel_1.setFont(new Font("宋体", Font.PLAIN, 16));
+		lblNewLabel_1.setFont(new Font("맑은 고딕", Font.PLAIN, 16));
 		lblNewLabel_1.setBounds(76, 25, 263, 31);
 		getContentPane().add(lblNewLabel_1);
 		
-		JLabel lblNewLabel_2 = new JLabel("收 件 人 ：");
+		JLabel lblNewLabel_2 = new JLabel("받는 사람:");
 		lblNewLabel_2.setForeground(Color.BLUE);
-		lblNewLabel_2.setFont(new Font("宋体", Font.PLAIN, 14));
+		lblNewLabel_2.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		lblNewLabel_2.setBounds(37, 66, 77, 15);
 		getContentPane().add(lblNewLabel_2);
 		
-		JLabel lblNewLabel_3 = new JLabel("     五子棋游戏建议反馈部");
+		JLabel lblNewLabel_3 = new JLabel("오목 게임 의견 담당");
 		lblNewLabel_3.setForeground(Color.BLUE);
-		lblNewLabel_3.setFont(new Font("宋体", Font.PLAIN, 14));
+		lblNewLabel_3.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		lblNewLabel_3.setBounds(96, 66, 205, 15);
 		getContentPane().add(lblNewLabel_3);
 		
-		JLabel lblNewLabel_4 = new JLabel("主   题  ：");
+		JLabel lblNewLabel_4 = new JLabel("제목:");
 		lblNewLabel_4.setForeground(Color.BLUE);
-		lblNewLabel_4.setFont(new Font("宋体", Font.PLAIN, 14));
+		lblNewLabel_4.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		lblNewLabel_4.setBounds(37, 104, 77, 15);
 		getContentPane().add(lblNewLabel_4);
 		
@@ -147,13 +147,13 @@ setVisible(true);
 		getContentPane().add(textField);
 		textField.setColumns(10);
 		
-		JLabel lblNewLabel_5 = new JLabel("正   文  ：");
+		JLabel lblNewLabel_5 = new JLabel("내용:");
 		lblNewLabel_5.setForeground(Color.BLUE);
-		lblNewLabel_5.setFont(new Font("宋体", Font.PLAIN, 14));
+		lblNewLabel_5.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		lblNewLabel_5.setBounds(37, 142, 77, 15);
 		getContentPane().add(lblNewLabel_5);
 		
-		JButton btnNewButton = new JButton("退出");
+		JButton btnNewButton = new JButton("닫기");
 		btnNewButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -161,7 +161,7 @@ setVisible(true);
 			}
 		});
 		btnNewButton.setForeground(Color.BLUE);
-		btnNewButton.setFont(new Font("宋体", Font.BOLD, 18));
+		btnNewButton.setFont(new Font("맑은 고딕", Font.BOLD, 18));
 		btnNewButton.setBounds(208, 312, 93, 23);
 		getContentPane().add(btnNewButton);
 		
@@ -230,8 +230,6 @@ setVisible(true);
 	
 	}
 }
-
-
 
 
 

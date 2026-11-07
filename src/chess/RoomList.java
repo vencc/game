@@ -38,7 +38,7 @@ public class RoomList extends JFrame {
   JTextField textField = new JTextField();
 
   JPanel panel_2 = new JPanel();
-  JButton btnNewButton_1 = new JButton("发送");
+  JButton btnNewButton_1 = new JButton("보내기");
 
   JScrollPane scrollPane = new JScrollPane();
   JScrollPane chartScroll=new JScrollPane();
@@ -48,7 +48,7 @@ public class RoomList extends JFrame {
     this.home = home;
     this.user = user;
     MyClient.getMyClient().setRoomlist(this);
-    this.setTitle("五子棋");
+    this.setTitle("오목 대기실");
     this.setSize(1000, 700);
     this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     this.setVisible(true);
@@ -160,7 +160,7 @@ public class RoomList extends JFrame {
     panel.add(panel_3);
     panel_3.setLayout(null);
 
-    JButton button = new JButton("\u5FEB\u901F\u8FDB\u5165");
+    JButton button = new JButton("빠른 입장");
     button.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {//快速进入按钮
         ClientQuickEnterMsg msg=new ClientQuickEnterMsg(user);
@@ -170,7 +170,7 @@ public class RoomList extends JFrame {
     button.setBounds(187, 13, 127, 30);
     panel_3.add(button);
 
-    JButton btnNewButton = new JButton("\u9000\u51FA\u767B\u5F55");
+    JButton btnNewButton = new JButton("로그아웃");
     btnNewButton.addActionListener(new ActionListener() {//退出登录按钮
       @Override
       public void actionPerformed(ActionEvent e) {
@@ -183,7 +183,7 @@ public class RoomList extends JFrame {
     panel_3.add(btnNewButton);
 
 
-    JButton button_3 = new JButton("\u53CD\u9988");
+    JButton button_3 = new JButton("의견 보내기");
     button_3.addActionListener(new ActionListener() {//反馈按钮
       @Override
       public void actionPerformed(ActionEvent e) {
@@ -193,7 +193,7 @@ public class RoomList extends JFrame {
     button_3.setBounds(488, 13, 93, 30);
     panel_3.add(button_3);
 
-    JButton button_2 = new JButton("战绩排名");
+    JButton button_2 = new JButton("전적 순위");
     button_2.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
@@ -320,7 +320,7 @@ public class RoomList extends JFrame {
     addWindowListener(new WindowAdapter() {
       @Override
       public void windowClosing(WindowEvent e) {
-        System.out.println("退出程序");
+        System.out.println("프로그램을 종료합니다.");
         ClientOffMsg msg = new ClientOffMsg();
         MyClient.getMyClient().sendMsg(msg);
       }
@@ -400,7 +400,7 @@ public class RoomList extends JFrame {
         public void actionPerformed(ActionEvent e) {
           //房间左边座位按钮
           int roomid = Integer.parseInt(((JComponent) e.getSource()).getParent().getName());//获得对应房间的名字
-          System.out.println("roomid:" + roomid);
+          System.out.println("방 번호: " + roomid);
           //房间选择报文传输 roomid、username、isleft  传输给其他用户的界面
           ClientClickRoomMsg msg = new ClientClickRoomMsg(roomid, user, true);
           MyClient.getMyClient().sendMsg(msg);//发给服务器
@@ -430,7 +430,7 @@ public class RoomList extends JFrame {
           //房间右边座位按钮
           int roomid = Integer.parseInt(((JComponent) e.getSource())
               .getParent().getName());//获得对应房间的名字
-          System.out.println("roomid:" + roomid);
+          System.out.println("방 번호: " + roomid);
           //房间选择报文传输 roomid、username、isleft  传输给其他用户的界面
           ClientClickRoomMsg msg = new ClientClickRoomMsg(roomid, user, false);
           MyClient.getMyClient().sendMsg(msg);//发给服务器

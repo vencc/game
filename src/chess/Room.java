@@ -73,7 +73,7 @@ public class Room extends JFrame {
     this.user = user;
     this.roomList = roomList;
     MyClient.getMyClient().setRoom(this);
-    System.out.println("网络对战");
+    System.out.println("온라인 대전");
     this.rid = roomid;
     this.isleft = isleft;
     init(0);
@@ -135,7 +135,7 @@ public class Room extends JFrame {
   public void init(final int model) {// 联网对战0 人机对战1
     this.setIconImage(new ImageIcon("resource/imag/logo.png").getImage());
 
-    this.setTitle("五子棋");
+    this.setTitle("오목 대국");
     this.setSize(1000, 800);
     this.setResizable(false);
     this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -218,7 +218,7 @@ public class Room extends JFrame {
     chatRoom.setLayout(null);
     chatRoom.setOpaque(false);
 
-    JLabel label_1 = new JLabel("聊天室");
+    JLabel label_1 = new JLabel("대화");
     label_1.setBounds(71, 147, 60, 348);
     chatRoom.add(label_1);
     label_1.setOpaque(false);
@@ -244,7 +244,7 @@ public class Room extends JFrame {
     UIPanel.setOpaque(false);
 
 
-    JButton But_ready = new JButton("准备");
+    JButton But_ready = new JButton("준비");
     But_ready.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e) {
@@ -260,7 +260,7 @@ public class Room extends JFrame {
     if (model == 0)
       UIPanel.add(But_ready);
     else {
-      JButton refresh = new JButton("重新开始");
+      JButton refresh = new JButton("다시 시작");
       refresh.addMouseListener(new MouseAdapter() {
         @Override
         public void mouseClicked(MouseEvent e) {
@@ -275,15 +275,15 @@ public class Room extends JFrame {
     /**
      * 退出按钮
      */
-    JButton But_exit = new JButton("退出");
+    JButton But_exit = new JButton("나가기");
     But_exit.setBounds(416, 5, 73, 23);
     But_exit.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e) {
         if (model == 0) {
           if (gameStart == true) {
-            String[] options = {"我还可以再战!", "我认怂 T T"};
-            int res = JOptionPane.showOptionDialog(null, "对方把你吓尿了~~", "这样真的好吗?",
+            String[] options = {"계속 대국", "기권하고 나가기"};
+            int res = JOptionPane.showOptionDialog(null, "대국을 그만두시겠습니까?", "대국 종료",
                 JOptionPane.DEFAULT_OPTION, JOptionPane.YES_NO_OPTION,
                 null, options, options[0]);
             if (res == 0) return;
@@ -310,14 +310,14 @@ public class Room extends JFrame {
     });
     UIPanel.add(But_exit);
 
-    JButton But_regret = new JButton("悔棋");
+    JButton But_regret = new JButton("무르기");
     But_regret.setBounds(240, 5, 78, 23);
     But_regret.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e) {
         if (backGame == true) {
-          String[] options = {"爸爸", "不叫"};
-          int res = JOptionPane.showOptionDialog(null, "叫爸爸", "还想悔棋?",
+          String[] options = {"요청하기", "취소"};
+          int res = JOptionPane.showOptionDialog(null, "상대에게 무르기를 요청하시겠습니까?", "무르기 요청",
               JOptionPane.DEFAULT_OPTION, JOptionPane.YES_NO_OPTION,
               new ImageIcon("resource/imag/back.png"), options, options[0]);
           if (res == 0) {
@@ -336,13 +336,13 @@ public class Room extends JFrame {
     });
     UIPanel.add(But_regret);
 
-    JButton But_sur = new JButton("认输");
+    JButton But_sur = new JButton("기권");
     But_sur.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
         if (model == 1) {
-          String[] options = {"我还可以再战!", "我认怂 T T"};
-          int res = JOptionPane.showOptionDialog(null, "你连机器人都打不过,还好意思认输~~", "这样真的好吗?",
+          String[] options = {"계속 대국", "기권하기"};
+          int res = JOptionPane.showOptionDialog(null, "기권하시겠습니까?", "기권 확인",
               JOptionPane.DEFAULT_OPTION, JOptionPane.YES_NO_OPTION,
               new ImageIcon("resource/imag/touxiang.png"), options, options[0]);
           if (res == 1) {
@@ -350,8 +350,8 @@ public class Room extends JFrame {
           }
         } else {
           if (gameStart == true) {
-            String[] options = {"我还可以再战!", "我认怂 T T"};
-            int res = JOptionPane.showOptionDialog(null, "对方把你吓尿了~~", "这样真的好吗?",
+            String[] options = {"계속 대국", "기권하기"};
+            int res = JOptionPane.showOptionDialog(null, "기권하시겠습니까?", "기권 확인",
                 JOptionPane.DEFAULT_OPTION, JOptionPane.YES_NO_OPTION,
                 new ImageIcon("resource/imag/touxiang.png"), options, options[0]);
             if (res == 1) {
@@ -459,8 +459,8 @@ public class Room extends JFrame {
 
   public void decide() {
     boolean result;
-    String[] options = {"收", "滚"};
-    int res = JOptionPane.showOptionDialog(this, "收不收", "对方为了悔棋认你做爸爸",
+    String[] options = {"수락", "거절"};
+    int res = JOptionPane.showOptionDialog(this, "상대가 무르기를 요청했습니다.", "무르기 요청",
         JOptionPane.DEFAULT_OPTION, JOptionPane.YES_NO_OPTION,
         null, options, options[0]);
 
@@ -482,7 +482,7 @@ public class Room extends JFrame {
       setCanplay(true);
     }
     JOptionPane.showMessageDialog(this,
-        "对方儿子太多", "对方拒绝了你的请求", JOptionPane.ERROR_MESSAGE);
+        "상대가 무르기 요청을 거절했습니다.", "무르기 거절", JOptionPane.ERROR_MESSAGE);
 
 
   }
@@ -494,7 +494,7 @@ public class Room extends JFrame {
     ClientMovePieces msg = new ClientMovePieces(rid, isleft, ChessImpl.chess, true, 0, 0);
     MyClient.getMyClient().sendMsg(msg);
     JOptionPane.showMessageDialog(this,
-        "乖儿子", "对方同意了你的请求", JOptionPane.ERROR_MESSAGE);
+        "상대가 무르기 요청을 수락했습니다.", "무르기 수락", JOptionPane.INFORMATION_MESSAGE);
   }
 
   private void resetGame() {
@@ -518,7 +518,7 @@ public class Room extends JFrame {
     }
     new Thread(new AudioPlayer("resource/audio/winner.wav")).start();
     JOptionPane.showMessageDialog(this,
-        "大侠，在下甘拜下风！！", "你赢了！", JOptionPane.ERROR_MESSAGE, new ImageIcon("resource/imag/winner.png"));
+        "멋진 승리입니다!", "승리!", JOptionPane.INFORMATION_MESSAGE, new ImageIcon("resource/imag/winner.png"));
     resetGame();
   }
 
@@ -529,14 +529,14 @@ public class Room extends JFrame {
     }
     new Thread(new AudioPlayer("resource/audio/loser.wav")).start();
     JOptionPane.showMessageDialog(this,
-        "胜败乃兵家常事，壮士请重新来过", "你输了！", JOptionPane.ERROR_MESSAGE, new ImageIcon("resource/imag/loser.png"));
+        "다음 대국에서 다시 도전하세요.", "패배", JOptionPane.INFORMATION_MESSAGE, new ImageIcon("resource/imag/loser.png"));
     resetGame();
   }
 
   public void pingju() {
     new Thread(new AudioPlayer("resource/audio/pingju.wav")).start();
     JOptionPane.showMessageDialog(this,
-        "相亲相爱一家人~~", "平局！", JOptionPane.ERROR_MESSAGE);
+        "승부를 가리지 못했습니다.", "무승부", JOptionPane.INFORMATION_MESSAGE);
     resetGame();
   }
 }

@@ -8,7 +8,7 @@ import javax.swing.*;
 public class Personal extends JFrame {
   private RoomList roomList;
   public void init() {
-    this.setTitle("五子棋");
+    this.setTitle("오목 - 내 정보");
     this.setSize(1000, 700);
     this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     this.setVisible(true);
