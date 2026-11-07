@@ -1,5 +1,6 @@
 @echo off
 setlocal EnableExtensions EnableDelayedExpansion
+chcp 65001 >nul
 pushd "%~dp0"
 
 where javac >nul 2>nul
@@ -22,7 +23,7 @@ set "JAR_DIR=%~dp0resource\lib"
 set "LIB_CP=%JAR_DIR%\JTattoo.jar;%JAR_DIR%\dsn.jar;%JAR_DIR%\gimap.jar;%JAR_DIR%\imap.jar;%JAR_DIR%\mailapi.jar;%JAR_DIR%\pop3.jar;%JAR_DIR%\smtp.jar"
 for %%J in (JTattoo.jar dsn.jar gimap.jar imap.jar mailapi.jar pop3.jar smtp.jar) do (
   if not exist "%JAR_DIR%\%%J" (
-    echo Missing required library: resource\lib\%%J
+    echo 필수 라이브러리가 없습니다: resource\lib\%%J
     goto failed
   )
 )
@@ -31,44 +32,46 @@ if not exist "bin" mkdir "bin"
 set "SOURCE_FILES="
 for /r "src" %%F in (*.java) do set "SOURCE_FILES=!SOURCE_FILES! "%%F""
 if not defined SOURCE_FILES (
-  echo No Java source files were found in src.
+  echo src 폴더에서 자바 소스 파일을 찾을 수 없습니다.
   goto failed
 )
 
-echo Compiling the game...
+echo 게임을 컴파일하고 있습니다...
 javac -encoding UTF-8 -cp "%LIB_CP%" -d "bin" !SOURCE_FILES!
 set "RESULT=%ERRORLEVEL%"
 if not "%RESULT%"=="0" (
   echo.
-  echo Game compilation failed. Fix the errors above, then run this file again.
+  echo.
+  echo 게임 컴파일에 실패했습니다. 위 오류를 확인한 뒤 다시 실행해 주세요.
   goto failed
 )
 
-echo Starting the game...
-java -cp "bin;%LIB_CP%" chess.Main
+echo 게임을 실행합니다...
+java -Dfile.encoding=UTF-8 -cp "bin;%LIB_CP%" chess.Main
 set "RESULT=%ERRORLEVEL%"
 if not "%RESULT%"=="0" (
   echo.
-  echo The game closed with error code %RESULT%.
+  echo.
+  echo 게임이 오류 코드 %RESULT%로 종료되었습니다.
   goto failed
 )
 goto end
 
 :no_jdk
-echo A Java Development Kit (JDK) version 8 or later is required.
-echo Install a JDK, then reopen this launcher so javac is available on PATH.
+echo JDK 8 이상이 필요합니다.
+echo JDK를 설치한 뒤 javac를 PATH에 추가하고 이 파일을 다시 실행해 주세요.
 goto failed
 
 :no_java
-echo Java was not found on PATH. Install a JDK version 8 or later and try again.
+echo PATH에서 Java를 찾을 수 없습니다. JDK 8 이상을 설치한 뒤 다시 실행해 주세요.
 goto failed
 
 :no_version
-echo Could not determine the JDK version. Make sure a JDK version 8 or later is on PATH.
+echo JDK 버전을 확인할 수 없습니다. JDK 8 이상이 PATH에 있는지 확인해 주세요.
 goto failed
 
 :old_java
-echo JDK version 8 or later is required. Detected version: %JAVA_VERSION%
+echo JDK 8 이상이 필요합니다. 확인된 버전: %JAVA_VERSION%
 goto failed
 
 :failed

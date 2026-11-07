@@ -27,13 +27,13 @@ public class ChessImpl implements IChess {
 	boolean black = false;
 	public boolean add(int x, int y, int type) {
 		if (chess[x][y] != 0) {
-			System.out.println("这个位置已经放过棋子了");
+			System.out.println("이미 돌이 놓인 자리입니다.");
 			return false;
 		} else {
 			if (type == 1)
-				System.out.println("在" + x + "," + y + "处下了一个白棋");
+				System.out.println("백돌을 놓았습니다: " + x + ", " + y);
 			else {
-				System.out.println("在" + x + "," + y + "处下了一个黑棋");
+				System.out.println("흑돌을 놓았습니다: " + x + ", " + y);
 			}
 			// 白棋為1，黑棋為2；
 			// chessx[1]chessy[1]紀録上次白棋下子位置
@@ -439,7 +439,7 @@ public class ChessImpl implements IChess {
 				this.wgrade = 0;
 				this.bgrade = 0;
 				 // 电脑下子位置
-				System.out.println("电脑下在了" + m + "," + n);
+				System.out.println("컴퓨터가 돌을 놓았습니다: " + m + ", " + n);
 				add(m,n,1);
 				compare(m, n, 1);
 				

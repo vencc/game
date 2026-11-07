@@ -34,8 +34,7 @@ import java.util.Random;
 import java.util.Set;
 
 /**
- * A self-contained, keyboard-and-mouse roguelike built from the attached
- * progression, character, floor, monster, boss, and item sheets.
+ * 첨부한 성장, 캐릭터, 층, 몬스터, 보스, 아이템 시트를 반영한 키보드·마우스 로그라이트.
  */
 public class DelveGame extends JFrame {
   private static final int WIDTH = 1080;
@@ -75,22 +74,22 @@ public class DelveGame extends JFrame {
       1.0, 1.12, 1.25, 1.38, 1.6, 1.75, 1.9, 2.05, 2.2, 2.6
   };
   private static final Item[] ITEMS = {
-      new Item("낡은 숫돌", "공격력 +1", "damage", 1, 0, "common"),
-      new Item("가벼운 장갑", "공격 속도 +20%", "speed", 0, 0.2, "common"),
-      new Item("매의 눈", "사거리 +20%", "range", 0, 0.2, "common"),
-      new Item("붉은 심장 조각", "최대 체력 +1칸, 체력 회복", "heart", 2, 0, "rare"),
-      new Item("네잎클로버", "행운 +2, 보상 획득률 증가", "luck", 2, 0, "rare"),
-      new Item("독니", "적중 시 독 피해", "poison", 0, 0, "rare"),
-      new Item("불씨 조각", "공격에 불 속성 부여", "fire", 0, 0, "rare"),
-      new Item("서리 조각", "공격에 얼음 속성 부여", "ice", 0, 0, "rare"),
-      new Item("쌍둥이 별", "탄환을 둘로 나눔", "twin", 0, 0, "epic"),
-      new Item("유령의 손", "탄환이 적을 관통", "pierce", 0, 0, "epic"),
-      new Item("폭죽통", "적중 시 20% 확률로 폭발", "explosion", 0, 0, "epic"),
-      new Item("흡혈 송곳니", "적 10마리 처치마다 체력 회복", "vampire", 0, 0, "epic"),
-      new Item("불사조 깃털", "이번 원정에서 한 번 부활", "revive", 0, 0, "legendary"),
-      new Item("긴 칼날", "검 사거리 +30%", "sword", 0, 0.3, "rare"),
-      new Item("속사 시위", "활 충전 시간 -30%", "bow", 0, 0.3, "rare"),
-      new Item("확장 탄창", "권총 탄창 +2", "magazine", 2, 0, "rare")
+      new Item("낡은 숫돌", "공격력 +1", "damage", 1, 0, "일반"),
+      new Item("가벼운 장갑", "공격 속도 +20%", "speed", 0, 0.2, "일반"),
+      new Item("매의 눈", "사거리 +20%", "range", 0, 0.2, "일반"),
+      new Item("붉은 심장 조각", "최대 체력 +1칸, 체력 회복", "heart", 2, 0, "희귀"),
+      new Item("네잎클로버", "행운 +2, 보상 획득률 증가", "luck", 2, 0, "희귀"),
+      new Item("독니", "적중 시 독 피해", "poison", 0, 0, "희귀"),
+      new Item("불씨 조각", "공격에 불 속성 부여", "fire", 0, 0, "희귀"),
+      new Item("서리 조각", "공격에 얼음 속성 부여", "ice", 0, 0, "희귀"),
+      new Item("쌍둥이 별", "탄환을 둘로 나눔", "twin", 0, 0, "영웅"),
+      new Item("유령의 손", "탄환이 적을 관통", "pierce", 0, 0, "영웅"),
+      new Item("폭죽통", "적중 시 20% 확률로 폭발", "explosion", 0, 0, "영웅"),
+      new Item("흡혈 송곳니", "적 10마리 처치마다 체력 회복", "vampire", 0, 0, "영웅"),
+      new Item("불사조 깃털", "이번 원정에서 한 번 부활", "revive", 0, 0, "전설"),
+      new Item("긴 칼날", "검 사거리 +30%", "sword", 0, 0.3, "희귀"),
+      new Item("속사 시위", "활 충전 시간 -30%", "bow", 0, 0.3, "희귀"),
+      new Item("확장 탄창", "권총 탄창 +2", "magazine", 2, 0, "희귀")
   };
 
   private static final String SELECT = "select";
@@ -116,7 +115,7 @@ public class DelveGame extends JFrame {
   private double permanentDamage;
   private int permanentHealth;
   private double permanentSpeed;
-  private String message = "WASD 이동 · 마우스/Space 공격 · Q 특수 능력";
+  private String message = "WASD 이동 · 마우스/스페이스 공격 · Q 특수 기술";
   private String state = SELECT;
   private Hero hero;
   private int floor;
@@ -199,15 +198,15 @@ public class DelveGame extends JFrame {
       gunnerUnlocked = Boolean.parseBoolean(progress.getProperty("gunner", "false"));
       level = levelForXp(totalXp);
     } catch (IOException error) {
-      System.err.println("Could not load game progress: " + error.getMessage());
+      System.err.println("게임 진행 정보를 불러오지 못했습니다: " + error.getMessage());
     } catch (NumberFormatException error) {
-      System.err.println("Could not parse game progress: " + error.getMessage());
+      System.err.println("게임 진행 정보를 해석하지 못했습니다: " + error.getMessage());
     } finally {
       if (input != null) {
         try {
           input.close();
         } catch (IOException error) {
-          System.err.println("Could not close progress file: " + error.getMessage());
+          System.err.println("진행 정보 파일을 닫지 못했습니다: " + error.getMessage());
         }
       }
     }
@@ -224,16 +223,16 @@ public class DelveGame extends JFrame {
     FileOutputStream output = null;
     try {
       output = new FileOutputStream(saveFile);
-      progress.store(output, "Spreadsheet Delver progress");
+      progress.store(output, "심연 원정 진행 정보");
     } catch (IOException error) {
-      System.err.println("Could not save game progress: " + error.getMessage());
-      message = "진행 저장 실패: " + error.getMessage();
+      System.err.println("게임 진행 정보를 저장하지 못했습니다: " + error.getMessage());
+      message = "진행 정보 저장 실패: " + error.getMessage();
     } finally {
       if (output != null) {
         try {
           output.close();
         } catch (IOException error) {
-          System.err.println("Could not close progress file: " + error.getMessage());
+          System.err.println("진행 정보 파일을 닫지 못했습니다: " + error.getMessage());
         }
       }
     }
@@ -658,8 +657,8 @@ public class DelveGame extends JFrame {
 
   private int weightedItemIndex() {
     int roll = random.nextInt(100);
-    String rarity = roll < 45 ? "common" :
-        (roll < 80 ? "rare" : (roll < 97 ? "epic" : "legendary"));
+    String rarity = roll < 45 ? "일반" :
+        (roll < 80 ? "희귀" : (roll < 97 ? "영웅" : "전설"));
     int count = 0;
     for (Item item : ITEMS) {
       if (rarity.equals(item.rarity)) count++;
@@ -741,7 +740,8 @@ public class DelveGame extends JFrame {
     if (midbossUnlockedThisRun) archerUnlocked = true;
     runGold += won ? 50 : 0;
     saveProgress();
-    message = won ? "심연을 정복했습니다! 원정 XP +" + payout : "원정 종료 · 획득 XP의 80%를 보존했습니다.";
+    message = won ? "심연을 정복했습니다! 원정 경험치 +" + payout :
+        "원정 종료 · 획득 경험치의 80%를 보존했습니다.";
   }
 
   private void addXp(int amount) {
@@ -844,7 +844,7 @@ public class DelveGame extends JFrame {
     if ((REWARD.equals(state) || FLOOR_BREAK.equals(state)) && hero.keys > 0) {
       hero.keys--;
       offeredItems = chooseItems();
-      message = "열쇠를 사용해 보물을 다시 굴렸습니다.";
+      message = "열쇠를 사용해 보물을 다시 뽑았습니다.";
     }
   }
 
@@ -890,7 +890,7 @@ public class DelveGame extends JFrame {
     g.fillRoundRect(38, 18, WIDTH - 76, 80, 16, 16);
     g.setColor(Color.WHITE);
     g.setFont(new Font("Dialog", Font.BOLD, 20));
-    g.drawString("제" + (floor + 1) + "층  " + FLOOR_NAMES[Math.max(0, Math.min(9, floor))], 58, 47);
+    g.drawString((floor + 1) + "층  " + FLOOR_NAMES[Math.max(0, Math.min(9, floor))], 58, 47);
     g.setFont(new Font("Dialog", Font.PLAIN, 13));
     g.setColor(new Color(200, 202, 220));
     g.drawString("위험: " + FLOOR_HAZARDS[Math.max(0, Math.min(9, floor))] + "   ·   난이도 ×" +
@@ -913,13 +913,14 @@ public class DelveGame extends JFrame {
     g.fillRoundRect(56, 122, 240, 85, 12, 12);
     g.setColor(Color.WHITE);
     g.setFont(new Font("Dialog", Font.BOLD, 15));
-    g.drawString(hero.name + " · Lv." + level, 70, 145);
+    g.drawString(hero.name + " · 레벨 " + level, 70, 145);
     g.setColor(new Color(240, 105, 116));
     g.drawString("♥ " + formatHealth(hero.hp) + "/" + formatHealth(hero.maxHp) +
         (hero.shield > 0 ? "  ◈ " + formatHealth(hero.shield) : "") +
         (hero.keys > 0 ? "  열쇠 " + hero.keys : ""), 70, 169);
     g.setColor(new Color(236, 195, 110));
-    g.drawString("XP " + totalXp + "/" + MAX_XP + "  ·  本次 +" + runXp + "  ·  金币 " + runGold, 70, 192);
+    g.drawString("경험치 " + totalXp + "/" + MAX_XP + "  ·  이번 원정 +" + runXp +
+        "  ·  금화 " + runGold, 70, 192);
     if (bossRoom && !enemies.isEmpty()) {
       Enemy boss = enemies.get(0);
       int barX = WIDTH / 2 - 200;
@@ -1008,8 +1009,8 @@ public class DelveGame extends JFrame {
     g.setFont(new Font("Dialog", Font.PLAIN, 13));
     g.setColor(new Color(223, 225, 235));
     g.drawString(message, 62, HEIGHT - 45);
-    String controls = "WASD 이동 · Space/클릭 공격 · Q 특수 · R 회복(" + hero.potions +
-        ") · F 폭탄(" + hero.bombs + ") · T 열쇠 리롤(" + hero.keys +
+    String controls = "WASD 이동 · 스페이스/마우스 공격 · Q 특수 능력 · R 회복(" + hero.potions +
+        ") · F 폭탄(" + hero.bombs + ") · T 열쇠로 다시 뽑기(" + hero.keys +
         ") · 1/2/3 능력치(" + statPoints + ") · Esc 마을";
     g.setColor(new Color(159, 169, 188));
     g.drawString(controls, 62, HEIGHT - 25);
@@ -1028,7 +1029,7 @@ public class DelveGame extends JFrame {
     g.setFont(new Font("Dialog", Font.BOLD, 30));
     centered(g, "보물 상자", WIDTH / 2, 230);
     g.setFont(new Font("Dialog", Font.PLAIN, 15));
-    centered(g, "아이템 선택: 1 / 2 / 3 · 열쇠 리롤: T", WIDTH / 2, 263);
+    centered(g, "아이템 선택: 1 / 2 / 3 · 열쇠로 다시 뽑기: T", WIDTH / 2, 263);
     drawCards(g, offeredItems);
   }
 
@@ -1038,10 +1039,10 @@ public class DelveGame extends JFrame {
     g.setFont(new Font("Dialog", Font.BOLD, 30));
     centered(g, "층 클리어!", WIDTH / 2, 230);
     g.setFont(new Font("Dialog", Font.PLAIN, 16));
-    centered(g, "보물을 고르세요 · 1 / 2 / 3 선택 · T 열쇠 리롤", WIDTH / 2, 264);
+    centered(g, "보물을 고르세요 · 1 / 2 / 3 선택 · T 열쇠로 다시 뽑기", WIDTH / 2, 264);
     drawCards(g, offeredItems);
     g.setColor(new Color(239, 209, 146));
-    centered(g, "보상 XP +100 · 보스 XP +150 · 이번 원정 " + runXp + " XP", WIDTH / 2, 497);
+    centered(g, "층 클리어 경험치 +100 · 보스 처치 경험치 +150 · 이번 원정 " + runXp + " 경험치", WIDTH / 2, 497);
     g.setColor(Color.WHITE);
     centered(g, "아이템 선택 후 다음 층으로", WIDTH / 2, 544);
   }
@@ -1059,7 +1060,7 @@ public class DelveGame extends JFrame {
       g.setStroke(new BasicStroke(2));
       g.drawRoundRect(x, y, 260, 168, 18, 18);
       g.setFont(new Font("Dialog", Font.BOLD, 12));
-      centered(g, item.rarity.toUpperCase(), x + 130, y + 29);
+      centered(g, item.rarity, x + 130, y + 29);
       g.setFont(new Font("Dialog", Font.BOLD, 21));
       centered(g, item.name, x + 130, y + 73);
       g.setColor(new Color(213, 216, 229));
@@ -1076,12 +1077,12 @@ public class DelveGame extends JFrame {
     centered(g, won ? "심연 정복" : "원정 종료", WIDTH / 2, 245);
     g.setColor(Color.WHITE);
     g.setFont(new Font("Dialog", Font.PLAIN, 18));
-    centered(g, "획득 XP " + (won ? runXp + (firstClearBonus ? 3000 : 0) : (int) (runXp * 0.8)) +
-        " · 처치 " + runKills + " · 골드 " + runGold, WIDTH / 2, 292);
-    centered(g, "영구 누적 XP " + totalXp + " / " + MAX_XP + " · 레벨 " + level, WIDTH / 2, 325);
-    centered(g, archerUnlocked ? "궁수 해금" : "궁수: 5층 보스 처치 시 해금", WIDTH / 2, 366);
-    centered(g, gunnerUnlocked ? "총잡이 해금" : "총잡이: 10층 첫 클리어 시 해금", WIDTH / 2, 396);
-    centered(g, "Enter: 다시 원정  ·  Esc: 마을", WIDTH / 2, 455);
+    centered(g, "획득 경험치 " + (won ? runXp + (firstClearBonus ? 3000 : 0) : (int) (runXp * 0.8)) +
+        " · 처치 " + runKills + " · 금화 " + runGold, WIDTH / 2, 292);
+    centered(g, "누적 경험치 " + totalXp + " / " + MAX_XP + " · 레벨 " + level, WIDTH / 2, 325);
+    centered(g, archerUnlocked ? "궁수 해금 완료" : "궁수: 5층 보스 처치 시 해금", WIDTH / 2, 366);
+    centered(g, gunnerUnlocked ? "총잡이 해금 완료" : "총잡이: 10층 첫 클리어 시 해금", WIDTH / 2, 396);
+    centered(g, "엔터: 다시 원정  ·  ESC: 마을로", WIDTH / 2, 455);
   }
 
   private void drawOverlayShade(Graphics2D g) {
@@ -1135,16 +1136,16 @@ public class DelveGame extends JFrame {
     }
     g.setColor(new Color(214, 218, 232));
     g.setFont(new Font("Dialog", Font.PLAIN, 14));
-    centered(g, "영구 XP " + totalXp + " / " + MAX_XP + "   ·   레벨 " + level +
+    centered(g, "누적 경험치 " + totalXp + " / " + MAX_XP + "   ·   레벨 " + level +
         "   ·   사용 가능 능력치 " + statPoints, WIDTH / 2, 608);
-    centered(g, "조작: WASD 이동 · 마우스/Space 공격 · Q 특수 능력 · 1 공격력 / 2 체력 / 3 이동 속도", WIDTH / 2, 640);
+    centered(g, "조작: WASD 이동 · 마우스/스페이스 공격 · Q 특수 기술 · 1 공격력 / 2 체력 / 3 이동 속도", WIDTH / 2, 640);
     centered(g, message, WIDTH / 2, 680);
   }
 
   private Color rarityColor(String rarity) {
-    if ("legendary".equals(rarity)) return new Color(244, 173, 78);
-    if ("epic".equals(rarity)) return new Color(194, 137, 244);
-    if ("rare".equals(rarity)) return new Color(103, 173, 244);
+    if ("전설".equals(rarity)) return new Color(244, 173, 78);
+    if ("영웅".equals(rarity)) return new Color(194, 137, 244);
+    if ("희귀".equals(rarity)) return new Color(103, 173, 244);
     return new Color(177, 195, 172);
   }
 

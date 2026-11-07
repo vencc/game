@@ -1,28 +1,30 @@
-## java五子棋客户端
+# 자바 오목 게임
 
-本系统是使用JAVA语言写的支持在线联机对战的五子棋客户端游戏。
+자바로 만든 온라인 대전 및 컴퓨터 대전용 오목 게임입니다. 별도의 프레임워크 없이 기존 자바 프로젝트 구조를 사용합니다.
 
-这只是一个新手项目，没有使用到任何框架与高级技术。
+## 심연 원정
 
-本地测试不需要修改任何东西就可以启动并玩人机对战。
+홈 화면에서 **심연 원정**을 선택하면 진행, 캐릭터, 층, 몬스터, 보스, 아이템 기획표를 반영한 1인용 10층 액션 로그라이트를 플레이할 수 있습니다. 캐릭터를 고르고 전투 방 두 곳과 층별 보스를 돌파해 보상을 선택한 뒤, 마지막 심연까지 내려가세요. 경험치와 캐릭터 해금 정보는 사용자 홈 폴더의 `.vencc-delver.properties` 파일에 저장됩니다.
 
-如果想联机，就需要创建数据库，并创建 user 表，里面包含的字段顺序为 name,fileName,winNum,loseNum,tiedNum.  
-并修改 BaseDao 中的数据库变量，和 MyClient 中的 ip 地址，就可以进行联机对战了。
+### 간편 실행
 
-## Spreadsheet-driven dungeon mode
+Windows에서는 저장소 폴더의 **`Run-Game.bat`** 파일을 더블클릭하세요. 자바 개발 도구(JDK) 버전 8 이상과 필수 라이브러리를 확인하고, 게임을 자동으로 컴파일해 실행합니다.
 
-The home screen also includes **深渊远征** (Abyss Expedition), a solo, 10-floor
-action roguelike based on the progression, character, floor, monster, boss,
-and item spreadsheets. Pick a character, clear two combat rooms and a floor
-boss, choose rewards, then continue down to the Abyss. XP and character
-unlocks are saved in `.vencc-delver.properties` under your home directory.
-Run `chess.Main` and choose **深渊远征** from the home screen.
-On Windows, you can also double-click `Run-Game.bat` in the repository folder.
-It checks for JDK 8 or later, compiles the game, and starts it automatically.
+또는 Eclipse에서 `src/chess/Main.java`를 **Java Application**으로 실행하고 홈 화면에서 **심연 원정**을 선택할 수 있습니다.
 
-Controls: WASD or arrow keys to move; hold Space or the mouse button to attack;
-Q uses the character ability; R uses a healing potion; F throws a bomb; T
-spends a key to reroll a reward; 1/2/3 spend stat points on damage, health, or
-speed; Esc returns to the home screen.
+### 조작 방법
+
+- **이동:** WASD 또는 방향키
+- **공격:** 스페이스바를 누른 채 있기 또는 마우스 버튼 누르기
+- **특수 능력:** Q
+- **회복 물약:** R
+- **폭탄:** F
+- **열쇠로 보상 다시 뽑기:** T
+- **능력치 강화:** 1 공격력, 2 체력, 3 이동 속도
+- **마을로 돌아가기:** Esc
+
+## 온라인 오목 대전 설정
+
+컴퓨터 대전은 별도 설정 없이 실행할 수 있습니다. 온라인 대전을 이용하려면 데이터베이스를 만들고 `user` 테이블에 `name`, `fileName`, `winNum`, `loseNum`, `tiedNum` 필드를 추가하세요. 그런 다음 `BaseDao`의 데이터베이스 설정과 `MyClient`의 서버 주소를 수정해야 합니다.
 
 by [vencc](https://github.com/vencc/game)

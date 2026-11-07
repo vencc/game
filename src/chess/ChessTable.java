@@ -77,7 +77,7 @@ public class ChessTable extends JPanel {
     this.room = room;
     model = 0;
     Moves = 0;
-    System.out.println("这个房间是网络对战模式");
+    System.out.println("온라인 대전 방입니다.");
     this.setBounds(0, 0, BOARD_WIDTH, BOARD_WIDTH);
     this.addMouseListener(new MouseHandler());
   }
@@ -98,7 +98,7 @@ public class ChessTable extends JPanel {
    * 功能: 机器人下棋 作者: 黄欢欢 时间: 2016-09-28
    */
   public synchronized void robotChess() {
-    System.out.println("机器线程开启");
+    System.out.println("컴퓨터 대전 스레드를 시작합니다.");
     synchronized (chessTable) {
       while (true) {
         if (!lock) {
@@ -149,8 +149,7 @@ public class ChessTable extends JPanel {
             if (paintItem(humanX, humanY)) {
               room.backGame=true;
               Moves++;
-              System.out.println("黑棋在这" + humanX + "," + humanY);
-              System.out.println("is here!");
+              System.out.println("흑돌 위치: " + humanX + ", " + humanY);
               mark[humanX][humanY] = 1;
               lock = true;
               repaint();
@@ -198,7 +197,7 @@ public class ChessTable extends JPanel {
 
           }
         } else {
-          System.out.println("请将棋子放进棋盘内");
+          System.out.println("바둑판 안에 돌을 놓아 주세요.");
         }
         System.out.println("x:" + x + "y:" + y);
       }
@@ -234,7 +233,7 @@ public class ChessTable extends JPanel {
         // System.out.println("未能明确棋子颜色");
       }
     } else {
-      System.out.println("棋子没添加成功");
+      System.out.println("돌을 놓지 못했습니다.");
     }
     return false;
   }
@@ -250,7 +249,7 @@ public class ChessTable extends JPanel {
     Graphics2D g2 = (Graphics2D) g;
     g2.setColor(Color.black);
     char ch = 'A';
-    g.setFont(new Font("宋体", Font.BOLD, 12));
+    g.setFont(new Font("맑은 고딕", Font.BOLD, 12));
 
 		/*
 		 * 功能：加载单元格间距
@@ -313,7 +312,7 @@ public class ChessTable extends JPanel {
             g2.setPaint(gp3);
 
           } else {
-            System.out.println("定位不准确，未获得棋子颜色");
+            System.out.println("돌 색을 확인할 수 없습니다.");
           }
           g2.setComposite(AlphaComposite.getInstance(
               AlphaComposite.SRC_OVER, 1));
@@ -352,7 +351,7 @@ public class ChessTable extends JPanel {
     if (!backChess) {
       room.setCanplay(true);
     }
-    System.out.println("我是TRUE：" + room.isCanplay());
+    System.out.println("현재 착수 가능 여부: " + room.isCanplay());
     for (int i = 0; i < 15; i++) {
       for (int j = 0; j < 17; j++) {
         // mark[i][j]=chess[i][j];

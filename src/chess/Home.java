@@ -18,13 +18,13 @@ import java.awt.event.WindowEvent;
  * 作者: 黄欢欢  时间: 2016-09-20
  */
 public class Home extends JFrame {
-  private User user = new User("游客");
+  private User user = new User("손님");
   private Home home = this;
   private JButton userButton = new JButton();       // 用户已登录显示自己姓名的按钮
-  private JButton netButton = new JButton("联网对战");    // 联网对战按钮
-  private JButton robotButton = new JButton("人机对战");  // 人机对战按钮
-  private JButton dungeonButton = new JButton("深渊远征"); // 表格驱动的地牢游戏
-  private JButton logoffButton = new JButton("退出");  // 退出按钮
+  private JButton netButton = new JButton("온라인 대전");    // 온라인 대전 버튼
+  private JButton robotButton = new JButton("컴퓨터와 대전");  // 컴퓨터와 대전 버튼
+  private JButton dungeonButton = new JButton("심연 원정"); // 스프레드시트 기반 던전 게임
+  private JButton logoffButton = new JButton("로그아웃");  // 로그아웃 버튼
   private JPanel contentPane = new JPanel() {
     protected void paintComponent(Graphics g) {
       Image image = new ImageIcon("resource/imag/home.png").getImage();
@@ -42,7 +42,7 @@ public class Home extends JFrame {
    * 作者: 黄欢欢   时间: 2016-09-21
    */
   private void init() {
-    this.setTitle("五子棋");
+    this.setTitle("오목");
     this.setSize(1000, 562);
     this.setDefaultCloseOperation(EXIT_ON_CLOSE);
     this.setIconImage(new ImageIcon("resource/imag/logo.png").getImage());
@@ -124,7 +124,7 @@ public class Home extends JFrame {
     addWindowListener(new WindowAdapter() {
       @Override
       public void windowClosing(WindowEvent e) {
-        System.out.println("退出程序");
+        System.out.println("프로그램을 종료합니다.");
         ClientLogoutMsg msg = new ClientLogoutMsg();
         MyClient.getMyClient().sendMsg(msg);
       }
